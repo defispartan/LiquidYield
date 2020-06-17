@@ -10343,7 +10343,7 @@ a.btn-icon-only {
     .main-content .container-fluid {
       padding-left: 39px !important;
       padding-right: 39px !important;
-      padding-top: 20px !important; } }
+      padding-top: 125px !important; } }
 
 .navbar-vertical.navbar-expand-xs.fixed-left + .main-content {
   margin-left: 250px; }
@@ -10374,6 +10374,19 @@ a.btn-icon-only {
     margin-left: 250px; }
   .navbar-vertical.navbar-expand-xl.fixed-right + .main-content {
     margin-right: 250px; } }
+
+.power {
+  width: 50%;
+  height: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-size: 50%; }
+
+.list {
+  display: block;
+  margin-top: 10px; }
 
 .custom-checkbox .custom-control-input ~ .custom-control-label {
   cursor: pointer;
@@ -14370,5 +14383,3 @@ button:focus, :focus {
 
 .table .badge i {
   margin-right: 10px; }
-
-/*# sourceMappingURL=liquid-yield.css.map */

@@ -20,6 +20,7 @@ import Maps from "views/examples/Maps.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
+import About from "views/About.js";
 
 var routes = [
   {
@@ -47,7 +48,7 @@ var routes = [
     path: "/about",
     name: "About",
     icon: "ni ni-book-bookmark text-info",
-    component: Login,
+    component: About,
     layout: "/admin"
   }
 
