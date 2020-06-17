@@ -28,29 +28,28 @@ var routes = [
     name: "Home",
     icon: "ni ni-app text-primary",
     component: Index,
-    layout: "/admin"
+    layout: "admin",
   },
   {
     path: "/pools",
     name: "Pool Explorer",
     icon: "ni ni-chart-pie-35 text-green",
     component: Tables,
-    layout: "/admin"
+    layout: "admin",
   },
   {
     path: "/zap",
     name: "Liquid Ether Zap",
     icon: "ni ni-sound-wave text-orange",
     component: Maps,
-    layout: "/admin"
+    layout: "admin",
   },
   {
     path: "/about",
     name: "About",
     icon: "ni ni-book-bookmark text-info",
     component: About,
-    layout: "/admin"
-  }
-
+    layout: "admin",
+  },
 ];
 export default routes;
