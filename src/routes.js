@@ -15,13 +15,9 @@
 
 */
 import Index from "views/Index.js";
-import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
-import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
 import About from "views/About.js";
-
+import Zap from "views/Zap.js";
+import Pools from "views/Pools.js";
 var routes = [
   {
     path: "/index",
@@ -34,14 +30,14 @@ var routes = [
     path: "/pools",
     name: "Pool Explorer",
     icon: "ni ni-chart-pie-35 text-green",
-    component: Tables,
+    component: Pools,
     layout: "admin",
   },
   {
     path: "/zap",
     name: "Liquid Ether Zap",
     icon: "ni ni-sound-wave text-orange",
-    component: Maps,
+    component: Zap,
     layout: "admin",
   },
   {
