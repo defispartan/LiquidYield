@@ -93,7 +93,8 @@ class About extends React.Component {
                   </a>
                 </li>
               </ul>
-
+              <h1 style={{ marginTop: "50px" }}>Source Code</h1>
+              <a href="https://github.com/aschmidt20/LiquidYield">GitHub</a>
               <h1 style={{ marginTop: "50px" }}>Donate</h1>
               <p>defispartan.eth</p>
             </div>
