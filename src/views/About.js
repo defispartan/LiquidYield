@@ -54,7 +54,7 @@ class About extends React.Component {
               <h1>Powered By</h1>
               <Row>
                 <div
-                  class="power"
+                  className="power"
                   style={{
                     backgroundImage: `url(${Aave})`,
                   }}
@@ -65,7 +65,7 @@ class About extends React.Component {
                   ></a>
                 </div>
                 <div
-                  class="power"
+                  className="power"
                   style={{ backgroundImage: `url(${Uniswap})` }}
                 >
                   <a
@@ -76,18 +76,18 @@ class About extends React.Component {
               </Row>
               <h1 style={{ marginTop: "50px" }}>Inspired By</h1>
               <ul style={{ listStyle: "none", padding: "0" }}>
-                <li class="list">
+                <li className="list">
                   <a href="https://twitter.com/NodarJ/status/1213507574215200769?s=20">
                     This Tweet
                   </a>
                 </li>
-                <li class="list">
+                <li className="list">
                   <a href="https://www.uniswaproi.com/#">Uniswap ROI</a>
                 </li>
-                <li class="list">
+                <li className="list">
                   <a href="https://zapper.fi">Zapper</a>
                 </li>
-                <li class="list">
+                <li className="list">
                   <a href="https://zumzoom.github.io/analytics/uniswap/roi/">
                     ZumZoom Uniswap ROI Graphs
                   </a>

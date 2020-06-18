@@ -148,7 +148,7 @@ class Index extends React.Component {
               initial investment while maintaining 100% exposure to the price of
               Ethereum.
             </p>
-            <div class="liquidether">
+            <div className="liquidether">
               <img
                 alt="..."
                 src={require("assets/img/theme/liquidetherzap.jpg")}
