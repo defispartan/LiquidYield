@@ -35,25 +35,25 @@ import {
   Table,
   Container,
   Row,
-  Col
+  Col,
 } from "reactstrap";
-
+import LiquidLogo from "../assets/img/brand/liquid-react.png";
 // core components
 import {
   chartOptions,
   parseOptions,
   chartExample1,
-  chartExample2
+  chartExample2,
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 
 class Index extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       activeNav: 1,
-      chartExample1Data: "data1"
+      chartExample1Data: "data1",
     };
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
@@ -64,7 +64,7 @@ class Index extends React.Component {
     this.setState({
       activeNav: index,
       chartExample1Data:
-        this.state.chartExample1Data === "data1" ? "data2" : "data1"
+        this.state.chartExample1Data === "data1" ? "data2" : "data1",
     });
   };
   render() {
@@ -73,33 +73,88 @@ class Index extends React.Component {
         <Header />
         {/* Page content */}
         <Container className="mt--7" fluid>
-          <Row>
+          <div className="col" style={{ textAlign: "left" }}>
+            <div
+              className="logohead"
+              style={{ backgroundImage: `url(${LiquidLogo})` }}
+            ></div>
+            <h2>What is Liquid Yield?</h2>
+            <p>
+              Liquid Yield is a service designed to help DeFi investors maximize
+              their Ethereum yields by leveraging the{" "}
+              <a href="https://app.aave.com/?pool=Uniswap">
+                Aave Uniswap Market
+              </a>
+              . This site provides investors with an in-depth analysis of
+              liquidity pool yields and a tool to zap into Uniswap pools while
+              maintaining 100% exposure to the price of Ethereum.
+            </p>
 
+            <h2>What is Uniswap?</h2>
+            <p>
+              Uniswap is a decentralized exchange and AMM (automated market
+              maker), allowing users to efficiently swap Ethereum and ERC20
+              tokens without an order book by leveraging reserves of assets
+              called liquidity pools. The ratio of assets in the pool serve as a
+              price discovery mechanism for asset pairs, and the pools rely on
+              arbitrage to keep Uniswap asset prices in line with other
+              exchanges. Liquidity providers on Uniswap must deposit an equal
+              value of both assets in the pair to maintain a constant product of
+              reserves. When a user swaps currencies on the exchange, a 0.3% fee
+              is assesed and is distributed proportionally to the liquidity
+              providers. When a person contributes liquidity to a pool, pool
+              tokens are minted to represent the contributors share of the pool.
+              To withdraw the pooled assets, the pool tokens are burned and an
+              equivalent share of the tokens in the pool are returned.
+            </p>
+            <h2>How do I make money as a liquidity provider?</h2>
+            <p>
+              Liquidity pools have a simple fee-based payout structure (0.3% per
+              swap), but the returns of being a liquidity provider often a
+              source of confusion for investors. This confusion is due to the
+              fact that fee accumalation is not the only contributing factor to
+              the returns of a liquidity pool. The other two important factors
+              that a provider must take into account are{" "}
+              <strong>Impermanent Loss</strong> and{" "}
+              <strong>Price Exposure</strong>.
+            </p>
+            <p>
+              {" "}
+              <strong>Impermanent Loss</strong> occurs when the price of the two
+              assets in a liquidity pair diverge. The result is a
+            </p>
+            <p>
+              <strong>Price Exposure</strong> is much simpler to understand but
+              can also result in dimished returns compared to holding Ethereum.
+              By contributing an equal value of both tokens in the pair, a
+              provider only has 50% price exposure to both tokens. This means
+              that if the price of Ethereum rises by 20%, the pool tokens will
+              only appreciate by 10%. Maintaining price exposure to Ethereum is
+              a key reason why liquidity pools may not provide the best yield
+              for investors if the market is bullish on Ethereum, and is the
+              reasoning behind the <strong>Liquid Ether Zap</strong> explained
+              below.
+            </p>
 
-          <div className="col" style={{textAlign:"center"}}>
-            <br></br>
-
-              <h2>What is Liquid Yield?</h2>
-              <p>Liquid Yield is a service designed to maximize the yields of being a Uniswap liquidity provider while maintaining 100% exposure to the price of Ethereum. As a DeFi enthusiast I find my investment decisions boiling down to a simple question, </p>
-              <h2>What is Uniswap?</h2>
-              <h2>How do I make money as a liquidity provider?</h2>
-              <p>Liquidity pools have a simple payout structure but are often a source of confusion for investors as finding accurate reporting and predictions for pool returns is not straightforward. </p>
-
-              <div className="emphasis">I have Ethereum, how do I leverage it to earn more?</div>
-
-              <p>On the surface, providing liquidity to an AMM like Uniswap can seem like an enticing option with weekly returns as high as 10%, but from personal experience being a liquidity provider is not as lucrative in nominal returns and often gets beaten out by simply holding Ethereum. With the abundance of leverage and lending oppurtunities popping up in the DeFi ecosystem I thought that surely there was a simple way to maximize LP returns while maintaining Ethereum exposure. With the introduction of Aave's Uniswap Market, this easy solution exists and Liquid Yield is a site built to bring this oppurtunity to you with a simple zap interface.</p>
-              <p>I call this transaction the Liquid Ether Zap, the individual steps are shown in the graph below and the result is earning liquidity provision fees on 100% of your initial investment while maintaining 100% exposure to the price of Ethereum.</p>
+            <p>
+              The{" "}
+              <a href="https://app.aave.com/?pool=Uniswap">
+                Aave Uniswap Market
+              </a>{" "}
+              can be leveraged to long Ethereum by providing Uniswap liquidity
+              pool tokens as collateral. An example of the Liquid Ether Zap
+              transaction for the ETH/DAI pool are shown in the graph below and
+              the result is earning liquidity provision fees on 100% of your
+              initial investment while maintaining 100% exposure to the price of
+              Ethereum.
+            </p>
+            <div class="liquidether">
               <img
                 alt="..."
                 src={require("assets/img/theme/liquidetherzap.jpg")}
               />
             </div>
-
-
-
-
-
-          </Row>
+          </div>
         </Container>
       </>
     );
