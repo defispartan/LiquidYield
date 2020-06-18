@@ -45,10 +45,19 @@
   }
 }
 
-.power {
+.powerleft {
   width: 50%;
   height: 100px;
-  background-position: center;
+  background-position: 90%;
+  background-repeat: no-repeat;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-size: 50%;
+}
+.powerright {
+  width: 50%;
+  height: 100px;
+  background-position: 10%;
   background-repeat: no-repeat;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -72,4 +81,14 @@
 .liquidether {
   margin-top: 50px;
   text-align: center;
+}
+
+.lpreturns {
+  margin: 0 auto;
+  width: 50%;
+  height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin-bottom: 20px;
 }

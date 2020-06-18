@@ -38,6 +38,7 @@ import {
   Col,
 } from "reactstrap";
 import LiquidLogo from "../assets/img/brand/liquid-react.png";
+import LPreturns from "../assets/img/brand/lpreturns.PNG";
 // core components
 import {
   chartOptions,
@@ -121,7 +122,47 @@ class Index extends React.Component {
             <p>
               {" "}
               <strong>Impermanent Loss</strong> occurs when the price of the two
-              assets in a liquidity pair diverge. The result is a
+              assets in a liquidity pair diverge. The result of this price
+              divergence is a reduction in the value of the supplied liquidity
+              relative to holding the assets, in some cases completely negating
+              the fees earned by the providers. We can model the effects of
+              impermanent loss on liquidity provider returns by looking at the
+              return on investment for positions with varying pool growth (fee
+              accrual) and price divergence as shown in the figure below.
+            </p>
+            <figure>
+              <div
+                className="lpreturns"
+                style={{ backgroundImage: `url(${LPreturns})` }}
+              ></div>
+            </figure>
+            <figcaption>
+              {" "}
+              <p
+                style={{
+                  textAlign: "center",
+                  fontSize: "0.75rem",
+                  marginBottom: "20px",
+                }}
+              >
+                Source:{" "}
+                <a href="https://medium.com/@pintail/understanding-uniswap-returns-cc593f3499ef">
+                  https://medium.com/@pintail/understanding-uniswap-returns-cc593f3499ef
+                </a>
+              </p>
+            </figcaption>
+            <p>
+              This phenomenon of impermanent loss introduces uncertainty in
+              calculating liquidity provider returns because accuractely
+              predicting pool returns would require accurate forecasting of
+              asset prices. The incurred losses can be minimized by providing
+              liquidity to pools whos assets have prices that do not fluctuate
+              (i.e. stablecoins). For more information about Uniswap returns and
+              impermanent loss,{" "}
+              <a href="https://medium.com/@pintail/understanding-uniswap-returns-cc593f3499ef">
+                this
+              </a>{" "}
+              article provides some fantastic insights.
             </p>
             <p>
               <strong>Price Exposure</strong> is much simpler to understand but
@@ -150,7 +191,7 @@ class Index extends React.Component {
             </p>
             <div className="liquidether">
               <img
-                alt="..."
+                alt="Liquid Ether Zap"
                 src={require("assets/img/theme/liquidetherzap.jpg")}
               />
             </div>

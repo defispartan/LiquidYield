@@ -54,7 +54,7 @@ class About extends React.Component {
               <h1>Powered By</h1>
               <Row>
                 <div
-                  className="power"
+                  className="powerleft"
                   style={{
                     backgroundImage: `url(${Aave})`,
                   }}
@@ -65,7 +65,7 @@ class About extends React.Component {
                   ></a>
                 </div>
                 <div
-                  className="power"
+                  className="powerright"
                   style={{ backgroundImage: `url(${Uniswap})` }}
                 >
                   <a
