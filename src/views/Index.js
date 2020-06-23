@@ -79,6 +79,15 @@ class Index extends React.Component {
               className="logohead"
               style={{ backgroundImage: `url(${LiquidLogo})` }}
             ></div>
+            <h1
+              style={{
+                textAlign: "center",
+                color: "#416fe6",
+                marginBottom: "20px",
+              }}
+            >
+              Provide Liquidity. Accumulate ETH.
+            </h1>
             <h2>What is Liquid Yield?</h2>
             <p>
               Liquid Yield is a service designed to help DeFi investors maximize

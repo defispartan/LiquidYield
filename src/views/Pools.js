@@ -93,19 +93,43 @@ class Pools extends React.Component {
                     />
                   </tbody>
                 </Table>
-                <CardFooter>
-                  This data is populated from the{" "}
-                  <a href="https://thegraph.com/explorer/subgraph/ianlapham/uniswap">
-                    Uniswap V1 Subgraph
-                  </a>
-                  . The only pools which are displayed are the pools currently
-                  available on the{" "}
-                  <a href="https://app.aave.com/?pool=Uniswap">
-                    Aave Uniswap Market
-                  </a>
-                  .{" "}
-                </CardFooter>
               </Card>
+              <p className="tablefooter" style={{ marginTop: "30px" }}>
+                * This data is populated from the{" "}
+                <a href="https://thegraph.com/explorer/subgraph/ianlapham/uniswap">
+                  Uniswap V1 Subgraph
+                </a>
+                . The only pools which are displayed are the pools currently
+                available on the{" "}
+                <a href="https://app.aave.com/?pool=Uniswap">
+                  Aave Uniswap Market
+                </a>
+                .
+              </p>
+              <p className="tablefooter">
+                ** Expected fees are calculated by projecting outward trends in
+                Volume and Liquidity on different time-scales.
+              </p>
+              <p className="tablefooter">
+                *** Impermanent loss is calculated by using previous 30 day
+                price ratios plugged into the Uniswap bonding curve to estimate
+                stake reduction vs HODLing.{" "}
+              </p>{" "}
+              <p className="tablefooter">
+                **** Expected ROI is simply the difference between fees and
+                impermanent loss
+              </p>
+              <p className="tablefooter">
+                ***** As mentioned on the home page, there are a variety of
+                factors which influence the returns of liquidity pools, as a
+                result these numbers should be treated as rough estimations.
+                I'll be working to incorporate more advanced methods to provide
+                better estimations in the future. In the meantime I would
+                suggest cross-referencing these values with estimations from{" "}
+                <a href="https://www.uniswaproi.com/">UniswapROI</a> and{" "}
+                <a href="https://pools.fyi/#/">Pools.fyi</a> before making
+                investment decisions.
+              </p>
             </div>
           </Row>
         </Container>

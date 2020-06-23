@@ -95,6 +95,28 @@ class About extends React.Component {
               </ul>
               <h1 style={{ marginTop: "50px" }}>Source Code</h1>
               <a href="https://github.com/aschmidt20/LiquidYield">GitHub</a>
+              <h1 style={{ marginTop: "50px" }}>Future Features</h1>
+              <ul style={{ listStyle: "none", padding: "0" }}>
+                <li className="list">
+                  - Expandable rows in Pool Explorer for graphs of Volume,
+                  Liquidity, Fees, IL, and ROI
+                </li>
+                <li className="list">
+                  - Ability to sort by column in Pool Explorer
+                </li>
+                <li className="list">
+                  - Optimize weights of historical volume and liquidity
+                  measurements for better ROI predictions
+                </li>
+                <li className="list">- Usage data for Liquid Ether Zap</li>
+              </ul>
+              <h1 style={{ marginTop: "50px" }}>
+                Question, Comments, Concerns
+              </h1>
+              <p>
+                You can reach out to me on Twitter{" "}
+                <a href="https://twitter.com/defispartan">@defispartan</a>
+              </p>
               <h1 style={{ marginTop: "50px" }}>Donate</h1>
               <p>defispartan.eth</p>
             </div>
