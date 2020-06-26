@@ -83,6 +83,7 @@ class Index extends React.Component {
               style={{
                 textAlign: "center",
                 color: "#416fe6",
+                marginTop: "20px",
                 marginBottom: "20px",
               }}
             >
