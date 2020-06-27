@@ -58,8 +58,6 @@ const Zap = (props) => {
   const toggleWalletConnect = () => {
     if (walletConnected == false) {
       setButtonMessage("Execute Zap");
-    } else {
-      setButtonMessage("Connect Wallet");
     }
     setConnect(!walletConnected);
   };

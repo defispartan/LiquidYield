@@ -65,7 +65,8 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.0",
     "reactstrap": "8.4.1",
-    "semantic-ui-react": "^0.88.2"
+    "semantic-ui-react": "^0.88.2",
+    "truffle-hdwallet-provider": "^1.0.17"
   },
   "devDependencies": {
     "@types/googlemaps": "3.39.2",
