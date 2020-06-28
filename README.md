@@ -20,11 +20,7 @@ npm run build
 
 ## Smart Contracts:
 
-This project uses the Truffle framework
-
-Contracts and Migrations are located in their respective folders
-
-To compile smart contracts run the command
+This project uses the Truffle framework. Contracts and Migrations are located in their respective folders. To compile smart contracts run the command
 
 ```
 truffle compile
@@ -40,11 +36,7 @@ To start a local Ganache instance and enter the Truffle development terminal run
 truffle develop
 ```
 
-Note: It's a known issue that Ganache may have trouble running on Node version 14.\*
-
-If the you get errors or hanging when running the above command you may have to use an older Node version (12.\* worked for me)
-
-Within this terminal you can run `migrate` to deploy contracts to the local Ganache instance
+Note: It's a known issue that Ganache may have trouble running on Node version 14.\*. If the you get errors or a hanging terminal when running the above command you may have to use nvm to switch to an older Node version (12.\* worked for me). Within this terminal you can run `migrate` to deploy contracts to the local Ganache instance.
 
 ### Ropsten
 
@@ -52,12 +44,12 @@ To deploy contracts to Ropsten, you'll need an Infura API key and a wallet with 
 
 In the root directory, you'll need to make a .env file with:
 
-pk = a Web3 wallet private key or mnemonic
-ropsteninfura = your Infura URL with API key
+```
+pk="a Web3 wallet private key or mnemonic"
+ropsteninfura="your Infura URL with API key"
+```
 
-Alternatively you can skip the .env and hardcode these values into truffle-config.js
-
-Once you have your truffle-config.js setup for ropsten deployment you can migrate smart contracts to the network with
+Alternatively you can skip the .env and hardcode these values into truffle-config.js. Once you have your truffle-config.js setup for ropsten deployment you can migrate smart contracts to the network with
 
 ```
 truffle migrate --network ropsten
