@@ -192,7 +192,26 @@ const Zap = (props) => {
           <h3 className="disclaimericon">Disclaimer</h3>
 
           <Collapse isOpen={disclaimerOpen} className="disclaimercontent">
-            Disclaimer content
+            <p> There are two main risks associated with executing this zap:</p>
+            <h4>Smart Contract Risk</h4>
+            <p></p>
+            <h4>Liquidation Risk</h4>
+            <p>
+              This zap involves borrowing DAI against the value of your newly
+              minted Uniswap liquidity tokens. It's important to note that your
+              borrowing position can be liquidated if the value of borrowed DAI
+              exceeds the liquidation threshold for the liquidity tokens. You
+              can track the health factor of your borrowing position on the{" "}
+              <a href="https://app.aave.com/dashboard/borrowings">
+                Aave Borrowings Dashboard{" "}
+              </a>{" "}
+              . Be sure to keep enough assets deposited to keep your Health
+              Factor above 1. A fantastic way to do this is by using an
+              automated tool called <a href="https://9000.hal.xyz">HAL</a>. By
+              using the Aave Recipe on HAL, you can have it notify you by email,
+              Discord, Slack, Telegram, or Twitter when your Health Factor
+              crosses a certain threshold.
+            </p>
           </Collapse>
         </div>
       </Container>

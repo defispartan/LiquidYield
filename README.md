@@ -2,7 +2,7 @@
 
 Project to maximize yields as a liquidity provider by leveraging the Aave Uniswap market to provide 100% exposure to the price of Ethereum
 
-## Frontend:
+## Frontend
 
 Built using React.js
 
@@ -18,7 +18,7 @@ To create production build for server deployment, you can create a **build** dir
 npm run build
 ```
 
-## Smart Contracts:
+## Smart Contracts
 
 This project uses the Truffle framework. Contracts and Migrations are located in their respective folders. To compile smart contracts run the command
 
