@@ -16,7 +16,7 @@
 */
 import Index from "views/Index.js";
 import About from "views/About.js";
-import Zap from "views/Zap.js";
+import Zap from "views/ZapHome.js";
 import Pools from "views/Pools.js";
 var routes = [
   {

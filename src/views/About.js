@@ -17,20 +17,7 @@
 */
 import React from "react";
 // reactstrap components
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
+import { Container, Row } from "reactstrap";
 
 import Uniswap from "assets/img/brand/uniswap.png";
 import Aave from "assets/img/brand/aave.png";

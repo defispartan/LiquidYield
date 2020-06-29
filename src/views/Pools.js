@@ -18,25 +18,7 @@
 import React from "react";
 
 // reactstrap components
-import {
-  Badge,
-  Card,
-  CardHeader,
-  CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Progress,
-  Table,
-  Container,
-  Row,
-  UncontrolledTooltip,
-} from "reactstrap";
+import { Card, CardHeader, Container, Row, Table } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
 import Pool from "components/Data/Pool.js";

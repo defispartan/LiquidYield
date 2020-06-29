@@ -17,63 +17,37 @@
 */
 
 // reactstrap components
-import {
-  Badge,
-  Card,
-  Collapse,
-  CardHeader,
-  CardText,
-  Button,
-  CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Progress,
-  Table,
-  Container,
-  Row,
-  UncontrolledTooltip,
-  CardTitle,
-} from "reactstrap";
+import { Card, Collapse, Button, Container, Row } from "reactstrap";
 // core components
-import Header from "components/Headers/Header.js";
-import { Dropdown, Input, Label, Icon } from "semantic-ui-react";
-import React, { useState, useEffect } from "react";
+import { Dropdown, Input, Label } from "semantic-ui-react";
+import React, { useState } from "react";
 
-const Zap = (props) => {
-  const [walletConnected, setConnect] = useState(false);
+const ZapConnect = ({ disconnect }) => {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
-  const [aboutIcon, setAboutIcon] = useState(<i class="plus circle icon"></i>);
-  const [disclaimerIcon, setDisclaimerIcon] = useState(
-    <i class="plus circle icon"></i>
+  const [aboutIcon, setAboutIcon] = useState(
+    <i className="plus circle icon"></i>
   );
-  const [buttonMessage, setButtonMessage] = useState("Connect Wallet");
+  const [disclaimerIcon, setDisclaimerIcon] = useState(
+    <i className="plus circle icon"></i>
+  );
 
-  const toggleWalletConnect = () => {
-    if (walletConnected == false) {
-      setButtonMessage("Execute Zap");
-    }
-    setConnect(!walletConnected);
+  const onExecute = () => {
+    console.log("Execute transaction");
   };
   const toggleAboutOpen = () => {
     if (aboutOpen == false) {
-      setAboutIcon(<i class="minus circle icon"></i>);
+      setAboutIcon(<i className="minus circle icon"></i>);
     } else {
-      setAboutIcon(<i class="plus circle icon"></i>);
+      setAboutIcon(<i className="plus circle icon"></i>);
     }
     setAboutOpen(!aboutOpen);
   };
   const toggleDisclaimerOpen = () => {
     if (disclaimerOpen == false) {
-      setDisclaimerIcon(<i class="minus circle icon"></i>);
+      setDisclaimerIcon(<i className="minus circle icon"></i>);
     } else {
-      setDisclaimerIcon(<i class="plus circle icon"></i>);
+      setDisclaimerIcon(<i className="plus circle icon"></i>);
     }
     setDisclaimerOpen(!disclaimerOpen);
   };
@@ -144,6 +118,13 @@ const Zap = (props) => {
           <h1>Liquid Ether Zap</h1>
         </div>
         <Card body className="zap">
+          <div className="walletdetails">
+            <p className="wallet">Wallet Connected | Balance</p>
+            <Button className="wallet" onClick={() => disconnect()}>
+              Disconnect Wallet
+            </Button>
+          </div>
+
           <div className="poolselect">
             <Dropdown
               placeholder="Select Pool"
@@ -157,22 +138,14 @@ const Zap = (props) => {
           <div className="ethinput">
             <Input
               className="ethinputbox"
-              label={
-                <Label as="eth" image>
-                  ETH
-                </Label>
-              }
+              label={<Label>ETH</Label>}
               labelPosition="right"
               placeholder="0.0"
             />
           </div>
 
-          <Button
-            className="connectbutton"
-            onClick={toggleWalletConnect}
-            color="primary"
-          >
-            {buttonMessage}
+          <Button className="connectbutton" onClick={onExecute} color="primary">
+            Execute Zap
           </Button>
         </Card>
 
@@ -219,4 +192,4 @@ const Zap = (props) => {
   );
 };
 
-export default Zap;
+export default ZapConnect;
