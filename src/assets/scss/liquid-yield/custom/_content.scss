@@ -52,7 +52,7 @@
 
 .powerleft {
   width: 50%;
-  height: 100px;
+  height: 150px;
   background-position: 90%;
   background-repeat: no-repeat;
   margin-top: 20px;
@@ -61,7 +61,7 @@
 }
 .powerright {
   width: 50%;
-  height: 100px;
+  height: 150px;
   background-position: 10%;
   background-repeat: no-repeat;
   margin-top: 20px;
@@ -112,7 +112,8 @@
 
 .zap {
   text-align: center;
-  width: 50%;
+  width: 100%;
+  max-width: 700px;
   margin: 0 auto;
 }
 
