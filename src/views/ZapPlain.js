@@ -19,12 +19,20 @@
 // reactstrap components
 import { Card, Collapse, Button, Container, Row } from "reactstrap";
 // core components
-import { Dropdown, Input, Label, Icon } from "semantic-ui-react";
-import React, { useState } from "react";
+import {
+  Dropdown,
+  Input,
+  Label,
+  Icon,
+  Modal,
+  Header,
+  Button as Button2,
+} from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
 
-const ZapPlain = ({ connect }) => {
+const ZapPlain = ({ connect, alert, setAlert }) => {
   const [walletConnected, setConnect] = useState(false);
-  const [drizzleLoading, setDrizzleLoading] = useState(false);
+  const [alertSet, setAlertNotif] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [aboutIcon, setAboutIcon] = useState(
@@ -33,14 +41,16 @@ const ZapPlain = ({ connect }) => {
   const [disclaimerIcon, setDisclaimerIcon] = useState(
     <i className="plus circle icon"></i>
   );
-
-  const onExecute = () => {
-    if (walletConnected == false) {
-      setConnect(true);
-    } else {
-      console.log("Execute transaction");
+  useEffect(() => {
+    if (alert != null) {
+      setAlertNotif(true);
     }
+  });
+  const alertCancel = () => {
+    setAlertNotif(false);
+    setAlert(null);
   };
+
   const toggleAboutOpen = () => {
     if (aboutOpen == false) {
       setAboutIcon(<i className="minus circle icon"></i>);
@@ -119,9 +129,22 @@ const ZapPlain = ({ connect }) => {
   return (
     <>
       {/* Page content */}
+      <Modal open={alertSet} basic size="small">
+        <Header icon="exclamation circle" content="Alert" />
+        <Modal.Content>
+          <p>{alert}</p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button2 basic color="red" onClick={alertCancel} inverted>
+            <Icon name="remove" /> Close
+          </Button2>
+        </Modal.Actions>
+      </Modal>
       <Container className="mt--7" fluid>
         <div className="zapheader">
-          <h1>Liquid Ether Zap</h1>
+          <h1>
+            Liquid Ether Zap <i className="bolt icon text-yellow" />
+          </h1>
         </div>
         <Card body className="zap">
           <div className="poolselect">

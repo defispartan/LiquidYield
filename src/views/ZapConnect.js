@@ -21,6 +21,11 @@ import { Card, Collapse, Button, Container, Row } from "reactstrap";
 // core components
 import { Dropdown, Input, Label } from "semantic-ui-react";
 import React, { useState } from "react";
+import { drizzleReactHooks } from "@drizzle/react-plugin";
+import { newContextComponents } from "@drizzle/react-components";
+
+const { useDrizzle, useDrizzleState } = drizzleReactHooks;
+const { AccountData } = newContextComponents;
 
 const ZapConnect = ({ disconnect }) => {
   const [aboutOpen, setAboutOpen] = useState(false);
@@ -32,6 +37,17 @@ const ZapConnect = ({ disconnect }) => {
     <i className="plus circle icon"></i>
   );
 
+  const { drizzle } = useDrizzle();
+  const state = useDrizzleState((state) => state);
+  const networkMap = {
+    1: "Mainnet",
+    3: "Ropsten",
+    4: "Rinkeby",
+    5: "Goerli",
+    42: "Kovan",
+  };
+  console.log("DRIZZLE STATE");
+  console.log(state);
   const onExecute = () => {
     console.log("Execute transaction");
   };
@@ -110,16 +126,31 @@ const ZapConnect = ({ disconnect }) => {
     },
   ];
 
+  function round(value, decimals) {
+    return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+  }
+
   return (
     <>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <div className="zapheader">
-          <h1>Liquid Ether Zap</h1>
+          <h1>
+            Liquid Ether Zap <i class="bolt icon text-yellow" />
+          </h1>
         </div>
         <Card body className="zap">
           <div className="walletdetails">
-            <p className="wallet">Wallet Connected | Balance</p>
+            <h4>Network:</h4> <p>{networkMap[state.web3.networkId]}</p>
+            <h4>Wallet:</h4> <p>{state.accounts[0]}</p>
+            <h4>Balance:</h4>{" "}
+            <p>
+              {round(
+                state.accountBalances[state.accounts[0]] / 1000000000000000000,
+                5
+              )}{" "}
+              ETH
+            </p>
             <Button className="wallet" onClick={() => disconnect()}>
               Disconnect Wallet
             </Button>
