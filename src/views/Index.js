@@ -113,10 +113,7 @@ class Index extends React.Component {
               accrual) and price divergence as shown in the figure below.
             </p>
             <figure>
-              <div
-                className="lpreturns"
-                style={{ backgroundImage: `url(${LPreturns})` }}
-              ></div>
+              <img src={LPreturns} alt="LP returns" className="lpreturns"></img>
             </figure>
             <figcaption>
               {" "}
@@ -175,6 +172,7 @@ class Index extends React.Component {
               <img
                 alt="Liquid Ether Zap"
                 src={require("assets/img/theme/liquidetherzap.jpg")}
+                className="liquiddiagram"
               />
             </div>
           </div>
