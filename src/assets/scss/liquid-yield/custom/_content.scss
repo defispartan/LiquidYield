@@ -1,6 +1,11 @@
 .main-content {
   position: relative;
 
+  // Add top padding to main content when navbar shift to top of screen (for small screens)
+  @include media-breakpoint-down(sm) {
+    padding-top: 100px;
+  }
+
   // Navbar
   .navbar-top {
     position: absolute;
@@ -70,11 +75,11 @@
 }
 
 .logohead {
+  display: block;
+  margin: 0 auto;
   width: 100%;
-  height: 150px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 50%;
+  max-width: 500px;
+  height: auto;
 }
 
 .liquidether {

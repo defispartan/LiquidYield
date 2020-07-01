@@ -47,19 +47,19 @@ class Index extends React.Component {
         {/* Page content */}
         <Container className="mt--7" fluid>
           <div className="col" style={{ textAlign: "left" }}>
-            <div
+            <img
               className="logohead"
-              style={{ backgroundImage: `url(${LiquidLogo})` }}
-            ></div>
+              src={LiquidLogo}
+              alt="Liquid Yield Logo"
+            ></img>
             <h1
               style={{
                 textAlign: "center",
                 color: "#416fe6",
-                marginTop: "20px",
                 marginBottom: "20px",
               }}
             >
-              Provide Liquidity. Accumulate ETH.
+              Provide Liquidity. Earn ETH.
             </h1>
             <h2>What is Liquid Yield?</h2>
             <p>
