@@ -1,4 +1,4 @@
-# Liquid Yield
+# Liquid Yield - https://liquidyield.finance
 
 Project to maximize yields as a liquidity provider by leveraging the Aave Uniswap market to provide 100% exposure to the price of Ethereum
 
