@@ -4,7 +4,6 @@ const path = require("path");
 const HDWalletProvider = require("truffle-hdwallet-provider");
 const PK = process.env.pk;
 const ropsteninfura = process.env.ropsteninfura;
-("venture expect drastic manage excite hammer market boss candy crew thing over");
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
