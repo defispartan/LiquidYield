@@ -16,21 +16,25 @@ function LoadingContainer({ unsetWallet, setAlert, disconnect }) {
   const drizzleStatus = useDrizzleState((state) => state.drizzleStatus);
   const drizzleState = useDrizzleState((state) => state);
   const networkId = drizzleState.web3.networkId;
-  if (drizzleState.web3.status == "initialized" && networkId != 3) {
+  if (
+    drizzleState.web3.status == "initialized" &&
+    networkId != 3 &&
+    networkId != 1
+  ) {
     unsetWallet();
     if (networkId === undefined) {
       setAlert(
-        "No Web3 wallet detected in your browser. To use this feature you'll need an Ethereum broswer wallet like MetaMask."
+        "No Web3 wallet detected in your browser. To use this feature you'll need the Ethereum broswer wallet like MetaMask."
       );
     } else if (networkMap[networkId] != undefined) {
       setAlert(
-        "Web3 wallet is connected to " +
+        "Web3 wallet is connected to an unsupported network: " +
           networkMap[networkId] +
-          ". Currently Ropsten is the only supported Ethereum network. Please change network and try again."
+          ". Currently Ropsten and Mainnet are the only supported Ethereum networks. Please change network and try again."
       );
     } else {
       setAlert(
-        "Web3 wallet is connected to an unknown network. Current Ropsten is the only supported Ethereum network. Please change network and try again"
+        "Web3 wallet is connected to an unknown network. Current Ropsten and mainnet are the only supported Ethereum networks. Please change network and try again"
       );
     }
   }

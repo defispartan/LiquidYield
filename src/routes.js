@@ -18,6 +18,8 @@ import Index from "views/Index.js";
 import About from "views/About.js";
 import Zap from "views/ZapHome.js";
 import Pools from "views/Pools.js";
+import Education from "views/Education.js";
+import Portfolio from "views/Portfolio.js";
 var routes = [
   {
     path: "/index",
@@ -27,12 +29,27 @@ var routes = [
     layout: "admin",
   },
   {
+    path: "/education",
+    name: "Education Center",
+    icon: "idea icon yellow",
+    component: Education,
+    layout: "admin",
+  },
+  {
     path: "/pools",
     name: "Pool Explorer",
     icon: "tint icon text-info",
     component: Pools,
     layout: "admin",
   },
+  {
+    path: "/portfolio",
+    name: "Portfolio",
+    icon: "folder icon beige",
+    component: Portfolio,
+    layout: "admin",
+  },
+
   {
     path: "/zap",
     name: "Liquid Ether Zap",

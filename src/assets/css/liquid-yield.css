@@ -10330,6 +10330,9 @@ a.btn-icon-only {
 
 .main-content {
   position: relative; }
+  @media (max-width: 767.98px) {
+    .main-content {
+      padding-top: 100px; } }
   .main-content .navbar-top {
     position: absolute;
     left: 0;
@@ -10375,10 +10378,19 @@ a.btn-icon-only {
   .navbar-vertical.navbar-expand-xl.fixed-right + .main-content {
     margin-right: 250px; } }
 
-.power {
+.powerleft {
   width: 50%;
-  height: 100px;
-  background-position: center;
+  height: 150px;
+  background-position: 90%;
+  background-repeat: no-repeat;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-size: 50%; }
+
+.powerright {
+  width: 50%;
+  height: 150px;
+  background-position: 10%;
   background-repeat: no-repeat;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -10387,6 +10399,133 @@ a.btn-icon-only {
 .list {
   display: block;
   margin-top: 10px; }
+
+.logohead {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  height: auto; }
+
+.liquidether {
+  margin-top: 50px;
+  text-align: center; }
+
+.lpreturns {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  margin-bottom: 40px;
+  margin-top: 40px; }
+
+.factors {
+  display: block;
+  margin: 0 auto;
+  width: 33%;
+  max-width: 1000px;
+  min-width: 200px;
+  height: auto;
+  margin-bottom: 5px;
+  margin-top: 5px; }
+
+.defispartan {
+  width: 20%;
+  max-width: 500px;
+  position: absolute;
+  right: 4px;
+  bottom: -30px; }
+
+.liquiddiagram {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  margin-top: 60px; }
+
+.tablefooter {
+  font-size: 0.75rem; }
+
+.zap {
+  text-align: center;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto; }
+
+.poolselect {
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 30px; }
+
+.connectbutton {
+  width: 75%;
+  margin: 0 auto; }
+
+.providebutton {
+  width: 50%; }
+
+.ethinput {
+  width: 75%;
+  margin: 0 auto;
+  margin-bottom: 30px; }
+
+.ethinputbox {
+  width: 100%; }
+
+.labelimg {
+  vertical-align: center;
+  align-content: center; }
+
+.zapheader h1 {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 30px; }
+
+.about {
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: center; }
+
+.disclaimer {
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: center; }
+
+.abouticon {
+  display: inline-block;
+  margin-bottom: 20px; }
+
+.disclaimericon {
+  display: inline-block;
+  color: red;
+  margin-bottom: 20px; }
+
+.aboutcontent {
+  text-align: left; }
+
+.disclaimercontent {
+  text-align: left; }
+
+.navbar-vertical .navbar-nav .nav-link > i {
+  margin-bottom: 10px; }
+
+.spinny {
+  text-align: center;
+  margin-top: 5em; }
+
+.wallet {
+  display: inline;
+  margin-right: 20px;
+  margin-left: 20px; }
+
+.ui.small.modal {
+  margin-top: 5em !important; }
 
 .custom-checkbox .custom-control-input ~ .custom-control-label {
   cursor: pointer;
@@ -14383,3 +14522,5 @@ button:focus, :focus {
 
 .table .badge i {
   margin-right: 10px; }
+
+/*# sourceMappingURL=liquid-yield.css.map */

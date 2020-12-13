@@ -4,6 +4,8 @@ const path = require("path");
 const HDWalletProvider = require("truffle-hdwallet-provider");
 const PK = process.env.pk;
 const ropsteninfura = process.env.ropsteninfura;
+const mainnetinfura = process.env.mainnetinfura;
+
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
@@ -20,6 +22,13 @@ module.exports = {
         return new HDWalletProvider(PK, ropsteninfura);
       },
       network_id: 3,
+    },
+    mainnet: {
+      provider: function () {
+        return new HDWalletProvider(PK, mainnetinfura);
+      },
+      network_id: 1,
+      gasPrice: 27000000000, //27 gwei
     },
   },
 };

@@ -21,7 +21,7 @@ import { Container, Row } from "reactstrap";
 
 import Uniswap from "assets/img/brand/uniswap.png";
 import Aave from "assets/img/brand/aave.png";
-
+import AdminFooter from "../components/Footers/AdminFooter.js";
 import Header from "components/Headers/Header.js";
 
 class About extends React.Component {
@@ -94,6 +94,7 @@ class About extends React.Component {
               <p>defispartan.eth</p>
             </div>
           </Row>
+          <AdminFooter />
         </Container>
       </>
     );

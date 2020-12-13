@@ -32,6 +32,7 @@ import React, { useState, useEffect } from "react";
 
 const ZapPlain = ({ connect, alert, setAlert }) => {
   const [walletConnected, setConnect] = useState(false);
+  const [zapMode, setZapMode] = useState("simple");
   const [alertSet, setAlertNotif] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
@@ -66,6 +67,13 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
       setDisclaimerIcon(<i className="plus circle icon"></i>);
     }
     setDisclaimerOpen(!disclaimerOpen);
+  };
+
+  const setSimpleMode = () => {
+    setZapMode("simple");
+  };
+  const setAdvancedMode = () => {
+    setZapMode("advanced");
   };
 
   const poolOptions = [
@@ -145,27 +153,22 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
           <h1>
             Liquid Ether Zap <i className="bolt icon text-yellow" />
           </h1>
+          <div className="buttonrow">
+            <Button
+              onClick={setSimpleMode}
+              className={"simple" === zapMode ? "selected" : ""}
+            >
+              Simple
+            </Button>
+            <Button
+              onClick={setAdvancedMode}
+              className={"advanced" === zapMode ? "selected" : ""}
+            >
+              Advanced
+            </Button>
+          </div>
         </div>
         <Card body className="zap">
-          <div className="poolselect">
-            <Dropdown
-              placeholder="Select Pool"
-              fluid
-              search
-              selection
-              options={poolOptions}
-              width="50%"
-            />
-          </div>
-          <div className="ethinput">
-            <Input
-              className="ethinputbox"
-              label={<Label>ETH</Label>}
-              labelPosition="right"
-              placeholder="0.0"
-            />
-          </div>
-
           <Button
             className="connectbutton"
             onClick={() => connect()}

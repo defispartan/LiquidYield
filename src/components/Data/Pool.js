@@ -18,8 +18,15 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from "react";
 import { Media } from "reactstrap";
-import { TICKER_QUERY, TICKER_24HOUR_QUERY } from "components/Data/Query.js";
-import { client } from "components/Data/Client.js";
+import {
+  TICKER_QUERY,
+  TICKER_HISTORICAL_QUERY,
+} from "components/Data/Query.js";
+import { uniswapClient } from "components/Data/UniswapClient.js";
+import { sushiswapClient } from "components/Data/SushiSwapClient.js";
+import UNIV1 from "assets/img/theme/uniswapv1.jpg";
+import UNIV2 from "assets/img/theme/uniswapv2.jpg";
+import SUSHI from "assets/img/theme/chef.PNG";
 import dayjs from "dayjs";
 function round(value, decimals) {
   return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
@@ -30,15 +37,13 @@ function numberWithCommas(x) {
 }
 
 const Pool = (props) => {
-  const [exchangeData, setExchangeData] = useState([]);
-  const [previousDayExchangeData, setPreviousDayExchangeData] = useState([]);
-  const [ethPrice, setEthPrice] = useState([]);
-  const [previousMonthExchangeData, setPreviousMonthExchangeData] = useState(
-    []
-  );
-  const [previousMonthEthPrice, setPreviousMonthEthPrice] = useState([]);
+  const [client, setClient] = useState(uniswapClient);
+  const [pairData, setPairData] = useState([]);
+  const [previousDayPairData, setPreviousDayPairData] = useState([]);
+  const [previousMonthPairData, setPreviousMonthPairData] = useState([]);
 
-  const getExchangeData = async (address) => {
+  const getPairData = async (address) => {
+    console.log("CALLING GET PAIR DATA");
     const result = await client.query({
       query: TICKER_QUERY,
       variables: {
@@ -46,97 +51,66 @@ const Pool = (props) => {
       },
       fetchPolicy: "cache-first",
     });
-    let exchange = result.data.exchange;
-    console.log("EXCHANGE DATA");
-    console.log(exchange);
-    setExchangeData(result.data.exchange);
+    let pair = result.data.pair;
+    console.log("Pair DATA");
+    console.log(pair);
+    console.log("RESERVE USD");
+    console.log(result.data.pair.reserveUSD);
+    setPairData(result.data.pair);
   };
 
-  const getEtherPrice = async () => {
-    let daiResult = await client.query({
-      query: TICKER_QUERY,
-      variables: {
-        id: "0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667",
-      },
-      fetchPolicy: "cache-first",
-    });
-    daiResult = daiResult ? parseFloat(daiResult.data.exchange.price) : 0;
-    setEthPrice(daiResult);
-    console.log("ETHPRICE");
-    console.log(daiResult);
-  };
-
-  const getPreviousExchangeData = async (address) => {
+  const getPreviousPairData = async (address) => {
     const utcCurrentTime = dayjs();
     const utcOneDayBack = utcCurrentTime.subtract(1, "day");
+    utcOneDayBack = utcOneDayBack.unix();
+    utcOneDayBack = utcOneDayBack - (utcOneDayBack % 86400);
     const previous = await client.query({
-      query: TICKER_24HOUR_QUERY,
+      query: TICKER_HISTORICAL_QUERY,
       variables: {
-        exchangeAddr: address,
-        timestamp: utcOneDayBack.unix(),
+        id: address,
+        date: utcOneDayBack,
       },
       fetchPolicy: "cache-first",
     });
-    console.log("PREVIOUS DAY EXCHANGE DATA");
-    console.log(previous.data.exchangeHistoricalDatas[0]);
-    setPreviousDayExchangeData(previous.data.exchangeHistoricalDatas[0]);
+    console.log("PREVIOUS DAY PAIR DATA");
+    console.log(address);
+    console.log(utcOneDayBack);
+    console.log(previous.data.pairDayDatas[0]);
+    setPreviousDayPairData(previous.data.pairDayDatas[0]);
   };
 
-  const getPreviousMonthExchangeData = async (address) => {
+  const getPreviousMonthPairData = async (address) => {
     const utcCurrentTime = dayjs();
     const utcOneMonthBack = utcCurrentTime.subtract(30, "day");
+    utcOneMonthBack = utcOneMonthBack.unix();
+    utcOneMonthBack = utcOneMonthBack - (utcOneMonthBack % 86400);
     const previousMonth = await client.query({
-      query: TICKER_24HOUR_QUERY,
+      query: TICKER_HISTORICAL_QUERY,
       variables: {
-        exchangeAddr: address,
-        timestamp: utcOneMonthBack.unix(),
+        id: address,
+        date: utcOneMonthBack,
       },
       fetchPolicy: "cache-first",
     });
-    console.log("PREVIOUS MONTH EXCHANGEDATA");
-    console.log(previousMonth.data.exchangeHistoricalDatas[0]);
-    setPreviousMonthExchangeData(previousMonth.data.exchangeHistoricalDatas[0]);
+    console.log("PREVIOUS MONTH pairDATA");
+    console.log(utcOneMonthBack);
+    console.log(previousMonth.data.pairDayDatas[0]);
+    setPreviousMonthPairData(previousMonth.data.pairDayDatas[0]);
   };
-
-  const getPreviousMonthEthPrice = async () => {
-    const utcCurrentTime = dayjs();
-    const utcOneMonthBack = utcCurrentTime.subtract(30, "day");
-    const previousMonthEth = await client.query({
-      query: TICKER_24HOUR_QUERY,
-      variables: {
-        exchangeAddr: "0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667",
-        timestamp: utcOneMonthBack.unix(),
-      },
-      fetchPolicy: "cache-first",
-    });
-    console.log("PREVIOUS MONTH ETH PRICE");
-    console.log(previousMonthEth.data.exchangeHistoricalDatas[0].price);
-    setPreviousMonthEthPrice(
-      previousMonthEth.data.exchangeHistoricalDatas[0].price
-    );
-  };
-
-  function calculateLiquidity(ethp, ethv, holdingp, holdingv) {
-    let calcLiquidity = ethp * ethv + holdingp * holdingv;
-    return calcLiquidity;
-  }
-
-  function calculateVolume(newv, oldv) {
-    let vol = newv - oldv;
-    return vol;
-  }
 
   function expectedFees(volume, liquidity) {
     let returns = ((volume * 0.003 * 30) / liquidity) * 100;
     return returns;
   }
 
-  function calculateIL(new_eth, new_token, old_eth, old_token) {
-    console.log("CALC ");
-    console.log(props.exchange);
+  function calculateIL(current, previous) {
+    let new_eth = current.reserveUSD / 2 / current.reserve0;
+    let old_eth = previous.reserveUSD / 2 / previous.reserve0;
+    let new_token = current.reserveUSD / 2 / current.reserve1;
+    let old_token = previous.reserveUSD / 2 / previous.reserve1;
     console.log(new_eth);
-    console.log(new_token);
     console.log(old_eth);
+    console.log(new_token);
     console.log(old_token);
     let new_ratio = new_eth / new_token;
     let old_ratio = old_eth / old_token;
@@ -145,12 +119,32 @@ const Pool = (props) => {
     return Math.abs(il) * -1 * 100;
   }
 
+  function getMarketImage(market) {
+    if (market == "AAVE") {
+      return UNIV1;
+    } else if (market == "Uniswap") {
+      return UNIV2;
+    } else {
+      return SUSHI;
+    }
+  }
+
+  function getClient(market) {
+    if (market == "Uniswap") {
+      setClient(uniswapClient);
+    } else if (market == "SushiSwap") {
+      setClient(sushiswapClient);
+    } else {
+      setClient(client);
+    }
+  }
   useEffect(() => {
-    getExchangeData(props.address);
-    getEtherPrice();
-    getPreviousExchangeData(props.address);
-    getPreviousMonthExchangeData(props.address);
-    getPreviousMonthEthPrice();
+    getClient(props.market);
+    getPairData(props.address);
+    //getEtherPrice();
+    getPreviousPairData(props.address);
+    getPreviousMonthPairData(props.address);
+    //getPreviousMonthEthPrice();
   }, []);
 
   return (
@@ -158,92 +152,43 @@ const Pool = (props) => {
       <th scope="row">
         <Media className="align-items-center">
           <div className="avatar rounded-circle mr-3">
-            <img alt="..." src={require("assets/img/theme/uniswapv1.jpg")} />
+            <img alt="..." src={getMarketImage(props.market)} />
           </div>
           <Media>
-            <span className="mb-0 text-sm">{props.exchange}</span>
+            <span className="mb-0 text-sm">{props.pair}</span>
           </Media>
         </Media>
       </th>
       <td style={{ textAlign: "center" }}>
-        {"$" +
-          numberWithCommas(
-            round(
-              calculateLiquidity(
-                ethPrice,
-                exchangeData.ethBalance,
-                exchangeData.priceUSD,
-                exchangeData.tokenBalance
-              ),
-              2
-            )
-          )}
+        {"$" + numberWithCommas(round(pairData.reserveUSD, 2))}
       </td>
       <td style={{ textAlign: "center" }}>
-        {"$" +
-          numberWithCommas(
-            round(
-              calculateVolume(
-                exchangeData.tradeVolumeUSD,
-                previousDayExchangeData.tradeVolumeUSD
-              ),
-              2
-            )
-          )}
+        {"$" + numberWithCommas(round(previousDayPairData.dailyVolumeUSD, 2))}
+      </td>
+      <td style={{ textAlign: "center" }}>
+        {round(
+          expectedFees(previousDayPairData.dailyVolumeUSD, pairData.reserveUSD),
+          2
+        ).toString() + "%"}
+      </td>
+      <td style={{ textAlign: "center" }}>
+        {round(calculateIL(pairData, previousMonthPairData).toString(), 2) +
+          " %"}
       </td>
       <td style={{ textAlign: "center" }}>
         {round(
           expectedFees(
-            calculateVolume(
-              exchangeData.tradeVolumeUSD,
-              previousDayExchangeData.tradeVolumeUSD
-            ),
-            calculateLiquidity(
-              ethPrice,
-              exchangeData.ethBalance,
-              exchangeData.priceUSD,
-              exchangeData.tokenBalance
-            )
-          ),
+            previousDayPairData.dailyVolumeUSD,
+            pairData.reserveUSD
+          ) + calculateIL(pairData, previousMonthPairData),
           2
-        ).toString() + "%"}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        {round(
-          calculateIL(
-            ethPrice,
-            exchangeData.priceUSD,
-            previousMonthEthPrice,
-            previousMonthExchangeData.tokenPriceUSD
-          ),
-          2
-        ).toString() + "%"}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        {round(
-          expectedFees(
-            calculateVolume(
-              exchangeData.tradeVolumeUSD,
-              previousDayExchangeData.tradeVolumeUSD
-            ),
-            calculateLiquidity(
-              ethPrice,
-              exchangeData.ethBalance,
-              exchangeData.priceUSD,
-              exchangeData.tokenBalance
-            )
-          ) +
-            calculateIL(
-              ethPrice,
-              exchangeData.priceUSD,
-              previousMonthEthPrice,
-              previousMonthExchangeData.tokenPriceUSD
-            ),
-          2
-        ).toString() + "%"}
+        ).toString() + " %"}
       </td>
     </tr>
   );
 };
+
+{
+}
 
 export default Pool;

@@ -17,7 +17,7 @@
 */
 
 // reactstrap components
-import { Card, Collapse, Button, Container, Row } from "reactstrap";
+import { Card, Collapse, Button, Container, Row, Alert } from "reactstrap";
 // core components
 import { Dropdown, Input, Label } from "semantic-ui-react";
 import React, { useState } from "react";
@@ -28,7 +28,10 @@ const { useDrizzle, useDrizzleState } = drizzleReactHooks;
 const { AccountData } = newContextComponents;
 
 const ZapConnect = ({ disconnect }) => {
+  const [zapMode, setZapMode] = useState("simple");
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [ethInput, setEthInput] = useState(null);
+  const [poolSelect, setPoolSelect] = useState(null);
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [aboutIcon, setAboutIcon] = useState(
     <i className="plus circle icon"></i>
@@ -66,6 +69,37 @@ const ZapConnect = ({ disconnect }) => {
       setDisclaimerIcon(<i className="plus circle icon"></i>);
     }
     setDisclaimerOpen(!disclaimerOpen);
+  };
+
+  const setSimpleMode = () => {
+    setZapMode("simple");
+  };
+  const setAdvancedMode = () => {
+    setZapMode("advanced");
+  };
+  const displayOutput = () => {
+    console.log("POOLSELECT: " + poolSelect);
+    if (poolSelect != null && ethInput != null) {
+      let ethIn = parseFloat(ethInput);
+      ethIn = ethIn / 2.0;
+      return (
+        <div>
+          <h2>Output</h2>
+          <div className="buttonrow">
+            <Button>
+              {ethIn} a{poolSelect}
+            </Button>
+            <Button>{ethIn} aETH</Button>
+          </div>
+          <h2>Estimated Gas Cost</h2>
+          <p style={{ marginBottom: "30px" }}>
+            3750000 gas @ 20.5 gwei = $3.54
+          </p>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
   };
 
   const poolOptions = [
@@ -130,6 +164,16 @@ const ZapConnect = ({ disconnect }) => {
     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
   }
 
+  const getPool = (e, data) => {
+    console.log("POOOOOOOL" + data.value);
+    setPoolSelect(data.value);
+  };
+
+  const getInput = (e, data) => {
+    console.log("INPUTTTT" + data.value);
+    setEthInput(data.value);
+  };
+
   return (
     <>
       {/* Page content */}
@@ -138,24 +182,24 @@ const ZapConnect = ({ disconnect }) => {
           <h1>
             Liquid Ether Zap <i class="bolt icon text-yellow" />
           </h1>
-        </div>
-        <Card body className="zap">
-          <div className="walletdetails">
-            <h4>Network:</h4> <p>{networkMap[state.web3.networkId]}</p>
-            <h4>Wallet:</h4> <p>{state.accounts[0]}</p>
-            <h4>Balance:</h4>{" "}
-            <p>
-              {round(
-                state.accountBalances[state.accounts[0]] / 1000000000000000000,
-                5
-              )}{" "}
-              ETH
-            </p>
-            <Button className="wallet" onClick={() => disconnect()}>
-              Disconnect Wallet
+
+          <div className="buttonrow">
+            <Button
+              onClick={setSimpleMode}
+              className={"simple" === zapMode ? "selected" : ""}
+            >
+              Simple
+            </Button>
+            <Button
+              onClick={setAdvancedMode}
+              className={"advanced" === zapMode ? "selected" : ""}
+            >
+              Advanced
             </Button>
           </div>
-
+        </div>
+        <Card body className="zap">
+          <h2 style={{ marginTop: "30px" }}>Select Pool</h2>
           <div className="poolselect">
             <Dropdown
               placeholder="Select Pool"
@@ -164,22 +208,39 @@ const ZapConnect = ({ disconnect }) => {
               selection
               options={poolOptions}
               width="50%"
+              onChange={getPool}
             />
           </div>
+          <h2>Input</h2>
           <div className="ethinput">
             <Input
               className="ethinputbox"
               label={<Label>ETH</Label>}
               labelPosition="right"
               placeholder="0.0"
+              onChange={getInput}
             />
           </div>
-
+          {displayOutput()}
           <Button className="connectbutton" onClick={onExecute} color="primary">
             Execute Zap
           </Button>
         </Card>
-
+        <Card className="walletdetails">
+          <h4>Network:</h4> <p>{networkMap[state.web3.networkId]}</p>
+          <h4>Wallet:</h4> <p>{state.accounts[0]}</p>
+          <h4>Balance:</h4>{" "}
+          <p>
+            {round(
+              state.accountBalances[state.accounts[0]] / 1000000000000000000,
+              5
+            )}{" "}
+            ETH
+          </p>
+          <Button className="wallet" onClick={() => disconnect()}>
+            Disconnect Wallet
+          </Button>
+        </Card>
         <div className="about">
           <div className="abouticon" onClick={toggleAboutOpen}>
             {aboutIcon}

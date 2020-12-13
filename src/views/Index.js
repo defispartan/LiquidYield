@@ -31,9 +31,11 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import LiquidLogo from "../assets/img/brand/liquid-react.png";
+import LiquidLogo from "../assets/img/brand/liquidyieldblue.png";
 import LPreturns from "../assets/img/brand/lpreturns.PNG";
-
+import Factors from "../assets/img/theme/factors.png";
+import LEZ from "../assets/img/brand/LEZ.png";
+import AdminFooter from "../components/Footers/AdminFooter.js";
 import Header from "components/Headers/Header.js";
 
 class Index extends React.Component {
@@ -55,127 +57,70 @@ class Index extends React.Component {
             <h1
               style={{
                 textAlign: "center",
-                color: "#416fe6",
-                marginBottom: "20px",
+                color: "#4483f4",
+                marginBottom: "50px",
+                marginTop: "-10px",
               }}
             >
-              Provide Liquidity. Earn ETH.
+              Smarter Liquidity Management
             </h1>
             <h2>What is Liquid Yield?</h2>
             <p>
-              Liquid Yield is a service designed to help DeFi investors maximize
-              their Ethereum yields by leveraging the{" "}
-              <a href="https://app.aave.com/?pool=Uniswap">
-                Aave Uniswap Market
-              </a>
-              . This site provides investors with an in-depth analysis of
-              liquidity pool yields and a tool to zap into Uniswap pools while
-              maintaining 100% exposure to the price of Ethereum.
+              Liquid Yield is a service designed to educate and equip people
+              with skills and tools to maximize their yields as a liquidity
+              provider (LP).{" "}
+              <strong>
+                This project has no token or monetezation of any kind. Liquid
+                Yield is just a collection of resources to improve the lives of
+                liquidity providers.
+              </strong>{" "}
+              My goal with this site is to provide value to anyone that is
+              interested in maximizing yields with respect to Ethereum. Whether
+              you're a complete beginner, or an experienced LP, the interactive
+              guides on this site will help you understand, visualize, and take
+              control of the factors affecting your LP returns.
+            </p>
+            <h2>Key Features</h2>
+            <p>
+              I would first recommend exploring the{" "}
+              <a href="/education">Education Center</a>. Some of the information
+              in the early sections can probably be skipped over if you've
+              already been exposed to Uniswap before. Regardless of skill level,
+              the <a href="/education#il">impermanent loss</a> and{" "}
+              <a href="/education#pe">price exposure</a> sections are{" "}
+              <strong>must reads</strong>. The information and interactive tools
+              in these sections are the keys to mastering liquidity provision.
+            </p>
+            <p>
+              Once you've gone through the education center and have a
+              comfortable understanding of the 4 factors affecting your returns,
+              check out the <a href="/pools">Pool Explorer</a> and sort by APR
+              to get an idea of the returns you can expect as an LP. These
+              values are subject to change as liquidity and volume vary, so do
+              your due dilligence by clicking on the pools you are interested in
+              to view historical trends, and perform your research on the coin
+              before investing.
+            </p>
+            <p>
+              The final (and most exciting) feature of Liquid Yield is the{" "}
+              <a href="/zap">Liquid Ether Zap</a>. This zap is an interface to
+              go directly from ETH into an LP position while maintaining 100%
+              exposure to the price of ETH. To learn how this is possible, read
+              the AAVE section in the education center or check out the diagram
+              below. Currently the zap is under construction while I update the
+              interface to work with AAVE V2 and propose the creation of Uniswap
+              and SushiSwap markets in AAVE governance. If you are a holder of
+              AAVE I would strongly encourage you to support these proposals as
+              they're neccessary for the Liquid Ether Zap to work.
             </p>
 
-            <h2>What is Uniswap?</h2>
-            <p>
-              Uniswap is a decentralized exchange and AMM (automated market
-              maker), allowing users to efficiently swap Ethereum and ERC20
-              tokens without an order book by leveraging reserves of assets
-              called liquidity pools. The ratio of assets in the pool serve as a
-              price discovery mechanism for asset pairs, and the pools rely on
-              arbitrage to keep Uniswap asset prices in line with other
-              exchanges. Liquidity providers on Uniswap must deposit an equal
-              value of both assets in the pair to maintain a constant product of
-              reserves. When a user swaps currencies on the exchange, a 0.3% fee
-              is assesed and is distributed proportionally to the liquidity
-              providers. When a person contributes liquidity to a pool, pool
-              tokens are minted to represent the contributors share of the pool.
-              To withdraw the pooled assets, the pool tokens are burned and an
-              equivalent share of the tokens in the pool are returned.
-            </p>
-            <h2>How do I make money as a liquidity provider?</h2>
-            <p>
-              Liquidity pools have a simple fee-based payout structure (0.3% per
-              swap), but the returns of being a liquidity provider often a
-              source of confusion for investors. This confusion is due to the
-              fact that fee accumalation is not the only contributing factor to
-              the returns of a liquidity pool. The other two important factors
-              that a provider must take into account are{" "}
-              <strong>Impermanent Loss</strong> and{" "}
-              <strong>Price Exposure</strong>.
-            </p>
-            <p>
-              {" "}
-              <strong>Impermanent Loss</strong> occurs when the price of the two
-              assets in a liquidity pair diverge. The result of this price
-              divergence is a reduction in the value of the supplied liquidity
-              relative to holding the assets, in some cases completely negating
-              the fees earned by the providers. We can model the effects of
-              impermanent loss on liquidity provider returns by looking at the
-              return on investment for positions with varying pool growth (fee
-              accrual) and price divergence as shown in the figure below.
-            </p>
-            <figure>
-              <img src={LPreturns} alt="LP returns" className="lpreturns"></img>
-            </figure>
-            <figcaption>
-              {" "}
-              <p
-                style={{
-                  textAlign: "center",
-                  fontSize: "0.75rem",
-                  marginBottom: "20px",
-                }}
-              >
-                Source:{" "}
-                <a href="https://medium.com/@pintail/understanding-uniswap-returns-cc593f3499ef">
-                  https://medium.com/@pintail/understanding-uniswap-returns-cc593f3499ef
-                </a>
-              </p>
-            </figcaption>
-            <p>
-              This phenomenon of impermanent loss introduces uncertainty in
-              calculating liquidity provider returns because accuractely
-              predicting pool returns would require accurate forecasting of
-              asset prices. The incurred losses can be minimized by providing
-              liquidity to pools whos assets have prices that do not fluctuate
-              (i.e. stablecoins). For more information about Uniswap returns and
-              impermanent loss,{" "}
-              <a href="https://medium.com/@pintail/understanding-uniswap-returns-cc593f3499ef">
-                this
-              </a>{" "}
-              article provides some fantastic insights.
-            </p>
-            <p>
-              <strong>Price Exposure</strong> is much simpler to understand but
-              can also result in dimished returns compared to holding Ethereum.
-              By contributing an equal value of both tokens in the pair, a
-              provider only has 50% price exposure to both tokens. This means
-              that if the price of Ethereum rises by 20%, the pool tokens will
-              only appreciate by 10%. Maintaining price exposure to Ethereum is
-              a key reason why liquidity pools may not provide the best yield
-              for investors if the market is bullish on Ethereum, and is the
-              reasoning behind the <strong>Liquid Ether Zap</strong> explained
-              below.
-            </p>
-
-            <p>
-              The{" "}
-              <a href="https://app.aave.com/?pool=Uniswap">
-                Aave Uniswap Market
-              </a>{" "}
-              can be leveraged to long Ethereum by providing Uniswap liquidity
-              pool tokens as collateral. An example of the Liquid Ether Zap
-              transaction for the ETH/DAI pool are shown in the graph below and
-              the result is earning liquidity provision fees on 100% of your
-              initial investment while maintaining 100% exposure to the price of
-              Ethereum.
-            </p>
-            <div className="liquidether">
-              <img
-                alt="Liquid Ether Zap"
-                src={require("assets/img/theme/liquidetherzap.jpg")}
-                className="liquiddiagram"
-              />
-            </div>
+            <img
+              className="indexlez"
+              src={LEZ}
+              alt="Liquid Ether Zap Diagram"
+            ></img>
           </div>
+          <AdminFooter />
         </Container>
       </>
     );

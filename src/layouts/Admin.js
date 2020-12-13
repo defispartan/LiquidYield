@@ -61,7 +61,7 @@ class Admin extends React.Component {
           routes={routes}
           logo={{
             innerLink: "/index",
-            imgSrc: require("assets/img/brand/liquid-react.png"),
+            imgSrc: require("assets/img/brand/liquidyieldblue.png"),
             imgAlt: "...",
           }}
         />
@@ -70,9 +70,6 @@ class Admin extends React.Component {
             {this.getRoutes(routes)}
             <Redirect from="*" to="/index" />
           </Switch>
-          <Container fluid>
-            <AdminFooter />
-          </Container>
         </div>
       </>
     );

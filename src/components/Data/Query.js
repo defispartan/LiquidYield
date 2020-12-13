@@ -1,43 +1,25 @@
 import gql from "graphql-tag";
 
 export const TICKER_QUERY = gql`
-  query exchange($id: String!) {
-    exchange(id: $id) {
+  query pair($id: ID!) {
+    pair(id: $id) {
       id
-      tokenAddress
-      tokenName
-      tokenSymbol
-      price
-      priceUSD
-      tokenBalance
-      ethBalance
-      tradeVolumeEth
-      tradeVolumeToken
-      tradeVolumeUSD
-      tokenBalance
-      totalTxsCount
+      token1Price
+      reserve0
+      reserve1
+      reserveUSD
     }
   }
 `;
 
-export const TICKER_24HOUR_QUERY = gql`
-  query exchangeHistoricalDatas($timestamp: Int!, $exchangeAddr: String!) {
-    exchangeHistoricalDatas(
-      where: { timestamp_lt: $timestamp, exchangeAddress: $exchangeAddr }
-      first: 1
-      orderBy: tradeVolumeEth
-      orderDirection: desc
-    ) {
+export const TICKER_HISTORICAL_QUERY = gql`
+  query pairDayData($id: Bytes!, $date: Int!) {
+    pairDayDatas(where: { pairAddress: $id, date: $date }) {
       id
-      timestamp
-      exchangeAddress
-      tradeVolumeEth
-      tradeVolumeToken
-      tradeVolumeUSD
-      tokenPriceUSD
-      price
-      ethBalance
-      totalTxsCount
+      reserve0
+      reserve1
+      reserveUSD
+      dailyVolumeUSD
     }
   }
 `;

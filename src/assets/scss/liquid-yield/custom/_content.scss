@@ -80,6 +80,7 @@
   width: 100%;
   max-width: 500px;
   height: auto;
+  padding-bottom: 30px;
 }
 
 .liquidether {
@@ -97,6 +98,24 @@
   margin-top: 40px;
 }
 
+.factors {
+  display: block;
+  margin: 0 auto;
+  width: 33%;
+  max-width: 1000px;
+  min-width: 200px;
+  height: auto;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.defispartan {
+  width: 20%;
+  max-width: 500px;
+  position: absolute;
+  right: 4px;
+  bottom: -30px;
+}
 .liquiddiagram {
   display: block;
   margin: 0 auto;
@@ -105,9 +124,32 @@
   height: auto;
   margin-top: 60px;
 }
-
+.poolexplorer {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
 .tablefooter {
   font-size: 0.75rem;
+}
+.data {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 10%;
+  margin: 0 auto;
+  min-width: 250px;
+  text-align: center;
+}
+
+.footer {
+  background: none !important;
+}
+.buttonrow {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 30px;
 }
 
 .zap {
@@ -120,7 +162,6 @@
 .poolselect {
   width: 75%;
   margin: 0 auto;
-  margin-top: 30px;
   margin-bottom: 30px;
 }
 .connectbutton {
@@ -204,4 +245,23 @@
 
 .ui.small.modal {
   margin-top: 5em !important;
+}
+
+.scenarioheader {
+  text-align: center;
+}
+
+.walletdetails {
+  width: 40%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 50px;
+  min-width: 300px;
+}
+
+.indexlez {
+  display: block;
+  width: 40%;
+  margin: 0 auto;
+  min-width: 350px;
 }
