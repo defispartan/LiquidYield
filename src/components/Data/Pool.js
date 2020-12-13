@@ -61,7 +61,7 @@ const Pool = (props) => {
 
   const getPreviousPairData = async (address) => {
     const utcCurrentTime = dayjs();
-    const utcOneDayBack = utcCurrentTime.subtract(1, "day");
+    let utcOneDayBack = utcCurrentTime.subtract(1, "day");
     utcOneDayBack = utcOneDayBack.unix();
     utcOneDayBack = utcOneDayBack - (utcOneDayBack % 86400);
     const previous = await client.query({
@@ -81,7 +81,7 @@ const Pool = (props) => {
 
   const getPreviousMonthPairData = async (address) => {
     const utcCurrentTime = dayjs();
-    const utcOneMonthBack = utcCurrentTime.subtract(30, "day");
+    let utcOneMonthBack = utcCurrentTime.subtract(30, "day");
     utcOneMonthBack = utcOneMonthBack.unix();
     utcOneMonthBack = utcOneMonthBack - (utcOneMonthBack % 86400);
     const previousMonth = await client.query({
