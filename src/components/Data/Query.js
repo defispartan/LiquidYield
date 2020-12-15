@@ -50,7 +50,6 @@ export const SUSHI_TICKER_HISTORICAL_QUERY = gql`
 
 export const SUSHILP = gql`
   query pair($id: ID!) {
-    id
     pair(id: $id) {
       token0 {
         name
@@ -69,7 +68,6 @@ export const SUSHILP = gql`
 export const UNILP = gql`
   query pair($id: ID!) {
     pair(id: $id) {
-      id
       token0 {
         name
       }

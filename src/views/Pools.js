@@ -95,9 +95,6 @@ class Pools extends React.Component {
               30 *
               (entry.allocPoint / totalAlloc))) /
           (totalValueETH * (entry.slpBalance / totalSupply));
-        console.log("CALCULATED ONE");
-        console.log(entry.pair);
-        console.log(thirtyDayROI);
 
         pool30ROI[entry.pair] = thirtyDayROI;
       }
