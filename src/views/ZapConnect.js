@@ -49,11 +49,8 @@ const ZapConnect = ({ disconnect }) => {
     5: "Goerli",
     42: "Kovan",
   };
-  console.log("DRIZZLE STATE");
-  console.log(state);
-  const onExecute = () => {
-    console.log("Execute transaction");
-  };
+
+  const onExecute = () => {};
   const toggleAboutOpen = () => {
     if (aboutOpen == false) {
       setAboutIcon(<i className="minus circle icon"></i>);
@@ -78,7 +75,6 @@ const ZapConnect = ({ disconnect }) => {
     setZapMode("advanced");
   };
   const displayOutput = () => {
-    console.log("POOLSELECT: " + poolSelect);
     if (poolSelect != null && ethInput != null) {
       let ethIn = parseFloat(ethInput);
       ethIn = ethIn / 2.0;
@@ -165,12 +161,10 @@ const ZapConnect = ({ disconnect }) => {
   }
 
   const getPool = (e, data) => {
-    console.log("POOOOOOOL" + data.value);
     setPoolSelect(data.value);
   };
 
   const getInput = (e, data) => {
-    console.log("INPUTTTT" + data.value);
     setEthInput(data.value);
   };
 

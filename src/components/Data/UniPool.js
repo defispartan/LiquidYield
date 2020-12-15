@@ -23,11 +23,9 @@ import {
   TICKER_HISTORICAL_QUERY,
 } from "components/Data/Query.js";
 import { uniswapClient } from "components/Data/UniswapClient.js";
-import { sushiswapClient } from "components/Data/SushiSwapClient.js";
-import UNIV1 from "assets/img/theme/uniswapv1.jpg";
 import UNIV2 from "assets/img/theme/uniswapv2.jpg";
-import SUSHI from "assets/img/theme/chef.PNG";
 import dayjs from "dayjs";
+
 function round(value, decimals) {
   return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 }
@@ -36,8 +34,8 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const Pool = (props) => {
-  const [client, setClient] = useState([]);
+const UniPool = (props) => {
+  const [client, setClient] = useState(uniswapClient);
   const [pairData, setPairData] = useState([]);
   const [previousDayPairData, setPreviousDayPairData] = useState([]);
   const [previousMonthPairData, setPreviousMonthPairData] = useState([]);
@@ -107,33 +105,14 @@ const Pool = (props) => {
     return Math.abs(il) * -1 * 100;
   }
 
-  function getMarketImage(market) {
-    if (market == "AAVE") {
-      return UNIV1;
-    } else if (market == "Uniswap") {
-      return UNIV2;
-    } else {
-      return SUSHI;
-    }
+  function getMarketImage() {
+    return UNIV2;
   }
 
-  function getClient(market) {
-    if (market == "Uniswap") {
-      setClient(uniswapClient);
-    } else if (market == "SushiSwap") {
-      setClient(sushiswapClient);
-    } else {
-      setClient(client);
-    }
-  }
   useEffect(() => {
-    getClient(props.market);
-
-    //getPairData(props.address);
-    //getEtherPrice();
-    //getPreviousPairData(props.address);
-    //getPreviousMonthPairData(props.address);
-    //getPreviousMonthEthPrice();
+    getPairData(props.address);
+    getPreviousPairData(props.address);
+    getPreviousMonthPairData(props.address);
   }, []);
 
   return (
@@ -141,7 +120,7 @@ const Pool = (props) => {
       <th scope="row">
         <Media className="align-items-center">
           <div className="avatar rounded-circle mr-3">
-            <img alt="..." src={getMarketImage(props.market)} />
+            <img alt="..." src={getMarketImage()} />
           </div>
           <Media>
             <span className="mb-0 text-sm">{props.pair}</span>
@@ -180,4 +159,4 @@ const Pool = (props) => {
 {
 }
 
-export default Pool;
+export default UniPool;

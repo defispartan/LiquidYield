@@ -19,15 +19,13 @@
 import React, { useState, useEffect } from "react";
 import { Media } from "reactstrap";
 import {
-  TICKER_QUERY,
-  TICKER_HISTORICAL_QUERY,
+  SUSHI_TICKER_QUERY,
+  SUSHI_TICKER_HISTORICAL_QUERY,
 } from "components/Data/Query.js";
-import { uniswapClient } from "components/Data/UniswapClient.js";
 import { sushiswapClient } from "components/Data/SushiSwapClient.js";
-import UNIV1 from "assets/img/theme/uniswapv1.jpg";
-import UNIV2 from "assets/img/theme/uniswapv2.jpg";
 import SUSHI from "assets/img/theme/chef.PNG";
 import dayjs from "dayjs";
+
 function round(value, decimals) {
   return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 }
@@ -36,22 +34,22 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const Pool = (props) => {
-  const [client, setClient] = useState([]);
+const SushiPool = (props) => {
+  const [client, setClient] = useState(sushiswapClient);
   const [pairData, setPairData] = useState([]);
   const [previousDayPairData, setPreviousDayPairData] = useState([]);
   const [previousMonthPairData, setPreviousMonthPairData] = useState([]);
+  const [reward, setReward] = useState("");
 
   const getPairData = async (address) => {
     const result = await client.query({
-      query: TICKER_QUERY,
+      query: SUSHI_TICKER_QUERY,
       variables: {
         id: address,
       },
       fetchPolicy: "cache-first",
     });
     let pair = result.data.pair;
-
     setPairData(result.data.pair);
   };
 
@@ -61,14 +59,13 @@ const Pool = (props) => {
     utcOneDayBack = utcOneDayBack.unix();
     utcOneDayBack = utcOneDayBack - (utcOneDayBack % 86400);
     const previous = await client.query({
-      query: TICKER_HISTORICAL_QUERY,
+      query: SUSHI_TICKER_HISTORICAL_QUERY,
       variables: {
         id: address,
         date: utcOneDayBack,
       },
       fetchPolicy: "cache-first",
     });
-
     setPreviousDayPairData(previous.data.pairDayDatas[0]);
   };
 
@@ -78,14 +75,13 @@ const Pool = (props) => {
     utcOneMonthBack = utcOneMonthBack.unix();
     utcOneMonthBack = utcOneMonthBack - (utcOneMonthBack % 86400);
     const previousMonth = await client.query({
-      query: TICKER_HISTORICAL_QUERY,
+      query: SUSHI_TICKER_HISTORICAL_QUERY,
       variables: {
         id: address,
         date: utcOneMonthBack,
       },
       fetchPolicy: "cache-first",
     });
-
     setPreviousMonthPairData(previousMonth.data.pairDayDatas[0]);
   };
 
@@ -99,7 +95,6 @@ const Pool = (props) => {
     let old_eth = previous.reserveUSD / 2 / previous.reserve0;
     let new_token = current.reserveUSD / 2 / current.reserve1;
     let old_token = previous.reserveUSD / 2 / previous.reserve1;
-
     let new_ratio = new_eth / new_token;
     let old_ratio = old_eth / old_token;
     let price_ratio = new_ratio / old_ratio;
@@ -107,41 +102,32 @@ const Pool = (props) => {
     return Math.abs(il) * -1 * 100;
   }
 
-  function getMarketImage(market) {
-    if (market == "AAVE") {
-      return UNIV1;
-    } else if (market == "Uniswap") {
-      return UNIV2;
-    } else {
-      return SUSHI;
+  function getMarketImage() {
+    return SUSHI;
+  }
+  function getRewards() {
+    if (props.address in props.poolRewards) {
+      setReward(
+        " + " +
+          round(props.poolRewards[props.address].toString(), 2) +
+          "% SUSHI Rewards"
+      );
     }
   }
 
-  function getClient(market) {
-    if (market == "Uniswap") {
-      setClient(uniswapClient);
-    } else if (market == "SushiSwap") {
-      setClient(sushiswapClient);
-    } else {
-      setClient(client);
-    }
-  }
   useEffect(() => {
-    getClient(props.market);
-
-    //getPairData(props.address);
-    //getEtherPrice();
-    //getPreviousPairData(props.address);
-    //getPreviousMonthPairData(props.address);
-    //getPreviousMonthEthPrice();
-  }, []);
+    getPairData(props.address);
+    getPreviousPairData(props.address);
+    getPreviousMonthPairData(props.address);
+    getRewards();
+  }, [props.poolRewards]);
 
   return (
     <tr>
       <th scope="row">
         <Media className="align-items-center">
           <div className="avatar rounded-circle mr-3">
-            <img alt="..." src={getMarketImage(props.market)} />
+            <img alt="..." src={getMarketImage()} />
           </div>
           <Media>
             <span className="mb-0 text-sm">{props.pair}</span>
@@ -152,11 +138,11 @@ const Pool = (props) => {
         {"$" + numberWithCommas(round(pairData.reserveUSD, 2))}
       </td>
       <td style={{ textAlign: "center" }}>
-        {"$" + numberWithCommas(round(previousDayPairData.dailyVolumeUSD, 2))}
+        {"$" + numberWithCommas(round(previousDayPairData.volumeUSD, 2))}
       </td>
       <td style={{ textAlign: "center" }}>
         {round(
-          expectedFees(previousDayPairData.dailyVolumeUSD, pairData.reserveUSD),
+          expectedFees(previousDayPairData.volumeUSD, pairData.reserveUSD),
           2
         ).toString() + "%"}
       </td>
@@ -166,12 +152,12 @@ const Pool = (props) => {
       </td>
       <td style={{ textAlign: "center" }}>
         {round(
-          expectedFees(
-            previousDayPairData.dailyVolumeUSD,
-            pairData.reserveUSD
-          ) + calculateIL(pairData, previousMonthPairData),
+          expectedFees(previousDayPairData.volumeUSD, pairData.reserveUSD) +
+            calculateIL(pairData, previousMonthPairData),
           2
-        ).toString() + " %"}
+        ).toString() +
+          "%" +
+          reward}
       </td>
     </tr>
   );
@@ -180,4 +166,4 @@ const Pool = (props) => {
 {
 }
 
-export default Pool;
+export default SushiPool;

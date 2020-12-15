@@ -70,6 +70,7 @@
     "react-scripts": "3.4.0",
     "reactstrap": "8.4.1",
     "semantic-ui-react": "^0.88.2",
+    "sushi-data": "0.0.0",
     "truffle-hdwallet-provider": "^1.0.17"
   },
   "devDependencies": {

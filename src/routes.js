@@ -18,6 +18,7 @@ import Index from "views/Index.js";
 import About from "views/About.js";
 import Zap from "views/ZapHome.js";
 import Pools from "views/Pools.js";
+import LPValue from "views/LPValue.js";
 import Education from "views/Education.js";
 import Portfolio from "views/Portfolio.js";
 var routes = [
@@ -40,6 +41,13 @@ var routes = [
     name: "Pool Explorer",
     icon: "tint icon text-info",
     component: Pools,
+    layout: "admin",
+  },
+  {
+    path: "/lpvalue",
+    name: "LP Token Value",
+    icon: "money icon green",
+    component: LPValue,
     layout: "admin",
   },
   {
