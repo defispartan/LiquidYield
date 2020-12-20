@@ -8,6 +8,7 @@ export const TICKER_QUERY = gql`
       reserve0
       reserve1
       reserveUSD
+      volumeUSD
     }
   }
 `;
@@ -32,6 +33,7 @@ export const SUSHI_TICKER_QUERY = gql`
       reserve0
       reserve1
       reserveUSD
+      volumeUSD
     }
   }
 `;

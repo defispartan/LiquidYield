@@ -37,11 +37,13 @@ class Portfolio extends React.Component {
         {/* Page content */}
         <Container className="mt--7" fluid>
           <div className="data"></div>
-          <Card className="data">
+          <h2 style={{ textAlign: "center" }}>Coming Soon...</h2>
+          {/*           <Card className="data">
             Portfolio information from{" "}
             <a href="https://uniswaproi.com">UniswapROI</a>
-          </Card>
+          </Card> 
           <AdminFooter />
+          */}
         </Container>
       </>
     );

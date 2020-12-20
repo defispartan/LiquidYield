@@ -129,6 +129,8 @@
   margin-left: auto;
   margin-right: auto;
   width: 30%;
+  min-width: 200px;
+  padding-bottom: 10px;
 }
 .lpcardheader {
   display: block;
@@ -136,6 +138,7 @@
   margin-right: auto;
   width: 20%;
   margin-bottom: 0;
+  min-width: 125px;
 }
 .tablefooter {
   font-size: 0.75rem;
@@ -209,6 +212,13 @@
   text-align: center;
 }
 
+.info {
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: center;
+}
+
 .disclaimer {
   width: 75%;
   margin: 0 auto;
@@ -221,6 +231,12 @@
   margin-bottom: 20px;
 }
 
+.infoicon {
+  display: inline-block;
+  margin-bottom: 20px;
+  color: white;
+}
+
 .disclaimericon {
   display: inline-block;
   color: red;
@@ -229,6 +245,11 @@
 
 .aboutcontent {
   text-align: left;
+}
+
+.infocontent {
+  text-align: left;
+  color: white;
 }
 
 .disclaimercontent {
@@ -271,4 +292,37 @@
   width: 40%;
   margin: 0 auto;
   min-width: 350px;
+}
+
+.tableheaderimg {
+  float: left;
+  display: block;
+  width: 25%;
+  max-width: 100px;
+  padding-right: 10px;
+}
+
+.selected {
+  border: 1px solid lightskyblue;
+}
+
+.edu {
+  width: 95%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.infoheader {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.web {
+  display: block;
+  width: 40%;
+  margin: 0 auto;
+  min-width: 350px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }

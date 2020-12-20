@@ -17,20 +17,25 @@
 */
 import React, { useState } from "react";
 // reactstrap components
-import { Button, Card, CardBody, CardHeader, Container, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Container,
+  Row,
+  Spinner,
+} from "reactstrap";
 import { sushiswapClient } from "components/Data/SushiSwapClient.js";
 import { uniswapClient } from "components/Data/UniswapClient.js";
 import { UNILP, SUSHILP } from "components/Data/Query.js";
 import { Dropdown, Input, Label } from "semantic-ui-react";
 // core components
 import Header from "components/Headers/Header.js";
-import UniPool from "components/Data/UniPool.js";
-import SushiPool from "components/Data/SushiPool.js";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import LPValueImg from "../assets/img/brand/lpvalue.png";
 import UniswapLogo from "../assets/img/brand/uniswap.png";
 import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.PNG";
-import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 
 const LPValue = (props) => {
   const uniPoolOptions = [
@@ -383,6 +388,7 @@ const LPValue = (props) => {
   const [inputAmount, setInputAmount] = useState(null);
   const [usdValue, setUsdValue] = useState(null);
   const [reserves, setReserves] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const setUniswap = () => {
     setMarket("Uniswap");
@@ -419,6 +425,9 @@ const LPValue = (props) => {
 
   const calculateValue = async () => {
     if (pool != null && inputAmount != null) {
+      setUsdValue(null);
+      setReserves(null);
+      setLoading(true);
       if (market == "Uniswap") {
         const result = await client.query({
           query: UNILP,
@@ -438,6 +447,7 @@ const LPValue = (props) => {
           pair.token1.name,
         ];
         setReserves(output);
+        setLoading(false);
       } else if (market == "SushiSwap") {
         const result = await client.query({
           query: SUSHILP,
@@ -456,6 +466,7 @@ const LPValue = (props) => {
           pair.token1.name,
         ];
         setReserves(output);
+        setLoading(false);
       }
     }
   };
@@ -476,6 +487,18 @@ const LPValue = (props) => {
       return (
         <Input className="ethinputbox" placeholder="" onChange={getPool} />
       );
+    }
+  };
+
+  const loadingSpin = () => {
+    if (loading == true) {
+      return (
+        <div className="spinny">
+          <Spinner style={{ width: "3em", height: "3em" }} color="primary" />
+        </div>
+      );
+    } else {
+      return <></>;
     }
   };
 
@@ -556,13 +579,14 @@ const LPValue = (props) => {
                 >
                   Get Value
                 </Button>
+                {loadingSpin()}
                 {displayOutput()}
               </CardBody>
             </Card>
             <div className="data"></div>
-            <Card className="data">
+            {/*             <Card className="data">
               Data From <a href="https://thegraph.com/">The Graph</a>
-            </Card>
+            </Card> */}
           </div>
         </Row>
         <AdminFooter />

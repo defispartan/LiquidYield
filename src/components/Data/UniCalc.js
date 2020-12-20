@@ -34,23 +34,69 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const UniPool = (props) => {
-  const [client, setClient] = useState(uniswapClient);
-  const [pairData, setPairData] = useState([]);
-  const [previousDayPairData, setPreviousDayPairData] = useState([]);
-  const [previousMonthPairData, setPreviousMonthPairData] = useState([]);
+// Input: Address for Uniswap pool
+// Output: Object in the following form:
+// {
+//      "Liquidity Pool": {}
+//      "Total Liquidity (USD)": {},
+//      "24h Volume (USD)": {},
+//      "Estimated Fees (30d)": {},
+//      "Estimated IL (30d)": {},
+//      "Estimated ROI (30d)": {},
+// }
+const UniCalc = async (pool, address) => {
+  let liquidity = 4.3243243242;
+  let volume = 2.657567567;
+  let fees = 3.234234;
+  let il = 7.24234;
+  let roi = 1.56363;
 
-  const getPairData = async (address) => {
-    const result = await client.query({
-      query: TICKER_QUERY,
-      variables: {
-        id: address,
-      },
-      fetchPolicy: "cache-first",
-    });
-    let pair = result.data.pair;
+  const result = await uniswapClient.query({
+    query: TICKER_QUERY,
+    variables: {
+      id: address,
+    },
+    fetchPolicy: "cache-first",
+  });
+  let pair = result.data.pair;
 
-    setPairData(result.data.pair);
+  const utcCurrentTime = dayjs();
+  let utcOneDayBack = utcCurrentTime.subtract(1, "day");
+  utcOneDayBack = utcOneDayBack.unix();
+  utcOneDayBack = utcOneDayBack - (utcOneDayBack % 86400);
+  const previousData = await uniswapClient.query({
+    query: TICKER_HISTORICAL_QUERY,
+    variables: {
+      id: address,
+      date: utcOneDayBack,
+    },
+    fetchPolicy: "cache-first",
+  });
+
+  let previous = previousData.data.pairDayDatas[0];
+  return {
+    "Liquidity Pool": (
+      <Media className="align-items-center">
+        <div className="avatar rounded-circle mr-3">
+          <img alt="..." src={getMarketImage()} />
+        </div>
+        <Media>
+          <span className="mb-0 text-sm">{pool}</span>
+        </Media>
+      </Media>
+    ),
+    "Total Liquidity (USD)": "$ " + numberWithCommas(round(pair.reserveUSD, 0)),
+    "24h Volume (USD)":
+      "$ " + numberWithCommas(round(previous.dailyVolumeUSD, 0)),
+    "Estimated Fees (30d)":
+      round(expectedFees(previous.dailyVolumeUSD, pair.reserveUSD), 2) + " %",
+    "Estimated IL (30d)": round(calculateIL(previous, pair), 2) + " %",
+    "Estimated ROI (30d)":
+      round(
+        expectedFees(previous.dailyVolumeUSD, pair.reserveUSD) +
+          calculateIL(pair, previous),
+        2
+      ) + " %",
   };
 
   const getPreviousPairData = async (address) => {
@@ -159,4 +205,4 @@ const UniPool = (props) => {
 {
 }
 
-export default UniPool;
+export default UniCalc;

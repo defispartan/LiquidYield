@@ -36,10 +36,11 @@ function numberWithCommas(x) {
 
 const SushiPool = (props) => {
   const [client, setClient] = useState(sushiswapClient);
+  const [rewardLoad, setRewardLoad] = useState(true);
   const [pairData, setPairData] = useState([]);
   const [previousDayPairData, setPreviousDayPairData] = useState([]);
   const [previousMonthPairData, setPreviousMonthPairData] = useState([]);
-  const [reward, setReward] = useState("");
+  const [reward, setReward] = useState(0.0);
 
   const getPairData = async (address) => {
     const result = await client.query({
@@ -86,7 +87,7 @@ const SushiPool = (props) => {
   };
 
   function expectedFees(volume, liquidity) {
-    let returns = ((volume * 0.003 * 30) / liquidity) * 100;
+    let returns = ((volume * 0.0025 * 30) / liquidity) * 100;
     return returns;
   }
 
@@ -106,12 +107,19 @@ const SushiPool = (props) => {
     return SUSHI;
   }
   function getRewards() {
+    if (Object.keys(props.poolRewards).length != 0) {
+      setRewardLoad(false);
+    }
     if (props.address in props.poolRewards) {
-      setReward(
-        " + " +
-          round(props.poolRewards[props.address].toString(), 2) +
-          "% SUSHI Rewards"
-      );
+      setReward(props.poolRewards[props.address]);
+    }
+  }
+
+  function displayRewards() {
+    if (rewardLoad == true) {
+      return "CALCULATING";
+    } else {
+      return round(reward.toString(), 2) + " %";
     }
   }
 
@@ -144,20 +152,20 @@ const SushiPool = (props) => {
         {round(
           expectedFees(previousDayPairData.volumeUSD, pairData.reserveUSD),
           2
-        ).toString() + "%"}
+        ).toString() + " %"}
       </td>
       <td style={{ textAlign: "center" }}>
         {round(calculateIL(pairData, previousMonthPairData).toString(), 2) +
           " %"}
       </td>
+      <td style={{ textAlign: "center" }}>{displayRewards()}</td>
       <td style={{ textAlign: "center" }}>
         {round(
           expectedFees(previousDayPairData.volumeUSD, pairData.reserveUSD) +
-            calculateIL(pairData, previousMonthPairData),
+            calculateIL(pairData, previousMonthPairData) +
+            reward,
           2
-        ).toString() +
-          "%" +
-          reward}
+        ).toString() + " %"}
       </td>
     </tr>
   );
