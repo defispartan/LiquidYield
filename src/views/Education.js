@@ -100,41 +100,44 @@ class Scenarios extends React.Component {
               <Button>The Liquid Ether Zap</Button>
             </a>
           </div>
-          <div className="edu">
-            <h1 className="infoheader" id="bitcoin">
-              Bitcoin{" "}
-              <img src={Bitcoin} alt="Bitcoin Logo" className="infoimage"></img>
-            </h1>
-          </div>
-          <p className="educontent">
-            Bitcoin is a cryptocurrency invented in 2008 by an unknown person or
-            group of people using the name Satoshi Nakamoto, and implemented as
-            an open-source software in 2009. It is a decentralized digital
-            currency without a central bank or single administrator that can be
-            sent from user to user on the peer-to-peer bitcoin network without
-            the need for intermediaries. Transactions are verified by network
-            nodes through cryptography and recorded in a public distributed
-            ledger called a blockchain. Bitcoins are created as a reward for a
-            process known as mining. They can be exchanged for other currencies,
-            products, and services.
-          </p>
 
-          <p className="educontent">
-            The key innovation of the Bitcoin white paper is a consensus
-            algorithm which secures a global, decentralized ledger of payments.
-            The Bitcoin ledger is replicated across all participants which
-            enforces <strong>immutability</strong> in the network. Immutability
-            means that transaction on the Bitcoin network are irreversible, and
-            that the supply of Bitcoin is not controlled by a single entity. If
-            you hold the private key to a wallet cotaining 1 Bitcoin, NO ONE can
-            modify the Bitcoin ledger and take your Bitcoin away, and NO ENTITY
-            can create new Bitcoins and devalue your holdings outside of the 21
-            million supply cap set forth in the whitepaper. In this way Bitcoin
-            acts as a digital store of value with a finite supply. There is a
-            strong case to be made that Bitcoin is a logical hedge against fiat
-            inflation, given it's striking similarities to Gold and the
-            increasingly digital precense of money.
-          </p>
+          <h1 className="infoheader" id="bitcoin">
+            Bitcoin{" "}
+            <img src={Bitcoin} alt="Bitcoin Logo" className="infoimage"></img>
+          </h1>
+          <div className="edu">
+            <p className="educontent">
+              Bitcoin is a cryptocurrency invented in 2008 by an unknown person
+              or group of people using the name Satoshi Nakamoto, and
+              implemented as an open-source software in 2009. It is a
+              decentralized digital currency without a central bank or single
+              administrator that can be sent from user to user on the
+              peer-to-peer bitcoin network without the need for intermediaries.
+              Transactions are verified by network nodes through cryptography
+              and recorded in a public distributed ledger called a blockchain.
+              Bitcoins are created as a reward for a process known as mining.
+              They can be exchanged for other currencies, products, and
+              services.
+            </p>
+
+            <p className="educontent">
+              The key innovation of the Bitcoin white paper is a consensus
+              algorithm which secures a global, decentralized ledger of
+              payments. The Bitcoin ledger is replicated across all participants
+              which enforces <strong>immutability</strong> in the network.
+              Immutability means that transaction on the Bitcoin network are
+              irreversible, and that the supply of Bitcoin is not controlled by
+              a single entity. If you hold the private key to a wallet cotaining
+              1 Bitcoin, NO ONE can modify the Bitcoin ledger and take your
+              Bitcoin away, and NO ENTITY can create new Bitcoins and devalue
+              your holdings outside of the 21 million supply cap set forth in
+              the whitepaper. In this way Bitcoin acts as a digital store of
+              value with a finite supply. There is a strong case to be made that
+              Bitcoin is a logical hedge against fiat inflation, given it's
+              striking similarities to Gold and the increasingly digital
+              precense of money.
+            </p>
+          </div>
           <h1 className="infoheader" id="ethereum">
             Ethereum{" "}
             <img src={Ethereum} alt="Ethereum Logo" className="infoimage"></img>

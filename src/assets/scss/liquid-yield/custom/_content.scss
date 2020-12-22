@@ -90,23 +90,11 @@
 
 .lpreturns {
   display: block;
+  width: 50%;
   margin: 0 auto;
-  width: 100%;
-  max-width: 1000px;
-  height: auto;
-  margin-bottom: 40px;
-  margin-top: 40px;
-}
-
-.factors {
-  display: block;
-  margin: 0 auto;
-  width: 33%;
-  max-width: 1000px;
-  min-width: 200px;
-  height: auto;
-  margin-bottom: 5px;
-  margin-top: 5px;
+  min-width: 333px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .defispartan {
@@ -341,8 +329,10 @@
 }
 
 .factors {
-  width: 20%;
   display: block;
+  width: 40%;
   margin: 0 auto;
-  min-width: 400px;
+  min-width: 300px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
