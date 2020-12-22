@@ -19,12 +19,18 @@ import React from "react";
 // reactstrap components
 import { Container, Row, Button } from "reactstrap";
 
-import Uniswap from "assets/img/brand/uniswap.png";
 import Aave from "assets/img/brand/aave.png";
+import Ethereum from "assets/img/brand/ethereum.png";
+import Uniswap from "assets/img/brand/uniswap.png";
+import SushiNew from "assets/img/brand/sushinew.png";
+import Ghost from "assets/img/brand/ghost.jpg";
+import LEZ from "assets/img/brand/LEZ.png";
+import lpreturns from "assets/img/brand/lpreturns.PNG";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import Header from "components/Headers/Header.js";
 import Web3 from "assets/img/brand/web3.PNG";
-import LEZ from "assets/img/brand/LEZ.png";
+import Bitcoin from "assets/img/brand/bitcoin.png";
+import Factors from "assets/img/theme/factors.png";
 
 class Scenarios extends React.Component {
   constructor(props) {
@@ -43,6 +49,9 @@ class Scenarios extends React.Component {
           </div>
 
           <div className="buttonrow">
+            <a href="javascript:document.getElementById('bitcoin').scrollIntoView(true);">
+              <Button>Bitcoin</Button>
+            </a>
             <a href="javascript:document.getElementById('ethereum').scrollIntoView(true);">
               <Button>Ethereum</Button>
             </a>
@@ -52,7 +61,9 @@ class Scenarios extends React.Component {
             <a href="javascript:document.getElementById('dex').scrollIntoView(true);">
               <Button>Decentralized Exchanges</Button>
             </a>
-
+            <a href="javascript:document.getElementById('lp').scrollIntoView(true);">
+              <Button>Liquidity Provider</Button>
+            </a>
             <a href="javascript:document.getElementById('uniswap').scrollIntoView(true);">
               <Button>Uniswap</Button>
             </a>
@@ -84,28 +95,51 @@ class Scenarios extends React.Component {
             <a href="javascript:document.getElementById('aave').scrollIntoView(true);">
               <Button>AAVE</Button>
             </a>
+
+            <a href="javascript:document.getElementById('lez').scrollIntoView(true);">
+              <Button>The Liquid Ether Zap</Button>
+            </a>
           </div>
+          <div className="edu">
+            <h1 className="infoheader" id="bitcoin">
+              Bitcoin{" "}
+              <img src={Bitcoin} alt="Bitcoin Logo" className="infoimage"></img>
+            </h1>
+          </div>
+          <p className="educontent">
+            Bitcoin is a cryptocurrency invented in 2008 by an unknown person or
+            group of people using the name Satoshi Nakamoto, and implemented as
+            an open-source software in 2009. It is a decentralized digital
+            currency without a central bank or single administrator that can be
+            sent from user to user on the peer-to-peer bitcoin network without
+            the need for intermediaries. Transactions are verified by network
+            nodes through cryptography and recorded in a public distributed
+            ledger called a blockchain. Bitcoins are created as a reward for a
+            process known as mining. They can be exchanged for other currencies,
+            products, and services.
+          </p>
+
+          <p className="educontent">
+            The key innovation of the Bitcoin white paper is a consensus
+            algorithm which secures a global, decentralized ledger of payments.
+            The Bitcoin ledger is replicated across all participants which
+            enforces <strong>immutability</strong> in the network. Immutability
+            means that transaction on the Bitcoin network are irreversible, and
+            that the supply of Bitcoin is not controlled by a single entity. If
+            you hold the private key to a wallet cotaining 1 Bitcoin, NO ONE can
+            modify the Bitcoin ledger and take your Bitcoin away, and NO ENTITY
+            can create new Bitcoins and devalue your holdings outside of the 21
+            million supply cap set forth in the whitepaper. In this way Bitcoin
+            acts as a digital store of value with a finite supply. There is a
+            strong case to be made that Bitcoin is a logical hedge against fiat
+            inflation, given it's striking similarities to Gold and the
+            increasingly digital precense of money.
+          </p>
           <h1 className="infoheader" id="ethereum">
-            Ethereum
+            Ethereum{" "}
+            <img src={Ethereum} alt="Ethereum Logo" className="infoimage"></img>
           </h1>
           <div className="edu">
-            <p className="educontent">
-              To understand Ethereum we must first take a step back and explore
-              it's predecessor, Bitcoin.
-            </p>
-            <p className="educontent">
-              In 2008, Satoshi Nakamoto wrote the Bitcoin whitepaper. The key
-              innovation of this white paper is a consensus algorithm which
-              secures a global, decentralized ledger of payments. The Bitcoin
-              ledger is replicated across all participants which enforces{" "}
-              <strong>immutability</strong> in the network. Immutability means
-              that transaction on the Bitcoin network are irreversible, and that
-              the supply of Bitcoin is not controlled by a single entity. If you
-              hold the private key to a wallet cotaining 1 Bitcoin, NO ONE can
-              modify the Bitcoin ledger and take your Bitcoin away, and NO
-              ENTITY can create new Bitcoins and devalue your holdings outside
-              of the 21 million supply cap set forth in the Bitcoin whitepaper.
-            </p>
             <p className="educontent">
               Bitcoin is a revolutionary technology, but the underlying network
               serves a single purpose: to facilitate the transaction of Bitcoin.
@@ -135,7 +169,7 @@ class Scenarios extends React.Component {
                   internet connection is on a level playing field.
                 </li>
                 <li>
-                  Censorship resistant: Once a dApp is deployed it will exist
+                  Censorship Resistant: Once a dApp is deployed, it will exist
                   forever on the blockchain. The same guarantees of immutability
                   discussed with Bitcoin apply to all interactions with Web3.
                 </li>
@@ -152,35 +186,32 @@ class Scenarios extends React.Component {
           </h1>
           <div className="edu">
             <p className="educontent">
-              An experimental form of finance that does not rely on central
-              financial intermediaries such as brokerages, exchanges, or banks,
-              and instead utilizes smart contracts on blockchains, the most
-              common being Ethereum. DeFi platforms allow people to lend or
-              borrow funds from others, speculate on price movements on a range
-              of assets using derivatives, trade cryptocurrencies, insure
-              against risks, and earn interest in a savings-like account. Some
-              DeFi applications promote high interest rates, with some providers
-              offering triple-digit interest rates, but are subject to high
-              risk. As of October 2020, over $11 billion was deposited in
-              various decentralized finance protocols, which represents more
+              DeFi (or decentralized finance) is an experimental form of finance
+              that does not rely on central financial intermediaries such as
+              brokerages, exchanges, or banks, and instead utilizes smart
+              contracts on blockchains, the most common being Ethereum. DeFi
+              platforms allow people to lend or borrow funds from others,
+              speculate on price movements on a range of assets using
+              derivatives, trade cryptocurrencies, insure against risks, or earn
+              interest in a savings-like account just to name a few. Some DeFi
+              applications promote high interest rates, with some providers
+              offering triple-digit interest rates, but are subject to high risk
+              and volatility. As of October 2020, over $11 billion was deposited
+              in various decentralized finance protocols, which represents more
               than a tenfold growth during the course of 2020.
             </p>
             <p className="educontent">
               DeFi revolves around applications known as DApps (decentralized
-              applications) that perform financial functions on digital ledgers
-              called blockchains, a technology that was invented for Bitcoin but
-              has since caught on more broadly. Rather than transactions being
-              with and through a centralised intermediary such as a
-              cryptocurrency exchange, transactions are directly between
-              participants, mediated by smart contract programs. DApps are
-              typically accessed through a Web3 enabled browser extension or
-              application, such as MetaMask. Many of these DApps can connect and
-              work together to create complex financial services. For example,
-              stablecoin holders can commit assets to a liquidity pool. Others
-              can borrow from this pool, by contributing additional collateral,
-              typically more than the amount of the loan. The protocol
-              automatically adjusts interest rates based upon the
-              moment-to-moment demand for the asset.
+              applications) that perform financial functions on blockchains.
+              Rather than transactions being with and through a centralised
+              intermediary such as a cryptocurrency exchange, transactions are
+              directly between participants, mediated by smart contract
+              programs. DApps are typically accessed through a Web3 enabled
+              browser extension or application, such as MetaMask. Many of these
+              DApps can connect and work together to create synergistic
+              financial services. This phenomona is known as{" "}
+              <strong>composability</strong>, and is a stark contrast to the
+              fragmented infrastructure of the modern banking system.
             </p>
           </div>
           <h1 className="infoheader" id="dex">
@@ -214,45 +245,140 @@ class Scenarios extends React.Component {
               from Consensys.
             </p>
           </div>
-
-          <h1 className="infoheader" id="uniswap">
-            Uniswap
+          <h1 className="infoheader" id="lp">
+            Liquidity Provider
           </h1>
           <div className="edu">
             <p className="educontent">
-              Uniswap is an on-chain system of smart contracts on the Ethereum
-              blockchain, implementing an automated liquidity protocol based on
-              a “constant product formula.” In V1 of the protocol, each pair on
-              the protocol stores pooled reserves of two assets, and provides
-              liquidity for those two assets, maintaining the invariant that the
-              product of the reserves cannot decrease. Traders pay a
-              30-basis-point fee on trades, which goes to liquidity providers.
-              V2 is a new implementation based on the same formula, with several
-              new highly desirable features. Most significantly, it enables the
-              creation of arbitrary ERC20/ERC20 pairs, rather than supporting
-              only pairs between ERC20 and ETH. It also provides a hardened
-              price oracle that accumulates the relative price of the two assets
-              at the beginning of each block. This allows other contracts on
-              Ethereum to estimate the time-weighted average price for the two
-              assets over arbitrary intervals. Finally, it enables “flash swaps”
-              where users can receive assets freely and use them elsewhere on
-              the chain, only paying for (or returning) those assets at the end
-              of the transaction.
+              A liquidity provider is a user or institution who funds a
+              liquidity pool with crypto assets they own to facilitate trading
+              on the platform and earn passive income on their deposit.
+              Liquidity pools are leveraged by the decentralized exchanges that
+              use automated market maker-based systems to allow trading of
+              illiquid trading pairs with limited slippage. Instead of using
+              traditional order book-based trading systems, such exchanges use
+              funds that are held for every asset in every trading pair to allow
+              trades to be executed. While trading illiquid trading pairs on
+              order book-based exchanges could lead to suffering from great
+              slippage and the inability to execute trades, the advantage of
+              liquidity providers is that trades can always be executed as long
+              as the liquidity pools are big enough. For this reason, liquidity
+              providers are seen as trade facilitators and paid with the
+              transaction fees paid for the trades that they enabled. How much
+              liquidity providers are paid is based on the percentage of the
+              liquidity pool that they provide. When funding the pool, they are
+              usually required to fund two different assets to enable traders to
+              switch between one to the other by trading them in pairs. In the
+              case of Uniswap and SushiSwap this ratio is 50/50.
+            </p>
+            <p className="educontent">
+              Liquidity Provision is an excellent was to earn a consistent ROI
+              when properly managed. It is easily possible to consistently
+              return 2-3% ROI monthly with an LP position. To make this possible
+              you must understand the systems which you are providing liquidity
+              to, and the four factors which will influence your returns as an
+              LP:
+              <img src={Factors} className="factors"></img>
+              Information on two of the leading decentralized exchanges and each
+              of these four factors can be found below.
+            </p>
+          </div>
+
+          <h1 className="infoheader" id="uniswap">
+            <img src={Uniswap} alt="Uniswap Logo" className="infoimage"></img>
+          </h1>
+          <div className="edu">
+            <p className="educontent">
+              Uniswap is a DApp built on the Ethereum blockchain which allows
+              user to swap tokens on a decntralized exchange. Uniswap is notable
+              for it's simple user interface and low transaction fees. These
+              factors have contributed to Uniswap's status as the highest volume
+              decentralized exchange in existence. Uniswap has consistently
+              maintained a weekly volume of over $1 Billion since August, 2020
+              and reached a peak of $5.25 Billion in a single week from Aug 31 -
+              Sep 5.
+            </p>
+            <p className="educontent">
+              The Uniswap Protocol has a governance token called UNI. Token
+              holders are responsible for ensuring that governance decisions are
+              made in compliance with applicable laws and regulations. To help
+              facilitate this, the fee switch has been initialized to a contract
+              UNI holders can use to vote on tokens for which they will collect
+              fees. The community is encouraged to consult knowledgeable legal
+              and regulatory professionals before implementing any specific
+              proposal. Token holders have immediate ownership of Uniswap
+              governance, UNI community treasury, the protocol switch fee, eth
+              ENS, Uniswap Default List (tokens.uniswap.eth), and SOCKS
+              liquidity tokens.
             </p>
           </div>
 
           <h1 className="infoheader" id="sushiswap">
-            SushiSwap
+            SushiSwap{" "}
+            <img
+              src={SushiNew}
+              alt="SushiSwap Logo"
+              className="infoimage"
+            ></img>
           </h1>
           <div className="edu">
-            <p className="educontent"></p>
+            <p className="educontent">
+              SushiSwap is another decentralized exchange on Ethereum, which
+              began as a fork of Uniswap. The launch of SushiSwap was a wild
+              ride beginning on September 6, 2020. On this date a platform
+              launched which allowed users to stake Uniswap LP tokens and
+              harvest SUSHI tokens at a 10x reward rate. The true launch of
+              SushiSwap was to happen in a few weeks, when all of the staked
+              Uniswap liquidity would be converted to SushiSwap liquidity, a
+              liquidity heist of sorts. Within the first few days almost $1
+              Billion worth of liquidity was staked in this new protocol, and
+              demand for SUSHI on exchanges drove the price up above $8.00. The
+              pseudononymous founder of the project Chef Nomi sold $14 million
+              worth of Ether from the development fund (which he later returned)
+              in a contraversial move which killed a lot of public hype over the
+              project. Nonetheless, the liquidity heist went off without a hitch
+              and the SushiSwap exchange has continued to pull in a large amount
+              of liquidity and moderate trade volume. SushiSwap re-entered the
+              radar of the DeFi space when it was announced that the SushiSwap
+              (which has been hard at work building new products despite the
+              departure of Chef Nomi) is merging with the popular Yearn.Finance
+              protocol.
+            </p>
+            <p className="educontent">
+              The previously mentioned SUSHI token is the native token of
+              SushiSwap. There are two key aspects of the SUSHI token which
+              differ from UNI:
+              <ul>
+                <li>
+                  When staked, the Token entitles holders to earn a small
+                  portion of SushiSwap's collected fees (0.005%).
+                </li>
+                <li>
+                  Liquidity providers on SushiSwap are also paid of portion of
+                  SUSHI proportional to their size. This Liquidity Mining reward
+                  is factored into the <a href="/pools">SushiSwap Pool ROI</a>.
+                </li>
+              </ul>
+              The token has a hard cap of 250 million SUSHI, to be reached in
+              November 2023. The current block reward liquidity providers is 70
+              SUSHI / block.
+            </p>
           </div>
 
           <h1 className="infoheader" id="fees">
             Fees
           </h1>
           <div className="edu">
-            <p className="educontent"></p>
+            <p className="educontent">
+              Liquidity providers earn a percentage of the trading fees (0.03%
+              for Uniswap and 0.025% for SushiSwap) for each swap performed on
+              the platform. The amount of fees that an LP will collect depend
+              on:
+              <ul>
+                <li>Ratio of your liquidity to the total pool liquidity </li>
+                <li>Volume of the liquidity pool</li>
+              </ul>
+            </p>
           </div>
 
           <h1 className="infoheader" id="il">
@@ -260,16 +386,28 @@ class Scenarios extends React.Component {
           </h1>
           <div className="edu">
             <p className="educontent">
-              The difference between holding tokens in an automated market maker
-              (AMM) and holding them in your wallet. It occurs when the price of
-              tokens inside an AMM diverge in any direction. The more
-              divergence, the greater the impermanent loss. The loss is
-              “impermanent” because as long as the relative prices of tokens in
-              the AMM return to their original state when you entered the AMM,
-              the loss disappears and you earn 100% of the trading fees.
-              However, this is rarely the case. More often than not, impermanent
-              loss becomes permanent, eating into your trade income or leaving
-              you with negative returns.
+              The difference between holding tokens in a liquidity pool and
+              holding them in your wallet. It occurs when the price of tokens
+              inside a pool diverge in any direction. The more divergence, the
+              greater the impermanent loss. The loss is “impermanent” because as
+              long as the relative prices of tokens in the AMM return to their
+              original state when you entered the AMM, the loss disappears and
+              you earn 100% of the trading fees. However, this is rarely the
+              case. More often than not, impermanent loss becomes permanent,
+              eating into your trade income or leaving you with negative
+              returns. It is important to monitor the impermanent loss of a
+              potential investment or current position to pick appropriate entry
+              and exit points, and to find pools with fees and liquidity rewards
+              which are expected to overcome the affects of impermanent loss.
+              The following graphics shows the returns you can expect for
+              varying levels of price divergence on the x-axis, and pool growth
+              in the form of collected fees + liquidity mining rewards shown by
+              the different colored lines:
+              <img src={lpreturns} className="lpreturns"></img>
+              In the future, I'm planning on adding a historical and
+              scenraio-based calculator for impermanent loss. If you'd like to
+              try out an impermanent loss calculator now you can check one out{" "}
+              <a href="https://baller.netlify.app/">here</a>.
             </p>
           </div>
 
@@ -290,7 +428,33 @@ class Scenarios extends React.Component {
             Price Exposure
           </h1>
           <div className="edu">
-            <p className="educontent"></p>
+            <p className="educontent">
+              In my opinion, the most neglected factor to consider when choosing
+              a liquidity pool on Uniswap or SushiSwap is price exposure. If you
+              measure you returns with respect to Ethereum (which I would
+              strongly advise), there are two things you need to consider:
+              <ul>
+                <li>
+                  What gains or losses am I incurring by only being exposed to
+                  50% ETH.
+                </li>
+                <li>
+                  What gains or losses am I incurring by exposing myself to 50%
+                  of another asset?
+                </li>
+              </ul>
+              For the second question, there's no alternative but to DYOR (Do
+              Your Own Research) on the token you are buying and make an
+              informed decision. For the first question, if you hold your
+              liquidity for long enough you are almost certainly missing out on
+              gains from lack of ETH exposure. This is the motivation behind the
+              Liquid Ether Zap. By leveraging the composability of DeFi and
+              using LP tokens as a form of collateral, the zap allows users to
+              borrow assets and maintain 100% to the price of ETH while
+              providing liquidity. I have another visualizer planned for
+              calculating historical and scenario-based price exposure in the
+              future.
+            </p>
           </div>
           <h1 className="infoheader" id="apr">
             APR, APY, and ROI
@@ -366,10 +530,44 @@ class Scenarios extends React.Component {
             </p>
           </div>
           <h1 className="infoheader" id="aave">
-            AAVE and the Liquid Ether Zap
+            <img src={Aave} alt="AAVE Logo" className="infoimage"></img>{" "}
+            <img src={Ghost} className="infoimage"></img>
+          </h1>
+
+          <div className="edu">
+            <div className="educontent">
+              AAVE is decentralized and non-custodial money market protocol
+              where users can participate as depositors or borrowers. Depositors
+              provide liquidity to the market to earn a passive income, while
+              borrowers are able to borrow in an overcollateralized
+              (perpetually) or undercollateralized (one-block liquidity)
+              fashion. For borrowers, they are given the option to borrow at
+              either variable or fixed rates. Depositors receive an aToken
+              version of the asset they have deposited into Aave, which accrues
+              interest each second. Each asset exists as its own pool. The
+              protocol has been audited and secured. The protocol is open
+              source, which allows anyone to interact with the user interface
+              client, API or directly with the smart contracts on the Ethereum
+              network. Being open source means that users are able to build any
+              third-party service or application to interact with the protocol
+              and enrich their product (like this one).
+            </div>
+          </div>
+          <h1 className="infoheader" alt="AAVE Ghost" id="aave">
+            Liquid Ether Zap
           </h1>
           <div className="edu">
-            <p className="educontent"></p>
+            <p className="educontent">
+              The Liquid Ether Zap is a tool which allows users to go from ETH
+              into a liquidity pool while maintaining 100%{" "}
+              <a href="#pe">Price Exposure</a> to ETH. The motivation behind
+              this zap is that if you are long term bullish on the price of
+              Ethereum, there is money left on the table when providing
+              liquidity in the form of lack of ETH price exposure. This zap
+              leverages the composability of DeFi to collateralize LP tokens,
+              and borrows assets to maintain 100% price exposure to ETH.
+            </p>
+            <img src={LEZ} alt="Liquid Ether Zap" className="indexlez"></img>
           </div>
           <AdminFooter />
         </Container>

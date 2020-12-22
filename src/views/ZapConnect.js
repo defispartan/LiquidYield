@@ -18,6 +18,8 @@
 
 // reactstrap components
 import { Card, Collapse, Button, Container, Row, Alert } from "reactstrap";
+import LEZHeader from "assets/img/brand/LEZHeader.png";
+import LEZ from "assets/img/brand/LEZ.png";
 // core components
 import { Dropdown, Input, Label } from "semantic-ui-react";
 import React, { useState } from "react";
@@ -173,12 +175,10 @@ const ZapConnect = ({ disconnect }) => {
       {/* Page content */}
       <Container className="mt--7" fluid>
         <div className="zapheader">
-          <h1>
-            Liquid Ether Zap <i class="bolt icon text-yellow" />
-          </h1>
+          <img src={LEZHeader} className="lezheader"></img>
 
-          <div className="buttonrow">
-            <Button
+          <div className="buttonrow" style={{ textAlign: "center" }}>
+            {/*             <Button
               onClick={setSimpleMode}
               className={"simple" === zapMode ? "selected" : ""}
             >
@@ -189,7 +189,20 @@ const ZapConnect = ({ disconnect }) => {
               className={"advanced" === zapMode ? "selected" : ""}
             >
               Advanced
-            </Button>
+            </Button> */}
+            <h4 style={{ color: "red" }}>Coming Soon</h4>
+            <p style={{ minWidth: "500px", width: "50%", margin: "0 auto" }}>
+              With the recent release of{" "}
+              <a href="https://medium.com/aave/the-aave-protocol-v2-f06f299cee04">
+                AAVE V2
+              </a>
+              , new doors are opened for optimizing the performance of the zap
+              and feature upgrades including native collateral swaps. The next
+              step is to propose the creation of Uniswap V2 and SushiSwap
+              markets. These proposals are in the works and I'll post
+              information on how to particpate in the AAVE governance process
+              when they're ready.
+            </p>
           </div>
         </div>
         <Card body className="zap">
@@ -241,7 +254,15 @@ const ZapConnect = ({ disconnect }) => {
           </div>
           <h3 className="abouticon">About</h3>
           <Collapse isOpen={aboutOpen} className="aboutcontent">
-            About content
+            The Liquid Ether Zap allows you to go from ETH into a liquidity pool
+            while maintaining 100% exposure to the price of ETH with the click
+            of a button. Below is an example for the Uniswap ETH/DAI pair, for a
+            more detailed explanation see <a href="/education#lez">here</a>.
+            <img
+              src={LEZ}
+              alt="Liquid Ether Zap Diagram"
+              className="indexlez"
+            ></img>
           </Collapse>
         </div>
         <div className="disclaimer">
