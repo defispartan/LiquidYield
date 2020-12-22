@@ -25,6 +25,30 @@ export const TICKER_HISTORICAL_QUERY = gql`
   }
 `;
 
+export const TICKER_GET_MONTH = gql`
+  query pairDayData($id: Bytes!, $date: Int!) {
+    pairDayDatas(where: { pairAddress: $id, date_gt: $date }) {
+      id
+      reserve0
+      reserve1
+      reserveUSD
+      dailyVolumeUSD
+    }
+  }
+`;
+
+export const SUSHI_GET_MONTH = gql`
+  query pairDayData($id: Bytes!, $date: Int!) {
+    pairDayDatas(where: { pair: $id, date_gt: $date }) {
+      id
+      reserve0
+      reserve1
+      reserveUSD
+      volumeUSD
+    }
+  }
+`;
+
 export const SUSHI_TICKER_QUERY = gql`
   query pair($id: ID!) {
     pair(id: $id) {

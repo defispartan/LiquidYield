@@ -175,8 +175,55 @@ class NewPools extends React.Component {
     if (this.state.openPool == "Uniswap") {
       this.setState({ data: this.state.unidata });
     }
+
+    const blocksPerDay = 6500;
+    const sushi = await sushiswapClient.query({
+      query: GET_DERIVED_ETH,
+      variables: {
+        id: "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+      },
+    });
+    const derivedETH = sushi.data.token.derivedETH;
+    const poolResult = await masterchefClient.query({
+      query: GET_REWARD_POOLS,
+      fetchPolicy: "cache-first",
+    });
+    const pools = poolResult.data.pools;
+    const allocResult = await masterchefClient.query({
+      query: GET_TOTAL_ALLOC,
+      fetchPolicy: "cache-first",
+    });
+    const totalAlloc = allocResult.data.masterChefs[0].totalAllocPoint;
+    let pool30ROI = {};
+    await this.asyncForEach(pools, async (entry) => {
+      const poolInfo = await sushiswapClient.query({
+        query: GET_POOL_INFO,
+        variables: {
+          id: entry.pair,
+        },
+        fetchPolicy: "cache-first",
+      });
+      if (poolInfo.data.pair != null) {
+        let totalSupply = poolInfo.data.pair.totalSupply;
+        let totalValueETH = poolInfo.data.pair.reserveETH;
+        let sushiPerBlock = 100 - 100 * (entry.allocPoint / totalAlloc);
+        let thirtyDayROI =
+          (100 *
+            (derivedETH *
+              blocksPerDay *
+              sushiPerBlock *
+              3 *
+              30 *
+              (entry.allocPoint / totalAlloc))) /
+          (totalValueETH * (entry.slpBalance / totalSupply));
+
+        pool30ROI[entry.pair] = thirtyDayROI;
+      }
+    });
+    let rewards = pool30ROI;
+    console.log("SUSHI Rewards Calculated");
     await this.asyncForEach(sushilist, async (element) => {
-      let newObj = await SushiCalc(element[0], element[1]);
+      let newObj = await SushiCalc(element[0], element[1], rewards);
       sushiArray.push(newObj);
     });
     this.state.sushidata = sushiArray;
@@ -256,8 +303,14 @@ class NewPools extends React.Component {
       (this.state.openPool == "SushiSwap" && this.state.loadingSushi == true)
     ) {
       return (
-        <div className="spinny">
-          <Spinner style={{ width: "5em", height: "5em" }} color="white" />
+        <div className="loady" style={{ textAlign: "center" }}>
+          <div className="spinny">
+            <Spinner style={{ width: "5em", height: "5em" }} color="white" />
+          </div>
+          <p style={{ color: "white", paddingTop: "50px" }}>
+            Note: Loading may take a minute, especially for SushiSwap where pool
+            rewards are being calculated as well.
+          </p>
         </div>
       );
     } else {
@@ -291,13 +344,17 @@ class NewPools extends React.Component {
                     scope="col"
                     data-label={title}
                   >
-                    {title + " "}
+                    <p style={{ display: "inline", cursor: "pointer" }}>
+                      {title + " "}
+                    </p>
                     {this.getTooltip(title)}
-                    {this.state.activeColumn === key
-                      ? this.state.toggle
-                        ? " ↓"
-                        : " ↑"
-                      : ""}
+                    <p style={{ cursor: "pointer", display: "inline" }}>
+                      {this.state.activeColumn === key
+                        ? this.state.toggle
+                          ? " ↓"
+                          : " ↑"
+                        : ""}
+                    </p>
                   </th>
                 );
               })}
@@ -395,14 +452,21 @@ class NewPools extends React.Component {
                   <p>
                     Estimated by taking the average daily return over the last
                     30 days and multiplying by 30. The average daily return is
-                    calculated by averaging the volume * 0.003 (0.3% trading fee
-                    paid to liquidity providers) / pool liquidity for the day.
+                    calculated by averaging (volume * trading fees percentage /
+                    pool liquidity).
                   </p>
                   <h3>Impermanent Loss:</h3>
                   <p>
                     Estimated by taking the price divergence for the two assets
                     in the pool over the last 30 days, and plugging this value
-                    into the IL curve described <a href="/education#il">here</a>
+                    into the IL curve described{" "}
+                    <a style={{ color: "white" }} href="/education#il">
+                      here
+                    </a>
+                    . Estimations for this value could be improved upon by
+                    factoring in volatility on a rolling 30 day windows. For
+                    now, this calculation just predicts that the next month
+                    price divergence will be equal to the previous month.
                   </p>
                   <h3>Sushi Rewards:</h3>
                   <p>
@@ -410,7 +474,10 @@ class NewPools extends React.Component {
                     given pool, the price of Sushi, and the amount of liquidity
                     staked in the Masterchef contract. The full calculation is
                     described{" "}
-                    <a href="https://github.com/sushiswap/sushi-data/pull/7">
+                    <a
+                      style={{ color: "white" }}
+                      href="https://github.com/sushiswap/sushi-data/pull/7"
+                    >
                       here
                     </a>
                     .

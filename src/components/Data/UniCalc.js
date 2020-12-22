@@ -21,6 +21,7 @@ import { Media } from "reactstrap";
 import {
   TICKER_QUERY,
   TICKER_HISTORICAL_QUERY,
+  TICKER_GET_MONTH,
 } from "components/Data/Query.js";
 import { uniswapClient } from "components/Data/UniswapClient.js";
 import UNIV2 from "assets/img/theme/uniswapv2.jpg";
@@ -45,12 +46,6 @@ function numberWithCommas(x) {
 //      "Estimated ROI (30d)": {},
 // }
 const UniCalc = async (pool, address) => {
-  let liquidity = 4.3243243242;
-  let volume = 2.657567567;
-  let fees = 3.234234;
-  let il = 7.24234;
-  let roi = 1.56363;
-
   const result = await uniswapClient.query({
     query: TICKER_QUERY,
     variables: {
@@ -74,6 +69,37 @@ const UniCalc = async (pool, address) => {
   });
 
   let previous = previousData.data.pairDayDatas[0];
+  let monthlyAverageLiquidity = 0.0;
+  let monthlyAverageVolume = 0.0;
+  let dayCount = 0.0;
+
+  let utcCurrentTime30 = dayjs();
+  let utcOneMonthBack = utcCurrentTime30.subtract(30, "day");
+  utcOneMonthBack = utcOneMonthBack.unix();
+  utcOneMonthBack = utcOneMonthBack - (utcOneMonthBack % 86400);
+  const previousMonthData = await uniswapClient.query({
+    query: TICKER_GET_MONTH,
+    variables: {
+      id: address,
+      date: utcOneMonthBack,
+    },
+    fetchPolicy: "cache-first",
+  });
+  let previousMonth = previousMonthData.data.pairDayDatas;
+  previousMonth.forEach((element) => {
+    dayCount += 1.0;
+    monthlyAverageLiquidity =
+      monthlyAverageLiquidity +
+      (element.reserveUSD - monthlyAverageLiquidity) / dayCount;
+    monthlyAverageVolume =
+      monthlyAverageVolume +
+      (element.dailyVolumeUSD - monthlyAverageVolume) / dayCount;
+  });
+  console.log(monthlyAverageVolume);
+  console.log(monthlyAverageLiquidity);
+  let fees = expectedFees(monthlyAverageVolume, monthlyAverageLiquidity);
+  let il = calculateIL(pair, previousMonth[0]);
+
   return {
     "Liquidity Pool": (
       <Media className="align-items-center">
@@ -88,49 +114,9 @@ const UniCalc = async (pool, address) => {
     "Total Liquidity (USD)": "$ " + numberWithCommas(round(pair.reserveUSD, 0)),
     "24h Volume (USD)":
       "$ " + numberWithCommas(round(previous.dailyVolumeUSD, 0)),
-    "Estimated Fees (30d)":
-      round(expectedFees(previous.dailyVolumeUSD, pair.reserveUSD), 2) + " %",
-    "Estimated IL (30d)": round(calculateIL(previous, pair), 2) + " %",
-    "Estimated ROI (30d)":
-      round(
-        expectedFees(previous.dailyVolumeUSD, pair.reserveUSD) +
-          calculateIL(pair, previous),
-        2
-      ) + " %",
-  };
-
-  const getPreviousPairData = async (address) => {
-    const utcCurrentTime = dayjs();
-    let utcOneDayBack = utcCurrentTime.subtract(1, "day");
-    utcOneDayBack = utcOneDayBack.unix();
-    utcOneDayBack = utcOneDayBack - (utcOneDayBack % 86400);
-    const previous = await client.query({
-      query: TICKER_HISTORICAL_QUERY,
-      variables: {
-        id: address,
-        date: utcOneDayBack,
-      },
-      fetchPolicy: "cache-first",
-    });
-
-    setPreviousDayPairData(previous.data.pairDayDatas[0]);
-  };
-
-  const getPreviousMonthPairData = async (address) => {
-    const utcCurrentTime = dayjs();
-    let utcOneMonthBack = utcCurrentTime.subtract(30, "day");
-    utcOneMonthBack = utcOneMonthBack.unix();
-    utcOneMonthBack = utcOneMonthBack - (utcOneMonthBack % 86400);
-    const previousMonth = await client.query({
-      query: TICKER_HISTORICAL_QUERY,
-      variables: {
-        id: address,
-        date: utcOneMonthBack,
-      },
-      fetchPolicy: "cache-first",
-    });
-
-    setPreviousMonthPairData(previousMonth.data.pairDayDatas[0]);
+    "Estimated Fees (30d)": round(fees, 2) + " %",
+    "Estimated IL (30d)": round(il, 2) + " %",
+    "Estimated ROI (30d)": round(fees + il, 2) + " %",
   };
 
   function expectedFees(volume, liquidity) {
@@ -154,55 +140,6 @@ const UniCalc = async (pool, address) => {
   function getMarketImage() {
     return UNIV2;
   }
-
-  useEffect(() => {
-    getPairData(props.address);
-    getPreviousPairData(props.address);
-    getPreviousMonthPairData(props.address);
-  }, []);
-
-  return (
-    <tr>
-      <th scope="row">
-        <Media className="align-items-center">
-          <div className="avatar rounded-circle mr-3">
-            <img alt="..." src={getMarketImage()} />
-          </div>
-          <Media>
-            <span className="mb-0 text-sm">{props.pair}</span>
-          </Media>
-        </Media>
-      </th>
-      <td style={{ textAlign: "center" }}>
-        {"$" + numberWithCommas(round(pairData.reserveUSD, 2))}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        {"$" + numberWithCommas(round(previousDayPairData.dailyVolumeUSD, 2))}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        {round(
-          expectedFees(previousDayPairData.dailyVolumeUSD, pairData.reserveUSD),
-          2
-        ).toString() + " %"}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        {round(calculateIL(pairData, previousMonthPairData).toString(), 2) +
-          " %"}
-      </td>
-      <td style={{ textAlign: "center" }}>
-        {round(
-          expectedFees(
-            previousDayPairData.dailyVolumeUSD,
-            pairData.reserveUSD
-          ) + calculateIL(pairData, previousMonthPairData),
-          2
-        ).toString() + " %"}
-      </td>
-    </tr>
-  );
 };
-
-{
-}
 
 export default UniCalc;

@@ -41,7 +41,7 @@ var routes = [
     path: "/pools",
     name: "Pool Explorer",
     icon: "tint icon text-info",
-    component: Pools,
+    component: NewPools,
     layout: "admin",
   },
   {
