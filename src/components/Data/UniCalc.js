@@ -77,6 +77,7 @@ const UniCalc = async (pool, address) => {
   let utcOneMonthBack = utcCurrentTime30.subtract(30, "day");
   utcOneMonthBack = utcOneMonthBack.unix();
   utcOneMonthBack = utcOneMonthBack - (utcOneMonthBack % 86400);
+
   const previousMonthData = await uniswapClient.query({
     query: TICKER_GET_MONTH,
     variables: {
@@ -95,8 +96,6 @@ const UniCalc = async (pool, address) => {
       monthlyAverageVolume +
       (element.dailyVolumeUSD - monthlyAverageVolume) / dayCount;
   });
-  console.log(monthlyAverageVolume);
-  console.log(monthlyAverageLiquidity);
   let fees = expectedFees(monthlyAverageVolume, monthlyAverageLiquidity);
   let il = calculateIL(pair, previousMonth[0]);
 

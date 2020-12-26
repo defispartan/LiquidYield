@@ -74,32 +74,55 @@ class Index extends React.Component {
                 Yield is just a collection of resources to improve the lives of
                 liquidity providers.
               </strong>{" "}
-              My goal with this site is to provide value to anyone that is
+              The goal of this site is to provide value to anyone who is
               interested in maximizing yields with respect to Ethereum. Whether
               you're a complete beginner, or an experienced LP, the interactive
               guides on this site will help you understand, visualize, and take
-              control of the factors affecting your LP returns.
+              control of the factors affecting your LP yields.
             </p>
-            <h2>Key Features</h2>
+            <h2>Features</h2>
             <p>
-              I would first recommend exploring the{" "}
-              <a href="/education">Education Center</a>. Some of the information
-              in the early sections can probably be skipped over if you've
-              already been exposed to Uniswap before. Regardless of skill level,
-              the <a href="/education#il">impermanent loss</a> and{" "}
-              <a href="/education#pe">price exposure</a> sections are{" "}
-              <strong>must reads</strong>. The information and interactive tools
-              in these sections are the keys to mastering liquidity provision.
+              The first resource you should check out is the{" "}
+              <a href="/education">Education Center</a>. This page is meant to
+              be an all-encompassing reource which covers Bitcoin, Ethereum,
+              DeFi, and terms specific to liquidity providers. Regardless of
+              skill level, there should be something in the Education Center to
+              learn from. Two sections worth highlighting are the{" "}
+              <a href="/education#il">impermanent loss</a> and{" "}
+              <a href="/education#pe">price exposure</a> sections. The
+              information and interactive tools in these sections are the keys
+              to mastering liquidity provision.
             </p>
             <p>
               Once you've gone through the education center and have a
-              comfortable understanding of the 4 factors affecting your returns,
-              check out the <a href="/pools">Pool Explorer</a> and sort by APR
-              to get an idea of the returns you can expect as an LP. These
-              values are subject to change as liquidity and volume vary, so do
-              your due dilligence by clicking on the pools you are interested in
-              to view historical trends, and perform your research on the coin
-              before investing.
+              comfortable understanding of the four factors affecting LP yields,
+              check out the <a href="/pools">Pool Explorer</a> to get an idea of
+              the ROI for liquidity pools on Uniswap and SushiSwap. As explained{" "}
+              <a href="/education#apr">here</a>, pool ROI is constantly changing
+              based on volume, liquidity, pool rewards, and asset price
+              fluctuation, so treat shorter term metrics like weekly and monthly
+              ROI with more confidence than APY. In addition, the pool ROI
+              cannot predict assets prices, so the returns are with respect to
+              the LP tokens (50% exposure to ETH, and 50% expsosure to a second
+              asset). This second point is why it is recommended to do your own
+              research on the assets in a liquidity pool before investing, and
+              track your returns with respect to ETH! For each pool in the
+              explorer, you can click on the row to bring up links for more in
+              depth pool analytics with{" "}
+              <a href="https://apy.vision/#/">apy.vision</a>, and a simple UI to
+              invest in the pool with{" "}
+              <a href="https://zapper.fi/dashboard">zapper.fi</a>.
+            </p>
+            <p>
+              The next two features are tools to track your existing LP
+              positions. The first is the{" "}
+              <a href="#lpvalue">LP Token Value Calculator</a>. Often times LP
+              tokens can be staked in contracts and it becomes difficult to find
+              the value of your staked tokens. With this tool you can input a
+              pool and an amount, and get the asset breakdown with value in USD
+              for your LP tokens. The second tool is the{" "}
+              <a href="#portfolio">Porfolio</a>, which tracks the performance of
+              Uniswap and SushiSwap LP tokens in your Ethereum wallet.
             </p>
             <p>
               The final (and most exciting) feature of Liquid Yield is the{" "}
@@ -109,9 +132,8 @@ class Index extends React.Component {
               the AAVE section in the education center or check out the diagram
               below. Currently the zap is under construction while I update the
               interface to work with AAVE V2 and propose the creation of Uniswap
-              and SushiSwap markets in AAVE governance. If you are a holder of
-              AAVE I would strongly encourage you to support these proposals as
-              they're neccessary for the Liquid Ether Zap to work.
+              and SushiSwap markets in AAVE governance. I'll be posting links to
+              support these proposals once they're available.
             </p>
 
             <img

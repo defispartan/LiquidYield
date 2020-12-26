@@ -102,8 +102,6 @@ const SushiCalc = async (pool, address, rewards) => {
       monthlyAverageVolume +
       (element.volumeUSD - monthlyAverageVolume) / dayCount;
   });
-  console.log(monthlyAverageVolume);
-  console.log(monthlyAverageLiquidity);
   let fees = expectedFees(monthlyAverageVolume, monthlyAverageLiquidity);
   let il = calculateIL(pair, previousMonth[0]);
 
