@@ -28,7 +28,7 @@ import AAVEPool from "../assets/img/brand/aavepoolex.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import AAVELogo from "../assets/img/brand/aave.png";
 import UniswapLogo from "../assets/img/brand/uniswap.png";
-import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.PNG";
+import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.png";
 import { masterchefClient } from "components/Data/MasterChefClient";
 import { sushiswapClient } from "components/Data/SushiSwapClient";
 import {

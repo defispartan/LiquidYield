@@ -52,7 +52,7 @@
 
 .powerleft {
   width: 50%;
-  height: 150px;
+  height: 200px;
   background-position: 90%;
   background-repeat: no-repeat;
   margin-top: 20px;
@@ -61,12 +61,23 @@
 }
 .powerright {
   width: 50%;
-  height: 150px;
+  height: 200px;
   background-position: 10%;
   background-repeat: no-repeat;
   margin-top: 20px;
   margin-bottom: 20px;
   background-size: 50%;
+}
+
+.powercenter {
+  width: 50%;
+  height: 200px;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-size: 50%;
+  margin: auto;
 }
 
 .list {
@@ -117,8 +128,8 @@
   margin-left: auto;
   margin-right: auto;
   width: 30%;
-  min-width: 200px;
-  padding-bottom: 10px;
+  min-width: 250px;
+  padding-bottom: 20px;
 }
 .lpcardheader {
   display: block;
@@ -301,9 +312,14 @@
 }
 
 .infoheader {
-  padding-top: 40px;
   padding-bottom: 20px;
+  padding-top: 40px;
   text-align: center;
+}
+
+.infoheadertop {
+  text-align: center;
+  padding-bottom: 30px;
 }
 
 .web {
@@ -335,4 +351,72 @@
   min-width: 300px;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+.jump {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.tableHeader p {
+  font-size: 0.75rem !important;
+}
+
+.modalbody {
+  text-align: center;
+}
+
+.portcardheader {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 15%;
+  min-width: 250px;
+  margin-bottom: 0;
+  padding-bottom: 30px;
+}
+
+.unipanel {
+  padding-top: 50px;
+}
+
+.sushipanel {
+  padding-top: 50px;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.portwalletdetails {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  width: 20%;
+  min-width: 200px;
+  text-align: center;
+}
+
+.inlinetext {
+  display: inline;
+}
+
+@media (max-width: 925px) {
+  .portwalletdetails {
+    position: relative;
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 50px;
+    min-width: 300px;
+  }
+}
+
+.portcardimg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10%;
+  min-width: 150px;
+  margin-bottom: 0;
+  padding-bottom: 30px;
 }

@@ -24,6 +24,7 @@ import LEZ from "assets/img/brand/LEZ.png";
 import { Dropdown, Input, Label } from "semantic-ui-react";
 import React, { useState } from "react";
 import { drizzleReactHooks } from "@drizzle/react-plugin";
+import AdminFooter from "../components/Footers/AdminFooter.js";
 import { newContextComponents } from "@drizzle/react-components";
 
 const { useDrizzle, useDrizzleState } = drizzleReactHooks;
@@ -294,6 +295,7 @@ const ZapConnect = ({ disconnect }) => {
             </p>
           </Collapse>
         </div>
+        <AdminFooter />
       </Container>
     </>
   );

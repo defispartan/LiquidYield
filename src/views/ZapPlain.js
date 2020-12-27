@@ -31,6 +31,7 @@ import {
 import React, { useState, useEffect } from "react";
 import LEZHeader from "assets/img/brand/LEZHeader.png";
 import LEZ from "assets/img/brand/LEZ.png";
+import AdminFooter from "../components/Footers/AdminFooter.js";
 
 const ZapPlain = ({ connect, alert, setAlert }) => {
   const [walletConnected, setConnect] = useState(false);
@@ -237,6 +238,7 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
             </p>
           </Collapse>
         </div>
+        <AdminFooter />
       </Container>
     </>
   );

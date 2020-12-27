@@ -44,7 +44,7 @@ class Scenarios extends React.Component {
         <Header />
         {/* Page content */}
         <Container className="mt--7" fluid>
-          <div className="infoheader" style={{ textAlign: "center" }}>
+          <div className="infoheadertop" id="top">
             <h1>Education Center</h1>
           </div>
 
@@ -88,12 +88,16 @@ class Scenarios extends React.Component {
               <Button>Price Exposure</Button>
             </a>
 
-            <a href="javascript:document.getElementById('apr').scrollIntoView(true);">
-              <Button>APR, APY, and ROI</Button>
+            <a href="javascript:document.getElementById('apy').scrollIntoView(true);">
+              <Button>APY, APR, and ROI</Button>
             </a>
 
             <a href="javascript:document.getElementById('aave').scrollIntoView(true);">
               <Button>AAVE</Button>
+            </a>
+
+            <a href="javascript:document.getElementById('governance').scrollIntoView(true);">
+              <Button>Governance</Button>
             </a>
 
             <a href="javascript:document.getElementById('lez').scrollIntoView(true);">
@@ -101,10 +105,16 @@ class Scenarios extends React.Component {
             </a>
           </div>
 
-          <h1 className="infoheader" id="bitcoin">
+          <div className="jump">
+            <a href="javascript:document.getElementById('top').scrollIntoView(true);">
+              <Button>Back To Top ↑</Button>
+            </a>
+          </div>
+
+          <h2 className="infoheader" id="bitcoin">
             Bitcoin{" "}
             <img src={Bitcoin} alt="Bitcoin Logo" className="infoimage"></img>
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               Bitcoin is a cryptocurrency invented in 2008 by an unknown person
@@ -138,10 +148,10 @@ class Scenarios extends React.Component {
               increasingly digital presence of money.
             </p>
           </div>
-          <h1 className="infoheader" id="ethereum">
+          <h2 className="infoheader" id="ethereum">
             Ethereum{" "}
             <img src={Ethereum} alt="Ethereum Logo" className="infoimage"></img>
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               Bitcoin is a revolutionary technology, but the underlying network
@@ -184,9 +194,9 @@ class Scenarios extends React.Component {
             </p>
           </div>
           <img src={Web3} alt="Web3" className="web"></img>
-          <h1 className="infoheader" id="defi">
+          <h2 className="infoheader" id="defi">
             DeFi
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               DeFi (or decentralized finance) is an experimental form of finance
@@ -217,9 +227,9 @@ class Scenarios extends React.Component {
               fragmented infrastructure of the modern banking system.
             </p>
           </div>
-          <h1 className="infoheader" id="dex">
+          <h2 className="infoheader" id="dex">
             Decentralized Exchanges
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               A decentralized exchange (or DEX for short) is a peer-to-peer
@@ -248,9 +258,9 @@ class Scenarios extends React.Component {
               from Consensys.
             </p>
           </div>
-          <h1 className="infoheader" id="lp">
+          <h2 className="infoheader" id="lp">
             Liquidity Provider
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               A liquidity provider is a user or institution who funds a
@@ -266,30 +276,30 @@ class Scenarios extends React.Component {
               slippage and the inability to execute trades, the advantage of
               liquidity providers is that trades can always be executed as long
               as the liquidity pools are big enough. For this reason, liquidity
-              providers are seen as trade facilitators and paid with the
-              transaction fees paid for the trades that they enabled. How much
-              liquidity providers are paid is based on the percentage of the
-              liquidity pool that they provide. When funding the pool, they are
-              usually required to fund two different assets to enable traders to
-              switch between one to the other by trading them in pairs. In the
-              case of Uniswap and SushiSwap this ratio is 50/50.
+              providers are seen as <strong>trade facilitators</strong> and paid
+              with the transaction fees paid for the trades that they enabled.
+              How much liquidity providers are paid is based on the percentage
+              of the liquidity pool that they provide. When funding the pool,
+              they are usually required to fund two different assets to enable
+              traders to switch between one to the other by trading them in
+              pairs. In the case of Uniswap and SushiSwap this ratio is 50/50.
             </p>
             <p className="educontent">
               Liquidity Provision is an excellent way to earn a consistent ROI
-              when properly managed. It is easily possible to consistently
-              return 2-3% ROI monthly with an LP position. To make this possible
-              you must understand the systems which you are providing liquidity
-              to, and the four factors which will influence your returns as an
-              LP:
+              on a pair of assets when properly managed. It is definitely
+              possible to consistently return 2-3% ROI monthly with an LP
+              position. To make this possible you must understand the systems
+              which you are providing liquidity to, and the four factors which
+              will influence your returns as an LP:
               <img src={Factors} className="factors"></img>
               Information on two of the leading decentralized exchanges and each
               of these four factors can be found below.
             </p>
           </div>
 
-          <h1 className="infoheader" id="uniswap">
+          <h2 className="infoheader" id="uniswap">
             <img src={Uniswap} alt="Uniswap Logo" className="infoimage"></img>
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               Uniswap is a DApp built on the Ethereum blockchain which allows
@@ -316,14 +326,14 @@ class Scenarios extends React.Component {
             </p>
           </div>
 
-          <h1 className="infoheader" id="sushiswap">
+          <h2 className="infoheader" id="sushiswap">
             SushiSwap{" "}
             <img
               src={SushiNew}
               alt="SushiSwap Logo"
               className="infoimage"
             ></img>
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               SushiSwap is another decentralized exchange on Ethereum, which
@@ -369,9 +379,9 @@ class Scenarios extends React.Component {
             </p>
           </div>
 
-          <h1 className="infoheader" id="fees">
+          <h2 className="infoheader" id="fees">
             Fees
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               Liquidity providers earn a percentage of the trading fees (0.03%
@@ -385,9 +395,9 @@ class Scenarios extends React.Component {
             </p>
           </div>
 
-          <h1 className="infoheader" id="il">
+          <h2 className="infoheader" id="il">
             Impermanent Loss
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               Impermanent Loss is the difference between holding tokens in a
@@ -415,9 +425,9 @@ class Scenarios extends React.Component {
             </p>
           </div>
 
-          <h1 className="infoheader" id="lm">
+          <h2 className="infoheader" id="lm">
             Liquidity Mining
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               Liquidity mining is the act of supplying liquidity to a protocol
@@ -428,9 +438,9 @@ class Scenarios extends React.Component {
               liquidity provided.
             </p>
           </div>
-          <h1 className="infoheader" id="pe">
+          <h2 className="infoheader" id="pe">
             Price Exposure
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               In my opinion, the most neglected factor to consider when choosing
@@ -460,9 +470,9 @@ class Scenarios extends React.Component {
               future.
             </p>
           </div>
-          <h1 className="infoheader" id="apr">
+          <h2 className="infoheader" id="apy">
             APY, APR, and ROI
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               These three terms are often misunderstood, and you will see them
@@ -532,11 +542,39 @@ class Scenarios extends React.Component {
               to improve the strategies for estimating pool metrics, and will
               provide backtested confidence levels for these calculations.
             </p>
+            <p className="educontent">
+              Another caveat about the yields of an LP position is that the ROI
+              you will see is <strong>with respect to the LP tokens</strong>{" "}
+              themselves. The LP tokens have 50% price exposure to ETH and 50%
+              to another asset, so the ROI is the return compared to holding
+              these assets in a 50-50 ratio.
+            </p>
+
+            {/* 
+              The following
+              three calculations should help clarify this idea, drive home the
+              importance of tracking yields with respect to ETH, and provide the
+              motivation behind the Liquid Ether Zap:
+            </p>
+            <p className="educontent">
+              In the following calculations, LP ROI is the rate of return you
+              will find in the Pool Explorer (fees + liquidity rewards -
+              impermanent loss).
+            </p>
+            <p className="educontent">
+              To calculate the USD value of LP position returns:
+              <div style={{ textAlign: "center" }}>
+                <p className="educontent">
+                  USD Output Value = USD Input Value + (USD Input Value * LP
+                  ROI)
+                </p>
+              </div>
+            </p> */}
           </div>
-          <h1 className="infoheader" id="aave">
+          <h2 className="infoheader" id="aave">
             <img src={Aave} alt="AAVE Logo" className="infoimage"></img>{" "}
             <img src={Ghost} className="infoimage"></img>
-          </h1>
+          </h2>
 
           <div className="edu">
             <p className="educontent">
@@ -554,12 +592,50 @@ class Scenarios extends React.Component {
               client, API or directly with the smart contracts on the Ethereum
               network. Being open source means that users are able to build any
               third-party service or application to interact with the protocol
-              and enrich their product (like this one).
+              and enrich their product (like this one). The decentralized nature
+              of AAVE also means that users can propose changes to the protocol
+              in the form of governance. This process is described in detail
+              below, and will be the mechanism for proposing the addition of the
+              additional markets which accept Uniswap and SushiSwap LP tokens as
+              collateral.
             </p>
           </div>
-          <h1 className="infoheader" alt="AAVE Ghost" id="aave">
+          <h2 className="infoheader" id="governance">
+            Governance
+          </h2>
+          <div className="edu">
+            <p className="educontent">
+              Governance is a structure that every user or participant agrees to
+              follow. Everything humans use is under some form of governance.
+              Its core purpose is to meet the user or participant's needs with
+              available resources as efficiently as possible and achieve the
+              long-term sustainability of the structure. It applies to any type
+              of group, be it in the real world or digital. Governance becomes
+              increasingly indispensable as institutions, organizations, or
+              services grow. In the context of DeFi, the governance of protocols
+              is typically delegated to the holders of a governance token.
+            </p>
+            <p className="educontent">
+              A governance token is a token which developers create to allow
+              token holders to help shape the future of a protocol. Governance
+              token holders can influence decisions concerning the project such
+              as proposing or deciding on new feature proposals and even
+              changing the governance system itself. In many cases, the changes
+              proposed, vetted and then voted on through on-chain governance
+              accessed by using governance tokens are applied automatically due
+              to smart contracts. In other cases, the team maintaining the
+              project is tasked with applying the changes or hiring someone who
+              will. Proponents of systems that use governance tokens believe
+              that they allow for user control, which holds true to the original
+              cryptocurrency ideals of decentralization and democratization. In
+              most cases, organizations who let users control the development of
+              their systems are called decentralized autonomous organizations
+              (DAOs).
+            </p>
+          </div>
+          <h2 className="infoheader" id="lez">
             Liquid Ether Zap
-          </h1>
+          </h2>
           <div className="edu">
             <p className="educontent">
               The Liquid Ether Zap is a tool which allows users to go from ETH

@@ -45,6 +45,7 @@ function numberWithCommas(x) {
 //      "Estimated IL (30d)": {},
 //      "Estimated Sushi Rewards (30d)": {},
 //      "Estimated ROI (30d)": {},
+//      "Address": {}
 // }
 const SushiCalc = async (pool, address, rewards) => {
   if (address in rewards) {
@@ -122,6 +123,7 @@ const SushiCalc = async (pool, address, rewards) => {
     "Estimated IL (30d)": round(il, 2) + " %",
     "Estimated Sushi Rewards (30d)": round(reward, 2) + " %",
     "Estimated ROI (30d)": round(fees + il + reward, 2) + " %",
+    Address: address,
   };
 
   function expectedFees(volume, liquidity) {

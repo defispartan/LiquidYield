@@ -23,13 +23,12 @@ import Uniswap from "assets/img/brand/uniswap.png";
 import Aave from "assets/img/brand/aave.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import Header from "components/Headers/Header.js";
+import TheGraph from "assets/img/brand/thegraph.png";
+import Zapper from "assets/img/brand/zapper.png";
+import SushiSwap from "assets/img/brand/sushiswaplogo.png";
+import DeFiPedia from "assets/img/brand/defipedia.png";
 
 class About extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     return (
       <>
@@ -42,6 +41,56 @@ class About extends React.Component {
               <Row>
                 <div
                   className="powerleft"
+                  style={{ backgroundImage: `url(${Uniswap})` }}
+                >
+                  <a
+                    href="https://uniswap.exchange"
+                    style={{ display: "block", width: "100%", height: "100%" }}
+                  >
+                    {" "}
+                  </a>
+                </div>
+                <div
+                  className="powerright"
+                  style={{
+                    backgroundImage: `url(${SushiSwap})`,
+                  }}
+                >
+                  <a
+                    href="https://sushiswap.fi/"
+                    style={{ display: "block", width: "100%", height: "100%" }}
+                  >
+                    {" "}
+                  </a>
+                </div>
+              </Row>
+              <Row>
+                <div
+                  className="powerleft"
+                  style={{ backgroundImage: `url(${TheGraph})` }}
+                >
+                  <a
+                    href="https://thegraph.com/"
+                    style={{ display: "block", width: "100%", height: "100%" }}
+                  >
+                    {" "}
+                  </a>
+                </div>
+                <div
+                  className="powerright"
+                  style={{ backgroundImage: `url(${Zapper})` }}
+                >
+                  <a
+                    href="https://zapper.fi/"
+                    style={{ display: "block", width: "100%", height: "100%" }}
+                  >
+                    {" "}
+                  </a>
+                </div>
+              </Row>
+              <Row>
+                <div
+                  className="powerleft"
                   style={{
                     backgroundImage: `url(${Aave})`,
                   }}
@@ -49,18 +98,26 @@ class About extends React.Component {
                   <a
                     href="https://aave.com"
                     style={{ display: "block", width: "100%", height: "100%" }}
-                  ></a>
+                  >
+                    {" "}
+                  </a>
                 </div>
+
                 <div
                   className="powerright"
-                  style={{ backgroundImage: `url(${Uniswap})` }}
+                  style={{
+                    backgroundImage: `url(${DeFiPedia})`,
+                  }}
                 >
                   <a
-                    href="https://uniswap.exchange"
+                    href="https://twitter.com/defipedia?lang=en"
                     style={{ display: "block", width: "100%", height: "100%" }}
-                  ></a>
+                  >
+                    {" "}
+                  </a>
                 </div>
               </Row>
+
               <h1 style={{ marginTop: "50px" }}>Inspired By</h1>
               <ul style={{ listStyle: "none", padding: "0" }}>
                 <li className="list">
@@ -84,7 +141,7 @@ class About extends React.Component {
               <a href="https://github.com/aschmidt20/LiquidYield">GitHub</a>
 
               <h1 style={{ marginTop: "50px" }}>
-                Question, Comments, Concerns
+                Question, Comments, or Feature Requests
               </h1>
               <p>
                 You can reach out to me on Twitter{" "}

@@ -35,7 +35,7 @@ import Header from "components/Headers/Header.js";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import LPValueImg from "../assets/img/brand/lpvalue.png";
 import UniswapLogo from "../assets/img/brand/uniswap.png";
-import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.PNG";
+import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.png";
 
 const LPValue = (props) => {
   const uniPoolOptions = [

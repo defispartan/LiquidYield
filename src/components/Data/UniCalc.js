@@ -44,6 +44,7 @@ function numberWithCommas(x) {
 //      "Estimated Fees (30d)": {},
 //      "Estimated IL (30d)": {},
 //      "Estimated ROI (30d)": {},
+//      "Address": {}
 // }
 const UniCalc = async (pool, address) => {
   const result = await uniswapClient.query({
@@ -98,7 +99,17 @@ const UniCalc = async (pool, address) => {
   });
   let fees = expectedFees(monthlyAverageVolume, monthlyAverageLiquidity);
   let il = calculateIL(pair, previousMonth[0]);
-
+  let count = 0;
+  let current = "";
+  /*   while (current !== address || count < uniswaproidata.length) {
+    current = uniswaproidata[count];
+    count = count + 1;
+  }
+  if (current === address) {
+    let returns = uniswaproidata[count].return_forecast;
+    console.log("POOL FOUND");
+    console.log(returns);
+  } */
   return {
     "Liquidity Pool": (
       <Media className="align-items-center">
@@ -116,6 +127,7 @@ const UniCalc = async (pool, address) => {
     "Estimated Fees (30d)": round(fees, 2) + " %",
     "Estimated IL (30d)": round(il, 2) + " %",
     "Estimated ROI (30d)": round(fees + il, 2) + " %",
+    Address: address,
   };
 
   function expectedFees(volume, liquidity) {
