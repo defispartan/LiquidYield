@@ -176,9 +176,17 @@ const ZapConnect = ({ disconnect }) => {
       {/* Page content */}
       <Container className="mt--7" fluid>
         <div className="zapheader">
-          <img src={LEZHeader} className="lezheader"></img>
+          <img src={LEZHeader} className="poolexplorer"></img>
 
-          <div className="buttonrow" style={{ textAlign: "center" }}>
+          <div
+            className="buttonrow"
+            style={{
+              textAlign: "center",
+              width: "50%",
+              margin: "0 auto",
+              minWidth: "300px",
+            }}
+          >
             {/*             <Button
               onClick={setSimpleMode}
               className={"simple" === zapMode ? "selected" : ""}
@@ -191,8 +199,14 @@ const ZapConnect = ({ disconnect }) => {
             >
               Advanced
             </Button> */}
-            <h4 style={{ color: "red" }}>Coming Soon</h4>
-            <p style={{ minWidth: "500px", width: "50%", margin: "0 auto" }}>
+            <h4
+              style={{
+                color: "red",
+              }}
+            >
+              Coming Soon
+            </h4>
+            <p>
               With the recent release of{" "}
               <a href="https://medium.com/aave/the-aave-protocol-v2-f06f299cee04">
                 AAVE V2

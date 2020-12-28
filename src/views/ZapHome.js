@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ZapConnect from "./ZapConnect.js";
 import ZapPlain from "./ZapPlain.js";
 import drizzleOptions from "../drizzleOptions.js";
 import { Drizzle } from "@drizzle/store";
@@ -7,29 +6,25 @@ import { drizzleReactHooks } from "@drizzle/react-plugin";
 import LoadingContainer from "./LoadingContainer.js";
 const { DrizzleProvider } = drizzleReactHooks;
 
-function ZapHome() {
-  const [walletConnected, setWalletConnect] = useState(false);
-  const [drizzle, setDrizzle] = useState(null);
+function ZapHome(props) {
   const [alertMessage, setAlert] = useState(null);
 
-  function connectWallet() {
-    const drizzleObject = new Drizzle(drizzleOptions);
-    setDrizzle(drizzleObject);
-    setWalletConnect(true);
+  let drizzle = {};
+  if (props.walletConnected) {
+    drizzle = new Drizzle(drizzleOptions);
   }
-
-  return walletConnected ? (
+  return props.walletConnected ? (
     <DrizzleProvider drizzle={drizzle}>
       <LoadingContainer
-        unsetWallet={() => setWalletConnect(false)}
+        unsetWallet={() => props.setWalletConnect(false)}
         setAlert={(alert) => setAlert(alert)}
-        disconnect={() => setWalletConnect(false)}
+        disconnect={() => props.setWalletConnect(false)}
         page="Zap"
       />
     </DrizzleProvider>
   ) : (
     <ZapPlain
-      connect={() => connectWallet()}
+      connect={() => props.connectWallet()}
       alert={alertMessage}
       setAlert={(alert) => setAlert(alert)}
     />

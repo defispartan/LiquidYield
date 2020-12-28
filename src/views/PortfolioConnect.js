@@ -48,11 +48,21 @@ const { AccountData } = newContextComponents;
 
 const PortfolioConnect = ({ disconnect }) => {
   const [uniLoading, setUniLoading] = useState(true);
-  const [data, setData] = useState([{}]);
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem("portfolioData")) || [{}]
+  );
+  const [currentAddress, setCurrentAddress] = useState(
+    localStorage.getItem("currentAddress") || ""
+  );
   const [activeUniColumn, setActiveUniColumn] = useState(-1);
   const [lastActiveUniColumn, setLastActiveUniColumn] = useState(0);
   const [uniToggle, setUniToggle] = useState(false);
   const [message, setMessage] = useState("");
+  const [showWalletDetails, setShowWalletDetails] = useState(true);
+
+  const [dataSaved, setDataSaved] = useState(
+    localStorage.getItem("dataSaved") || false
+  );
   const { drizzle } = useDrizzle();
   const state = useDrizzleState((state) => state);
   const networkMap = {
@@ -104,23 +114,15 @@ const PortfolioConnect = ({ disconnect }) => {
   }
 
   const calculateUniHoldings = (uniData) => {
-    let holdingsArray = [{}];
+    console.log("Calculating UNI holdings");
+    let holdingsArray = [];
     uniData.forEach((element) => {
       if (element.uniswap_version === "v2") {
         let current =
           element.operations_details[element.operations_details.length - 1];
         if (current.value_taken_out_usd > 10) {
           let currentObj = {
-            "Liquidity Pool": (
-              <Media className="align-items-center">
-                <div className="avatar rounded-circle mr-3">
-                  <img alt="..." src={UNIV2} />
-                </div>
-                <Media>
-                  <span className="mb-0 text-sm">{element.pair_name}</span>
-                </Media>
-              </Media>
-            ),
+            "Liquidity Pool": element.pair_name,
 
             "Current Value":
               "$ " + numberWithCommas(round(current.value_taken_out_usd, 2)),
@@ -136,8 +138,23 @@ const PortfolioConnect = ({ disconnect }) => {
         }
       }
     });
+    if (holdingsArray.length === 0) {
+      holdingsArray.push({});
+    }
     return holdingsArray;
   };
+
+  const setDataSave = (holdings) => {
+    console.log("SETTING PORTFOLIO DATA SAVE");
+    console.log(holdings);
+    localStorage.setItem("portfolioData", JSON.stringify(holdings));
+    localStorage.setItem("dataSaved", true);
+    setDataSaved(true);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("currentAddress", currentAddress);
+  }, [currentAddress]);
 
   useEffect(() => {
     async function fetchData() {
@@ -185,20 +202,50 @@ const PortfolioConnect = ({ disconnect }) => {
               setMessage(<React.Fragment></React.Fragment>);
             }
             setData(holdings);
+            setDataSave(holdings);
             setUniLoading(false);
+            setCurrentAddress(state.accounts[0]);
           } else {
             await timeout(10000);
           }
         }
       }
     }
-    fetchData();
+
+    if (dataSaved === false) {
+      fetchData();
+    } else {
+      // If data is saved, set the message which checks for empty portfolio, set loading to false, and check if currentAddress is equal to wallet address
+      if (currentAddress !== state.accounts[0]) {
+        setMessage(
+          <div style={{ textAlign: "center" }}>
+            <p style={{ color: "white", paddingTop: "20px" }}>
+              Wallet address changed, re-running analysis
+            </p>
+          </div>
+        );
+        fetchData();
+      } else {
+        setUniLoading(false);
+        if (Object.keys(data[0]).length === 0) {
+          setMessage(
+            <div style={{ textAlign: "center" }}>
+              <p style={{ color: "white" }}>
+                There are no active Uniswap LP positions for this address
+              </p>
+            </div>
+          );
+        } else {
+          setMessage(<React.Fragment></React.Fragment>);
+        }
+      }
+    }
   }, []);
 
   const uniLoadingSpin = () => {
     if (uniLoading === true) {
       return (
-        <div className="spinny">
+        <div className="newspinny">
           <Spinner
             style={{ width: "5em", height: "5em", paddingBottom: "20px" }}
             color="white"
@@ -250,6 +297,57 @@ const PortfolioConnect = ({ disconnect }) => {
     }
   };
 
+  const toggleWalletDetails = () => {
+    setShowWalletDetails(!showWalletDetails);
+  };
+  const displayWalletDetails = () => {
+    if (showWalletDetails) {
+      return (
+        <Card className="portwalletdetails">
+          <div className="walleticon" onClick={toggleWalletDetails}>
+            <h4 className="inlinetext" style={{ paddingRight: "5px" }}>
+              Hide Panel
+            </h4>
+            <i className="inlinetext minus circle icon"></i>
+          </div>
+          <div>
+            <h4 className="inlinetext">Network:</h4>{" "}
+            <p className="inlinetext">{networkMap[state.web3.networkId]}</p>
+          </div>
+          <div>
+            {" "}
+            <h4 className="inlinetext">Wallet:</h4>{" "}
+            <p className="inlinetext">{state.accounts[0]}</p>
+          </div>
+          <div>
+            <h4 className="inlinetext">Balance:</h4>{" "}
+            <p className="inlinetext">
+              {round(
+                state.accountBalances[state.accounts[0]] / 1000000000000000000,
+                5
+              )}{" "}
+              ETH
+            </p>
+          </div>
+
+          <Button className="wallet" onClick={() => disconnect()}>
+            Disconnect Wallet
+          </Button>
+        </Card>
+      );
+    } else {
+      return (
+        <Card className="smallerportwalletdetails">
+          <div onClick={toggleWalletDetails}>
+            <h4 className="inlinetext" style={{ paddingRight: "5px" }}>
+              Show Panel
+            </h4>
+            <i className="inlinetext plus circle icon"></i>
+          </div>
+        </Card>
+      );
+    }
+  };
   const displayUniTable = () => {
     if (uniLoading === false) {
       return (
@@ -286,7 +384,7 @@ const PortfolioConnect = ({ disconnect }) => {
                 <th scope="col">24h Volume (USD)</th>
                 <th scope="col">Estimated Fees (30d)</th>
                 <th scope="col">Estimated Impermanent Loss (30d)</th>
-                <th scope="col">Estimated ROI (30d)</th> */}
+              <th scope="col">Estimated ROI (30d)</th> */}
               </tr>
             </thead>
             <tbody>
@@ -294,14 +392,27 @@ const PortfolioConnect = ({ disconnect }) => {
                 return (
                   <tr key={key}>
                     {Object.keys(row).map(function (entry, key) {
-                      if (entry !== "Address") {
+                      if (entry !== "Liquidity Pool") {
                         return (
                           <td scope="row" key={key} data-label={entry}>
                             {row[entry]}
                           </td>
                         );
                       } else {
-                        return null;
+                        return (
+                          <td scope="row" key={key} data-label={entry}>
+                            <Media className="align-items-center">
+                              <div className="avatar rounded-circle mr-3">
+                                <img alt="..." src={UNIV2} />
+                              </div>
+                              <Media>
+                                <span className="mb-0 text-sm">
+                                  {row[entry]}
+                                </span>
+                              </Media>
+                            </Media>
+                          </td>
+                        );
                       }
                     })}
                   </tr>
@@ -343,30 +454,7 @@ const PortfolioConnect = ({ disconnect }) => {
           <p style={{ color: "white" }}>Coming Soon</p>
         </div>
 
-        <Card className="portwalletdetails">
-          <div>
-            <h4 className="inlinetext">Network:</h4>{" "}
-            <p className="inlinetext">{networkMap[state.web3.networkId]}</p>
-          </div>
-          <div>
-            {" "}
-            <h4 className="inlinetext">Wallet:</h4>{" "}
-            <p className="inlinetext">{state.accounts[0]}</p>
-          </div>
-          <div>
-            <h4 className="inlinetext">Balance:</h4>{" "}
-            <p className="inlinetext">
-              {round(
-                state.accountBalances[state.accounts[0]] / 1000000000000000000,
-                5
-              )}{" "}
-              ETH
-            </p>
-          </div>
-          <Button className="wallet" onClick={() => disconnect()}>
-            Disconnect Wallet
-          </Button>
-        </Card>
+        {displayWalletDetails()}
         <Card className="data">
           Data from the <a href="https://www.uniswaproi.com/#">UniswapROI</a>{" "}
           API

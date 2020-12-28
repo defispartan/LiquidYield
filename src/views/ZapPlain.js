@@ -153,8 +153,16 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
       </Modal>
       <Container className="mt--7" fluid>
         <div className="zapheader">
-          <img src={LEZHeader} className="lezheader"></img>
-          <div className="buttonrow" style={{ textAlign: "center" }}>
+          <img src={LEZHeader} className="poolexplorer"></img>
+          <div
+            className="buttonrow"
+            style={{
+              textAlign: "center",
+              width: "50%",
+              margin: "0 auto",
+              minWidth: "300px",
+            }}
+          >
             {/*             <Button
               onClick={setSimpleMode}
               className={"simple" === zapMode ? "selected" : ""}
@@ -168,7 +176,7 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
               Advanced
             </Button> */}
             <h4 style={{ color: "red" }}>Coming Soon</h4>
-            <p style={{ minWidth: "500px", width: "50%", margin: "0 auto" }}>
+            <p>
               With the recent release of{" "}
               <a href="https://medium.com/aave/the-aave-protocol-v2-f06f299cee04">
                 AAVE V2

@@ -22,6 +22,8 @@ import { Container } from "reactstrap";
 import axios from "axios";
 // core components
 import NewPools from "views/NewPools.js";
+import PortfolioHome from "views/PortfolioHome.js";
+import ZapHome from "views/ZapHome.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import { masterchefClient } from "components/Data/MasterChefClient";
 import { sushiswapClient } from "components/Data/SushiSwapClient";
@@ -33,8 +35,11 @@ import {
 } from "components/Data/Query.js";
 import UniCalc from "components/Data/UniCalc.js";
 import SushiCalc from "components/Data/SushiCalc.js";
-
+import drizzleOptions from "../drizzleOptions.js";
+import { Drizzle } from "@drizzle/store";
+import { drizzleReactHooks } from "@drizzle/react-plugin";
 import routes from "routes.js";
+const { DrizzleProvider } = drizzleReactHooks;
 
 let unilist = [
   ["USDT/ETH", "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852"],
@@ -105,6 +110,17 @@ class Admin extends React.Component {
     sushiData: [{}],
     loadingUni: true,
     loadingSushi: true,
+    walletConnected: localStorage.getItem("wallet") || false,
+  };
+
+  setWalletConnect = (status) => {
+    this.setState({ walletConnected: status });
+    localStorage.setItem("wallet", status);
+  };
+
+  connectWallet = () => {
+    this.setState({ walletConnected: true });
+    localStorage.setItem("wallet", true);
   };
 
   async asyncForEach(array, callback) {
@@ -196,7 +212,37 @@ class Admin extends React.Component {
   }
   getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.path === "/pools") {
+      if (prop.path === "/portfolio") {
+        return (
+          <Route
+            path={prop.path}
+            key={key}
+            render={(props) => (
+              <PortfolioHome
+                {...props}
+                setWalletConnect={this.setWalletConnect}
+                connectWallet={this.connectWallet}
+                walletConnected={this.state.walletConnected}
+              />
+            )}
+          />
+        );
+      } else if (prop.path === "/zap") {
+        return (
+          <Route
+            path={prop.path}
+            key={key}
+            render={(props) => (
+              <ZapHome
+                {...props}
+                setWalletConnect={this.setWalletConnect}
+                connectWallet={this.connectWallet}
+                walletConnected={this.state.walletConnected}
+              />
+            )}
+          />
+        );
+      } else if (prop.path === "/pools") {
         return (
           <Route
             path={prop.path}

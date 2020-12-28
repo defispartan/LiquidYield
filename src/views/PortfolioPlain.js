@@ -59,21 +59,24 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
           </Button2>
         </Modal.Actions>
       </Modal>
-      <Container className="mt--7 bg-dark" fluid>
-        <div className="zapheader">
-          <img src={PortfolioHeader} className="portcardheader"></img>
-        </div>
-        <Card body className="zap">
-          <Button
-            className="connectbutton"
-            onClick={() => connect()}
-            color="primary"
-          >
-            Connect Wallet
-          </Button>
-        </Card>
-        <AdminFooter />
-      </Container>
+
+      <div className="wrapper">
+        <Container className="mt--7 bg-dark" fluid>
+          <div className="zapheader">
+            <img src={PortfolioHeader} className="portcardheader"></img>
+          </div>
+          <Card body className="zap">
+            <Button
+              className="connectbutton"
+              onClick={() => connect()}
+              color="primary"
+            >
+              Connect Wallet
+            </Button>
+          </Card>
+          <AdminFooter />
+        </Container>
+      </div>
     </>
   );
 };
