@@ -106,10 +106,12 @@ let sushilist = [
 
 class Admin extends React.Component {
   state = {
-    uniData: [{}],
-    sushiData: [{}],
-    loadingUni: true,
-    loadingSushi: true,
+    uniData: JSON.parse(localStorage.getItem("uniData")) || [{}],
+    sushiData: JSON.parse(localStorage.getItem("sushiData")) || [{}],
+    loadingUni: localStorage.getItem("loadingUni") || true,
+    loadingSushi: localStorage.getItem("loadingSushi") || true,
+    //loadingUni: true,
+    //loadingSushi: true,
     walletConnected: localStorage.getItem("wallet") || false,
   };
 
@@ -141,68 +143,75 @@ class Admin extends React.Component {
       uniswaproidata = response.data;
       console.log("Uniswap ROI Data Fetched");
     } */
-    let uniArray = [];
-    let sushiArray = [];
-    this.setState({ loadingUni: true });
-    this.setState({ loadingSushi: true });
-    await this.asyncForEach(unilist, async (element) => {
-      let newObj = await UniCalc(element[0], element[1]);
-      uniArray.push(newObj);
-    });
-    this.setState({ uniData: uniArray });
-    this.setState({ loadingUni: false });
+    if (this.state.loadingUni === true) {
+      let uniArray = [];
+      await this.asyncForEach(unilist, async (element) => {
+        let newObj = await UniCalc(element[0], element[1]);
+        uniArray.push(newObj);
+      });
+      this.setState({ uniData: uniArray });
+      localStorage.setItem("uniData", JSON.stringify(uniArray));
+      this.setState({ loadingUni: false });
+      localStorage.setItem("loadingUni", false);
+    }
+    if (this.state.loadingSushi === true) {
+      let sushiArray = [];
 
-    const blocksPerDay = 6500;
-    const sushi = await sushiswapClient.query({
-      query: GET_DERIVED_ETH,
-      variables: {
-        id: "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
-      },
-    });
-    const derivedETH = sushi.data.token.derivedETH;
-    const poolResult = await masterchefClient.query({
-      query: GET_REWARD_POOLS,
-      fetchPolicy: "cache-first",
-    });
-    const pools = poolResult.data.pools;
-    const allocResult = await masterchefClient.query({
-      query: GET_TOTAL_ALLOC,
-      fetchPolicy: "cache-first",
-    });
-    const totalAlloc = allocResult.data.masterChefs[0].totalAllocPoint;
-    let pool30ROI = {};
-    await this.asyncForEach(pools, async (entry) => {
-      const poolInfo = await sushiswapClient.query({
-        query: GET_POOL_INFO,
+      const blocksPerDay = 6500;
+      const sushi = await sushiswapClient.query({
+        query: GET_DERIVED_ETH,
         variables: {
-          id: entry.pair,
+          id: "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
         },
+      });
+      const derivedETH = sushi.data.token.derivedETH;
+      const poolResult = await masterchefClient.query({
+        query: GET_REWARD_POOLS,
         fetchPolicy: "cache-first",
       });
-      if (poolInfo.data.pair != null) {
-        let totalSupply = poolInfo.data.pair.totalSupply;
-        let totalValueETH = poolInfo.data.pair.reserveETH;
-        let sushiPerBlock = 100 - 100 * (entry.allocPoint / totalAlloc);
-        let thirtyDayROI =
-          (100 *
-            (derivedETH *
-              blocksPerDay *
-              sushiPerBlock *
-              3 *
-              30 *
-              (entry.allocPoint / totalAlloc))) /
-          (totalValueETH * (entry.slpBalance / totalSupply));
+      const pools = poolResult.data.pools;
+      const allocResult = await masterchefClient.query({
+        query: GET_TOTAL_ALLOC,
+        fetchPolicy: "cache-first",
+      });
+      const totalAlloc = allocResult.data.masterChefs[0].totalAllocPoint;
+      let pool30ROI = {};
+      await this.asyncForEach(pools, async (entry) => {
+        const poolInfo = await sushiswapClient.query({
+          query: GET_POOL_INFO,
+          variables: {
+            id: entry.pair,
+          },
+          fetchPolicy: "cache-first",
+        });
+        if (poolInfo.data.pair != null) {
+          let totalSupply = poolInfo.data.pair.totalSupply;
+          let totalValueETH = poolInfo.data.pair.reserveETH;
+          let sushiPerBlock = 100 - 100 * (entry.allocPoint / totalAlloc);
+          let thirtyDayROI =
+            (100 *
+              (derivedETH *
+                blocksPerDay *
+                sushiPerBlock *
+                3 *
+                30 *
+                (entry.allocPoint / totalAlloc))) /
+            (totalValueETH * (entry.slpBalance / totalSupply));
 
-        pool30ROI[entry.pair] = thirtyDayROI;
-      }
-    });
-    let rewards = pool30ROI;
-    await this.asyncForEach(sushilist, async (element) => {
-      let newObj = await SushiCalc(element[0], element[1], rewards);
-      sushiArray.push(newObj);
-    });
-    this.setState({ sushiData: sushiArray });
-    this.setState({ loadingSushi: false });
+          pool30ROI[entry.pair] = thirtyDayROI;
+        }
+      });
+      let rewards = pool30ROI;
+      await this.asyncForEach(sushilist, async (element) => {
+        let newObj = await SushiCalc(element[0], element[1], rewards);
+        sushiArray.push(newObj);
+      });
+      this.setState({ sushiData: sushiArray });
+      localStorage.setItem("sushiData", JSON.stringify(sushiArray));
+      this.setState({ loadingSushi: false });
+
+      localStorage.setItem("loadingSushi", false);
+    }
   }
 
   componentDidUpdate(e) {

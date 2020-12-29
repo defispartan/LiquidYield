@@ -111,19 +111,9 @@ const UniCalc = async (pool, address) => {
     console.log(returns);
   } */
   return {
-    "Liquidity Pool": (
-      <Media className="align-items-center">
-        <div className="avatar rounded-circle mr-3">
-          <img alt="..." src={getMarketImage()} />
-        </div>
-        <Media>
-          <span className="mb-0 text-sm">{pool}</span>
-        </Media>
-      </Media>
-    ),
-    "Total Liquidity (USD)": "$ " + numberWithCommas(round(pair.reserveUSD, 0)),
-    "24h Volume (USD)":
-      "$ " + numberWithCommas(round(previous.dailyVolumeUSD, 0)),
+    "Liquidity Pool": pool,
+    "Total Liquidity": "$ " + numberWithCommas(round(pair.reserveUSD, 0)),
+    "24h Volume": "$ " + numberWithCommas(round(previous.dailyVolumeUSD, 0)),
     "Estimated Fees (30d)": round(fees, 2) + " %",
     "Estimated IL (30d)": round(il, 2) + " %",
     "Estimated ROI (30d)": round(fees + il, 2) + " %",

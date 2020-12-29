@@ -24,6 +24,7 @@ import {
   CardHeader,
   Collapse,
   Container,
+  Media,
   Row,
   Table,
   Spinner,
@@ -39,7 +40,8 @@ import AAVEPool from "../assets/img/brand/aavepoolex.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import UniswapLogo from "../assets/img/brand/uniswap.png";
 import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.png";
-
+import UNIV2 from "assets/img/theme/uniswapv2.jpg";
+import SUSHI from "assets/img/theme/chef.PNG";
 import { FaInfoCircle } from "react-icons/fa";
 import ReactTooltip from "react-tooltip";
 
@@ -72,21 +74,35 @@ function sortByColumn(a, colIndex, reverse) {
   return a;
 }
 
+function loadBoolParse(val) {
+  if (val === "true" || val === true) {
+    return true;
+  } else if (val === "false" || val === false) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 const NewPools = (props) => {
   const [openPool, setOpenPool] = useState("Uniswap");
   const [imagePool, setImagePool] = useState(AAVEPool);
   const [title, setTitle] = useState(UniswapLogo);
   const [poolRewards, setPoolRewards] = useState({});
-  const [uniData, setUniData] = useState([{}]);
-  const [sushiData, setSushiData] = useState([{}]);
+  const [uniData, setUniData] = useState(props.uniData);
+  //const [uniData, setUniData] = useState(JSON.parse(localStorage.getItem('uniData')) || [{}])
+  const [sushiData, setSushiData] = useState(props.sushiData);
+  //const [sushiData, setUniData] = useState(JSON.parse(localStorage.getItem('sushiData')) || [{}])
   const [data, setData] = useState([{}]);
   const [activeColumn, setActiveColumn] = useState(-1);
   const [lastActiveColumn, setLastActiveColumn] = useState(0);
   const [toggle, setToggle] = useState(false);
   const [sushiToolTip, setSushiToolTip] = useState(false);
   const [roiToolTip, setRoiToolTip] = useState(false);
-  const [loadingUni, setLoadingUni] = useState(props.loadingUni);
-  const [loadingSushi, setLoadingSushi] = useState(props.loadingSushi);
+  const [loadingUni, setLoadingUni] = useState(loadBoolParse(props.loadingUni));
+  const [loadingSushi, setLoadingSushi] = useState(
+    loadBoolParse(props.loadingSushi)
+  );
   const [infoIcon, setInfoIcon] = useState(
     <i className="plus circle icon"></i>
   );
@@ -102,17 +118,39 @@ const NewPools = (props) => {
   };
 
   useEffect(() => {
-    setUniData(props.uniData);
+    console.log("EFFECTOR");
+    console.log(loadingUni);
+    console.log(uniData);
+    console.log(loadingSushi);
+    console.log(sushiData);
     if (openPool === "Uniswap") {
       setData(uniData);
     }
-    setLoadingUni(props.loadingUni);
-    setSushiData(props.sushiData);
     if (openPool === "SushiSwap") {
       setData(sushiData);
     }
-    setLoadingSushi(props.loadingSushi);
-  }, [props.loadingUni, props.loadingSushi, props.uniData, props.sushiData]);
+  }, []);
+
+  useEffect(() => {
+    if (props.loadingUni === false) {
+      setUniData(props.uniData);
+      if (openPool === "Uniswap") {
+        //console.log("SETTING DATA TO UNI");
+        setData(props.uniData);
+        //console.log(data);
+      }
+      setLoadingUni(props.loadingUni);
+    }
+    if (props.loadingSushi === false) {
+      setSushiData(props.sushiData);
+      if (openPool === "SushiSwap") {
+        //console.log("SETTING DATA TO SUSHI");
+        setData(props.sushiData);
+        //console.log(data);
+      }
+      setLoadingSushi(props.loadingSushi);
+    }
+  }, [props.loadingUni, props.loadingSushi]);
 
   const handleClick = (title, key) => {
     if (activeColumn === key) {
@@ -127,8 +165,7 @@ const NewPools = (props) => {
 
   const handleRowClick = (key) => {
     if (modal === false) {
-      let poolName =
-        key["Liquidity Pool"].props.children[1].props.children.props.children;
+      let poolName = key["Liquidity Pool"];
       let secondAsset = poolName.split("/")[0];
       poolName = openPool + " " + poolName;
       let poolAddress = key["Address"];
@@ -238,11 +275,30 @@ const NewPools = (props) => {
     setInfoOpen(!infoOpen);
   };
 
+  const getMarketImage = () => {
+    if (openPool === "Uniswap") {
+      return UNIV2;
+    } else if (openPool === "SushiSwap") {
+      return SUSHI;
+    } else {
+      return null;
+    }
+  };
+
   const displayPools = () => {
+    //console.log("DISPLAY POOLS");
+    //console.log(loadingUni);
+    //console.log(uniData);
+    //console.log(loadingSushi);
+    //console.log(sushiData);
+    //console.log(data);
+    //console.log(openPool);
     if (
       (loadingUni === false && openPool === "Uniswap") ||
       (loadingSushi === false && openPool === "SushiSwap")
     ) {
+      //console.log("INTO THE LOOP, DATA BELOW");
+      //console.log(data);
       return (
         <Table className="align-items-center table-flush" responsive>
           <thead className="thead-light">
@@ -288,7 +344,20 @@ const NewPools = (props) => {
                   onClick={() => handleRowClick(row)}
                 >
                   {Object.keys(row).map(function (entry, key) {
-                    if (entry !== "Address") {
+                    if (entry === "Liquidity Pool") {
+                      return (
+                        <td scope="row" key={key} data-label={entry}>
+                          <Media className="align-items-center">
+                            <div className="avatar rounded-circle mr-3">
+                              <img alt="..." src={getMarketImage()} />
+                            </div>
+                            <Media>
+                              <span className="mb-0 text-sm">{row[entry]}</span>
+                            </Media>
+                          </Media>
+                        </td>
+                      );
+                    } else if (entry !== "Address") {
                       return (
                         <td scope="row" key={key} data-label={entry}>
                           {row[entry]}
