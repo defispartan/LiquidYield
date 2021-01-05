@@ -19,6 +19,7 @@
 // reactstrap components
 import {
   Card,
+  CardHeader,
   Collapse,
   Table,
   Button,
@@ -42,6 +43,7 @@ import SushiSwapLogo from "../assets/img/brand/sushiswaplogowhite.png";
 import UNIV2 from "assets/img/theme/uniswapv2.jpg";
 import { FaInfoCircle } from "react-icons/fa";
 import ReactTooltip from "react-tooltip";
+import dayjs from "dayjs";
 
 const { useDrizzle, useDrizzleState } = drizzleReactHooks;
 const { AccountData } = newContextComponents;
@@ -54,12 +56,15 @@ const PortfolioConnect = ({ disconnect }) => {
   const [currentAddress, setCurrentAddress] = useState(
     localStorage.getItem("currentAddress") || ""
   );
+  const [lastRefresh, setLastRefresh] = useState(
+    localStorage.getItem("lastRefresh") || null
+  );
   const [activeUniColumn, setActiveUniColumn] = useState(-1);
   const [lastActiveUniColumn, setLastActiveUniColumn] = useState(0);
   const [uniToggle, setUniToggle] = useState(false);
   const [message, setMessage] = useState("");
   const [showWalletDetails, setShowWalletDetails] = useState(true);
-
+  const [refresh, setRefresh] = useState(false);
   const [dataSaved, setDataSaved] = useState(
     localStorage.getItem("dataSaved") || false
   );
@@ -149,71 +154,91 @@ const PortfolioConnect = ({ disconnect }) => {
     console.log(holdings);
     localStorage.setItem("portfolioData", JSON.stringify(holdings));
     localStorage.setItem("dataSaved", true);
+    setLastRefresh(dayjs().format());
+    localStorage.setItem("lastRefresh", dayjs().format());
+    console.log("Setting last refresh time to " + dayjs().format());
     setDataSaved(true);
   };
+
+  async function fetchData() {
+    console.log("fetching data");
+    const uniswaproikey = process.env.REACT_APP_uniswaproiapikey;
+    axios.defaults.headers.post["Content-Type"] =
+      "application/x-www-form-urlencoded";
+    const response = await axios.post(
+      "https://api.uniswaproi.com/run_analysis",
+      {
+        api_key: uniswaproikey,
+        address: state.accounts[0],
+        //address: "0xc72525ab51a96cabe5d810125a08a4fb36740b07", // Test account
+      }
+    );
+    console.log("Called analysis");
+    console.log(response);
+    if (response.data.status === "failed") {
+      console.log(response.data.reason);
+    } else {
+      let req_id = response.data.request_id;
+
+      let status = "failed";
+      let analysis = {};
+      while (status !== "ok") {
+        analysis = await axios.get(
+          "https://cors-anywhere.herokuapp.com/https://api.uniswaproi.com/retrieve_analysis",
+          {
+            params: {
+              api_key: uniswaproikey,
+              request_id: req_id,
+            },
+          }
+        );
+        status = analysis.data.status;
+        if (status === "ok") {
+          console.log("Got the data");
+          let uniswapPortfolioData = analysis.data.data.analysis;
+          let holdings = calculateUniHoldings(uniswapPortfolioData);
+          if (Object.keys(holdings[0]).length === 0) {
+            setMessage(
+              <div style={{ textAlign: "center" }}>
+                <p style={{ color: "white" }}>
+                  There are no active Uniswap LP positions for this address
+                </p>
+              </div>
+            );
+          } else {
+            setMessage(<React.Fragment></React.Fragment>);
+          }
+          setData(holdings);
+          setDataSave(holdings);
+          setUniLoading(false);
+          setRefresh(false);
+          setCurrentAddress(state.accounts[0]);
+        } else {
+          await timeout(10000);
+        }
+      }
+    }
+  }
 
   useEffect(() => {
     localStorage.setItem("currentAddress", currentAddress);
   }, [currentAddress]);
 
   useEffect(() => {
-    async function fetchData() {
-      const uniswaproikey = process.env.REACT_APP_uniswaproiapikey;
-      axios.defaults.headers.post["Content-Type"] =
-        "application/x-www-form-urlencoded";
-      const response = await axios.post(
-        "https://api.uniswaproi.com/run_analysis",
-        {
-          api_key: uniswaproikey,
-          address: state.accounts[0],
-          //address: "0xc72525ab51a96cabe5d810125a08a4fb36740b07", // Test account
-        }
-      );
-      if (response.data.status === "failed") {
-        console.log(response.data.reason);
-      } else {
-        let req_id = response.data.request_id;
-
-        let status = "failed";
-        let analysis = {};
-        while (status !== "ok") {
-          analysis = await axios.get(
-            "https://cors-anywhere.herokuapp.com/https://api.uniswaproi.com/retrieve_analysis",
-            {
-              params: {
-                api_key: uniswaproikey,
-                request_id: req_id,
-              },
-            }
-          );
-          status = analysis.data.status;
-          if (status === "ok") {
-            let uniswapPortfolioData = analysis.data.data.analysis;
-            let holdings = calculateUniHoldings(uniswapPortfolioData);
-            if (Object.keys(holdings[0]).length === 0) {
-              setMessage(
-                <div style={{ textAlign: "center" }}>
-                  <p style={{ color: "white" }}>
-                    There are no active Uniswap LP positions for this address
-                  </p>
-                </div>
-              );
-            } else {
-              setMessage(<React.Fragment></React.Fragment>);
-            }
-            setData(holdings);
-            setDataSave(holdings);
-            setUniLoading(false);
-            setCurrentAddress(state.accounts[0]);
-          } else {
-            await timeout(10000);
-          }
-        }
-      }
+    if (refresh === true) {
+      setDataSaved(false);
+      setUniLoading(true);
+      fetchData();
+      localStorage.setItem("dataSaved", false);
+      console.log("REFRESH SET");
+      console.log(localStorage.getItem("dataSaved"));
     }
+  }, [refresh]);
 
+  useEffect(() => {
     if (dataSaved === false) {
       fetchData();
+      setRefresh(false);
     } else {
       // If data is saved, set the message which checks for empty portfolio, set loading to false, and check if currentAddress is equal to wallet address
       if (currentAddress !== state.accounts[0]) {
@@ -300,6 +325,41 @@ const PortfolioConnect = ({ disconnect }) => {
   const toggleWalletDetails = () => {
     setShowWalletDetails(!showWalletDetails);
   };
+
+  const triggerRefresh = () => {
+    setRefresh(true);
+    setMessage(
+      <div style={{ textAlign: "center", paddingTop: "20px" }}>
+        <p style={{ color: "white" }}>Refreshing portfolio data</p>
+      </div>
+    );
+  };
+
+  const displayRefresh = () => {
+    console.log("LAST REFRESH");
+    console.log(lastRefresh);
+    console.log(dayjs(lastRefresh));
+    if (refresh === false) {
+      return (
+        <div className="porttable">
+          <Button onClick={triggerRefresh}>Refresh Data</Button>
+          <p style={{ display: "inline-block" }}>
+            {" "}
+            Last Refresh: {round(
+              dayjs().diff(dayjs(lastRefresh)) / 60000,
+              0
+            )}{" "}
+            minutes ago
+          </p>
+        </div>
+      );
+    }
+  };
+
+  const displayMessage = () => {
+    return message;
+  };
+
   const displayWalletDetails = () => {
     if (showWalletDetails) {
       return (
@@ -351,76 +411,78 @@ const PortfolioConnect = ({ disconnect }) => {
   const displayUniTable = () => {
     if (uniLoading === false) {
       return (
-        <Card className="shadow">
-          <Table className="align-items-center table-flush" responsive>
-            <thead className="thead-light">
-              <tr>
-                {Object.keys(data[0]).map((title, key) => {
-                  return (
-                    <th
-                      key={key}
-                      onClick={() => handleUniClick(title, key)}
-                      scope="col"
-                      data-label={title}
-                      className="tableHeader"
-                    >
-                      <p style={{ display: "inline", cursor: "pointer" }}>
-                        {title + " "}
-                      </p>
-                      {getTooltip(title)}
-                      <p style={{ cursor: "pointer", display: "inline" }}>
-                        {activeUniColumn === key
-                          ? uniToggle
-                            ? " ↓"
-                            : " ↑"
-                          : ""}
-                      </p>
-                    </th>
-                  );
-                })}
+        <React.Fragment>
+          <Card className="shadow">
+            <Table className="align-items-center table-flush" responsive>
+              <thead className="thead-light">
+                <tr>
+                  {Object.keys(data[0]).map((title, key) => {
+                    return (
+                      <th
+                        key={key}
+                        onClick={() => handleUniClick(title, key)}
+                        scope="col"
+                        data-label={title}
+                        className="tableHeader"
+                      >
+                        <p style={{ display: "inline", cursor: "pointer" }}>
+                          {title + " "}
+                        </p>
+                        {getTooltip(title)}
+                        <p style={{ cursor: "pointer", display: "inline" }}>
+                          {activeUniColumn === key
+                            ? uniToggle
+                              ? " ↓"
+                              : " ↑"
+                            : ""}
+                        </p>
+                      </th>
+                    );
+                  })}
 
-                {/*               <th scope="col">Liquidity Pool</th>
+                  {/*               <th scope="col">Liquidity Pool</th>
                 <th scope="col">Total Liquidity (USD)</th>
                 <th scope="col">24h Volume (USD)</th>
                 <th scope="col">Estimated Fees (30d)</th>
                 <th scope="col">Estimated Impermanent Loss (30d)</th>
               <th scope="col">Estimated ROI (30d)</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row, key) => {
-                return (
-                  <tr key={key}>
-                    {Object.keys(row).map(function (entry, key) {
-                      if (entry !== "Liquidity Pool") {
-                        return (
-                          <td scope="row" key={key} data-label={entry}>
-                            {row[entry]}
-                          </td>
-                        );
-                      } else {
-                        return (
-                          <td scope="row" key={key} data-label={entry}>
-                            <Media className="align-items-center">
-                              <div className="avatar rounded-circle mr-3">
-                                <img alt="..." src={UNIV2} />
-                              </div>
-                              <Media>
-                                <span className="mb-0 text-sm">
-                                  {row[entry]}
-                                </span>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((row, key) => {
+                  return (
+                    <tr key={key}>
+                      {Object.keys(row).map(function (entry, key) {
+                        if (entry !== "Liquidity Pool") {
+                          return (
+                            <td scope="row" key={key} data-label={entry}>
+                              {row[entry]}
+                            </td>
+                          );
+                        } else {
+                          return (
+                            <td scope="row" key={key} data-label={entry}>
+                              <Media className="align-items-center">
+                                <div className="avatar rounded-circle mr-3">
+                                  <img alt="..." src={UNIV2} />
+                                </div>
+                                <Media>
+                                  <span className="mb-0 text-sm">
+                                    {row[entry]}
+                                  </span>
+                                </Media>
                               </Media>
-                            </Media>
-                          </td>
-                        );
-                      }
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        </Card>
+                            </td>
+                          );
+                        }
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </Card>
+        </React.Fragment>
       );
     }
   };
@@ -432,6 +494,7 @@ const PortfolioConnect = ({ disconnect }) => {
         <div className="zapheader">
           <img src={PortfolioHeader} className="portcardheader"></img>
         </div>
+        {displayRefresh()}
 
         <div className="unipanel">
           <img
@@ -441,7 +504,7 @@ const PortfolioConnect = ({ disconnect }) => {
           ></img>
           {displayUniTable()}
           {uniLoadingSpin()}
-          {message}
+          {displayMessage()}
         </div>
 
         <div className="sushipanel">

@@ -108,6 +108,15 @@
   padding-bottom: 20px;
 }
 
+.utility {
+  display: block;
+  width: 30%;
+  margin: 0 auto;
+  min-width: 333px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .defispartan {
   width: 20%;
   max-width: 500px;
@@ -297,6 +306,28 @@
   min-width: 350px;
 }
 
+.lpcomp {
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+  min-width: 350px;
+}
+.indexheaderdiv {
+  text-align: center;
+}
+.indexheader {
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+
+.featureimg {
+  width: 300px;
+  max-width: 100%;
+  position: relative;
+  margin-top: -100px;
+  top: 50%;
+}
+
 .tableheaderimg {
   float: left;
   display: block;
@@ -447,4 +478,39 @@
   min-width: 150px;
   margin-bottom: 0;
   padding-bottom: 30px;
+}
+
+.porttable {
+  display: inline-block;
+  color: white;
+}
+
+.featurerow {
+  height: 300px;
+  width: 100%;
+  max-width: 1000px;
+  min-width: 400px;
+  margin: 0 auto;
+}
+
+.featureleft {
+  float: left;
+  width: 50%;
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+}
+
+.featureright {
+  float: right;
+  width: 50%;
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+}
+
+.centerfeature {
+  position: relative;
+  margin-top: -50px;
+  top: 50%;
 }

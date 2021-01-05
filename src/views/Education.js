@@ -31,6 +31,7 @@ import Header from "components/Headers/Header.js";
 import Web3 from "assets/img/brand/web3.PNG";
 import Bitcoin from "assets/img/brand/bitcoin.png";
 import Factors from "assets/img/theme/factors.png";
+import Utility from "assets/img/brand/utility.jpg";
 
 class Scenarios extends React.Component {
   constructor(props) {
@@ -53,16 +54,29 @@ class Scenarios extends React.Component {
               <Button>Bitcoin</Button>
             </a>
             <a href="javascript:document.getElementById('ethereum').scrollIntoView(true);">
-              <Button>Ethereum</Button>
+              <Button>
+                Ethereum <i className="star icon yellow"></i>
+              </Button>
             </a>
             <a href="javascript:document.getElementById('defi').scrollIntoView(true);">
               <Button>DeFi</Button>
             </a>
+            <a href="javascript:document.getElementById('start').scrollIntoView(true);">
+              <Button>
+                Getting Started <i className="star icon yellow"></i>
+              </Button>
+            </a>
+            <a href="javascript:document.getElementById('risk').scrollIntoView(true);">
+              <Button>Risks</Button>
+            </a>
+
             <a href="javascript:document.getElementById('dex').scrollIntoView(true);">
               <Button>Decentralized Exchanges</Button>
             </a>
             <a href="javascript:document.getElementById('lp').scrollIntoView(true);">
-              <Button>Liquidity Provider</Button>
+              <Button>
+                Liquidity Provider <i className="star icon yellow"></i>
+              </Button>
             </a>
             <a href="javascript:document.getElementById('uniswap').scrollIntoView(true);">
               <Button>Uniswap</Button>
@@ -89,7 +103,9 @@ class Scenarios extends React.Component {
             </a>
 
             <a href="javascript:document.getElementById('apy').scrollIntoView(true);">
-              <Button>APY, APR, and ROI</Button>
+              <Button>
+                APY, APR, and ROI <i className="star icon yellow"></i>
+              </Button>
             </a>
 
             <a href="javascript:document.getElementById('aave').scrollIntoView(true);">
@@ -119,7 +135,7 @@ class Scenarios extends React.Component {
             <p className="educontent">
               Bitcoin is a cryptocurrency invented in 2008 by an unknown person
               or group of people using the name Satoshi Nakamoto, and
-              implemented as an open-source software in 2009. It is a
+              implemented as an open-source software in 2009. Bitcoin is a
               decentralized digital currency without a central bank or single
               administrator that can be sent from user to user on the
               peer-to-peer bitcoin network without the need for intermediaries.
@@ -144,8 +160,8 @@ class Scenarios extends React.Component {
               cap set forth in the whitepaper. In this way Bitcoin acts as a
               digital store of value with a finite supply. There is a strong
               case to be made that Bitcoin is a logical hedge against fiat
-              inflation, given it's striking similarities to Gold and the
-              increasingly digital presence of money.
+              inflation, given it's similarities to Gold and the increasingly
+              digital presence of money.
             </p>
           </div>
           <h2 className="infoheader" id="ethereum">
@@ -166,15 +182,13 @@ class Scenarios extends React.Component {
               current state and execution of code is shared by all network
               participants. This means that any idea, agreement, or application
               that can be expressed in code can be verifiably executed and
-              stored on the Ethereum blockchain. Over the last 5 years,
-              developers have been rapidly innovating and turning this vision of
-              building a decentralized web on Ethereum into a tangible reality.
+              stored on the Ethereum blockchain.
             </p>
             <p className="educontent">
               The environment of applications (dApps) built on the blockchain is
               commonly referred to as <strong>Web3</strong>. The features of
               Web3 that make it so revolutionary are:
-              <ul>
+              <ul style={{ paddingTop: "20px" }}>
                 <li>Seamless integration of a global payment network</li>
                 <li>
                   Permissionless: There is no government or entity which can
@@ -214,44 +228,162 @@ class Scenarios extends React.Component {
               than a tenfold growth during the course of 2020.
             </p>
             <p className="educontent">
-              DeFi revolves around applications known as DApps (decentralized
-              applications) that perform financial functions on blockchains.
-              Rather than transactions being with and through a centralized
-              intermediary such as a cryptocurrency exchange, transactions are
-              directly between participants, mediated by smart contract
-              programs. DApps are typically accessed through a Web3 enabled
-              browser extension or application, such as MetaMask. Many of these
-              DApps can connect and work together to create synergistic
-              financial services. This phenomena is known as{" "}
+              DeFi revolves around applications (dApps) that perform financial
+              functions on blockchains. Rather than transactions being with and
+              through a centralized intermediary such as a cryptocurrency
+              exchange, transactions are directly between participants, mediated
+              by smart contract programs. DApps are typically accessed through a
+              Web3 enabled browser extension or application, such as MetaMask.
+              Many of these dApps can connect and work together to create
+              synergistic financial services. This phenomena is known as{" "}
               <strong>composability</strong>, and is a stark contrast to the
-              fragmented infrastructure of the modern banking system.
+              fragmented infrastructure of the modern banking system. The
+              composability of DeFi protocols has opened the door for new forms
+              of financial products, and has created a "sandbox" for financial
+              innovation which has never previously existed. The Liquid Ether
+              Zap is an example of a product which is the direct result of DeFi
+              composability.
             </p>
           </div>
+
+          <h2 className="infoheader" id="start">
+            Getting Started
+          </h2>
+          <div className="edu">
+            <p className="educontent">
+              This section is very generalized and opionated. The advise that I
+              give here is <strong>not</strong> financial advise and should not
+              be interpreted as such. These are just some thoughts and resources
+              that you may find useful when starting out with cryptocurrency.
+            </p>
+            <p>
+              The first step in engaging with cryptocurrency is to underatand
+              cryptocurrency wallets. The following guide will teach you about
+              all of the different kinds of wallets, and give you an
+              introduction on best practices for keeping wallets secure:
+              <a href="https://collectiveshift.com.au/kc/storage-wallets/">
+                All About Cryptocurrency Wallets
+              </a>
+              .
+            </p>
+            <p className="educontent">
+              I would break down the content in this guide into two parts:
+              <ul style={{ paddingTop: "20px" }}>
+                <li>
+                  <strong>On Ramps: </strong>
+                  This is where you will actually purchase cryptocurrency with
+                  your native currency. Some of the most popular on-ramps are{" "}
+                  <a href="https://www.coinbase.com/">Coinbase</a> and{" "}
+                  <a href="https://www.binance.com/">Binance</a>. If you are on
+                  a mobile device I would personally recommend{" "}
+                  <a href="https://www.argent.xyz/">Argent</a> because of it's
+                  simple interface and direct integration with DeFi
+                  applications.
+                </li>
+                <li>
+                  <strong>Storage: </strong>
+                  It is not recommended to store your cryptocurrency on an
+                  exchange (see{" "}
+                  <a href="https://selfkey.org/list-of-cryptocurrency-exchange-hacks/">
+                    here
+                  </a>{" "}
+                  for a list of reasons why). For long term storage it is best
+                  to use a hardware wallet such as a{" "}
+                  <a href="https://www.ledger.com/">Ledger</a> or{" "}
+                  <a href="https://trezor.io/">Trezor</a>. For interacting with
+                  DeFi applications, it is also recommended to have a seperate
+                  browser wallet called{" "}
+                  <a href="https://metamask.io/">MetaMask</a> where you can
+                  quickly interact with dApps and send coins to other wallets.
+                </li>
+              </ul>
+            </p>
+            <p>
+              Once you own cryptocurrency and have your tokens secured on a
+              hardware wallet, take some time to give youself a pat on the back.
+              You're officially ahead of the curve and on your way to living
+              bankless. After you're all setup with wallets it's time to learn
+              about and interact with blockchain projects. This website is a
+              great place to learn about a few specific protocols, but if you're
+              looking for more general information sources check out{" "}
+              <a href="https://newsletter.banklesshq.com/p/-guide-1-starting-with-bankless">
+                Bankless
+              </a>
+              .
+            </p>
+          </div>
+
+          <h2 className="infoheader" id="risk">
+            Risks
+          </h2>
+          <div className="edu">
+            <p className="educontent">
+              The permisionless nature of cryptocurrency means that there's no
+              central authority which can revert transactions. This means that
+              it is <strong>crucial</strong> to take the security of your
+              crypotcurrency wallets and blockchain interactions seriously. The
+              first thing you must understand is how cryptocurrency wallets
+              work. If you haven't read the{" "}
+              <a href="https://collectiveshift.com.au/kc/storage-wallets/">
+                All About Cryptocurrency Wallets
+              </a>{" "}
+              guide I would strongly encourage you to do that now. This should
+              hopefully teach you the importance of keeping your private keys
+              safe. Once you understand how wallets work it's important to
+              understand the ways in which hackers will try to exploit you. The
+              <a href="https://collectiveshift.com.au/knowledge-centre/how-to-identify-avoid-crypto-scams/">
+                How to Identify and Avoid Crypto Scams
+              </a>{" "}
+              guide is another resource that it's crucial to read-through and
+              understand.
+            </p>
+            <p>
+              Once you understand the risks associated with wallet security,
+              it's time to turn to protocol security. The extremely experimental
+              and open-source nature of DeFi means that hacks are a pretty
+              common occurence. There are a few things that you can do to
+              protect yourself from these hacks:
+              <ul style={{ paddingTop: "20px" }}>
+                <li>
+                  <strong>Buy Insurance</strong>: Protocols such as{" "}
+                  <a href="https://www.coverprotocol.com/">Cover</a> allow you
+                  to buy insurance for your deposits in the event that a
+                  protocol is hacked.
+                </li>
+                <li>
+                  <strong>Do Your Own Research</strong>: Some factors to
+                  consider before interacting with a protocol are the age, value
+                  locked, complexity, contract upgradability, and most
+                  importantly the security audits which have been conducted.{" "}
+                </li>
+              </ul>
+            </p>
+          </div>
+
           <h2 className="infoheader" id="dex">
             Decentralized Exchanges
           </h2>
           <div className="edu">
             <p className="educontent">
-              A decentralized exchange (or DEX for short) is a peer-to-peer
-              exchange that allows users to buy and sell cryptocurrency and
-              other assets without a central intermediary involved.
-              Decentralized exchanges differ from centralized exchanges as they
-              enable users to remain in control of their funds by operating
-              their critical functions on the blockchain: they leverage the
-              technology behind cryptocurrencies themselves to enable a safer
-              and more transparent trading. It solves the main limitations faced
-              by cryptocurrency markets, since there is no single point of
-              failure, aligning them with what has made the blockchain
-              technology so powerful in the first place. Most decentralized
-              exchanges are not fully decentralized, but semi-decentralized
-              (full decentralization is today more of an ideal, due to
-              limitations listed hereunder). In most cases, servers
-              (centralized) still host order books (among other features) but do
-              not hold private keys. Another central aspect is that
-              decentralized exchanges present the characteristics, benefits, and
-              limitations, of their underlying blockchain. For more info on the
-              differences between centralized and decentralized exchanges, check
-              out this{" "}
+              A decentralized exchange (DEX) is a peer-to-peer exchange that
+              allows users to buy and sell cryptocurrency and other assets
+              without a central intermediary involved. Decentralized exchanges
+              differ from centralized exchanges as they enable users to remain
+              in control of their funds by operating their critical functions on
+              the blockchain: they leverage the technology behind
+              cryptocurrencies themselves to enable a safer and more transparent
+              trading. It solves the main limitations faced by cryptocurrency
+              markets, since there is no single point of failure, aligning them
+              with what has made the blockchain technology so powerful in the
+              first place. Most decentralized exchanges are not fully
+              decentralized, but semi-decentralized (full decentralization is
+              today more of an ideal, due to limitations listed hereunder). In
+              most cases, servers (centralized) still host order books (among
+              other features) but do not hold private keys. Another central
+              aspect is that decentralized exchanges present the
+              characteristics, benefits, and limitations, of their underlying
+              blockchain. For more info on the differences between centralized
+              and decentralized exchanges, check out this{" "}
               <a href="https://consensys.net/blog/news/decentralized-exchanges-overview-benefits-and-advantages-over-centralized-exchanges/">
                 article
               </a>{" "}
@@ -302,14 +434,16 @@ class Scenarios extends React.Component {
           </h2>
           <div className="edu">
             <p className="educontent">
-              Uniswap is a DApp built on the Ethereum blockchain which allows
-              user to swap tokens on a decentralized exchange. Uniswap is
+              Uniswap is a dApp built on the Ethereum blockchain which allows
+              users to swap tokens on a decentralized exchange. Uniswap is
               notable for its simple user interface and low transaction fees.
               These factors have contributed to Uniswap's status as the highest
-              volume decentralized exchange in existence. Uniswap has
-              consistently maintained a weekly volume of over $1 Billion since
-              August, 2020 and reached a peak of $5.25 Billion in a single week
-              from Aug 31 - Sep 5.
+              volume decentralized exchange in existence. The Uniswap protocol
+              consists of a serious of liquidity pools. These pools are just
+              pairs of assets, which serve as the liquidity to facilitate trades
+              on Uniswap. When a user swaps funds on Uniswap, they pay a 30
+              basis-point fee (0.03%) which goes directly to the liquidity
+              providers of the pool.
             </p>
             <p className="educontent">
               The Uniswap Protocol has a governance token called UNI. Token
@@ -430,13 +564,24 @@ class Scenarios extends React.Component {
           </h2>
           <div className="edu">
             <p className="educontent">
-              Liquidity mining is the act of supplying liquidity to a protocol
-              to earn provider fees, and additional incentives, including but
-              not limited to governance tokens. In the example of SushiSwap,
-              LP's for SushiSwap pools will be rewarded with SUSHI tokens over
-              time. The amount of tokens earned is proportional to the amount of
-              liquidity provided.
+              Liquidity Mining is the act of supplying liquidity to a protocol
+              and earning additional incentives beyond trading fees, including
+              but not limited to governance tokens. Liquidity Mining was a
+              revolution which took over the DeFi landscape in 2020, and
+              introduced incentives for users to become adopters (usually
+              liquidity providers) of certain protocols. In the example of
+              SushiSwap, LP's for SushiSwap pools will be rewarded with SUSHI
+              tokens over time. The amount of tokens earned is proportional to
+              the amount of liquidity provided.
             </p>
+            <p>
+              The reason for protocols introducing liquidity mining is to boost
+              adoption and give early adopters a sense of "brand loyalty" by
+              rewarding them with governance tokens. The rationale of governance
+              tokens pushing protocol adoption is summarized in the graphic
+              below.
+            </p>
+            <img src={Utility} className="utility"></img>
           </div>
           <h2 className="infoheader" id="pe">
             Price Exposure
@@ -481,7 +626,7 @@ class Scenarios extends React.Component {
               differences. Here is a formal definition for each, with an
               additional comment on how they relate to liquidity providers:
             </p>
-            <ul>
+            <ul style={{ paddingTop: "20px" }}>
               <li>
                 <p className="educontent">
                   <strong>APY</strong>: A normalized representation of an
@@ -537,10 +682,10 @@ class Scenarios extends React.Component {
               price ratio between assets. Getting an accurate estimate for these
               values on an <strong>annual</strong> level is not reasonable. It
               is for this reason that I have chosen to omit APR and APY from the{" "}
-              <a href="/pools">Pool Explorer</a>, and have opted for more
-              reasonable metrics of weekly and monthly ROI. In the future I plan
-              to improve the strategies for estimating pool metrics, and will
-              provide backtested confidence levels for these calculations.
+              <a href="/pools">Pool Explorer</a>, and have opted for monthly ROI
+              instead. In the future I plan to improve the strategies for
+              estimating pool metrics, and will provide backtested confidence
+              levels for these calculations.
             </p>
             <p className="educontent">
               Another caveat about the yields of an LP position is that the ROI

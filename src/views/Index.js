@@ -35,8 +35,14 @@ import LiquidLogo from "../assets/img/brand/liquidyieldblue.png";
 import LPreturns from "../assets/img/brand/lpreturns.PNG";
 import Factors from "../assets/img/theme/factors.png";
 import LEZ from "../assets/img/brand/LEZ.png";
+import LPComp from "../assets/img/brand/lpcomp.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import Header from "components/Headers/Header.js";
+import educenter from "../assets/img/brand/educenter.png";
+import poolexplorer from "../assets/img/brand/poolexplorer.png";
+import portfolio from "../assets/img/brand/portfolio.png";
+import lptoken from "../assets/img/brand/lptoken.PNG";
+import lezbox from "../assets/img/brand/zapbox.png";
 
 class Index extends React.Component {
   constructor(props) {
@@ -54,7 +60,7 @@ class Index extends React.Component {
               src={LiquidLogo}
               alt="Liquid Yield Logo"
             ></img>
-            <h1
+            <h2
               style={{
                 textAlign: "center",
                 color: "#4483f4",
@@ -63,78 +69,144 @@ class Index extends React.Component {
               }}
             >
               Smarter Liquidity Management
-            </h1>
-            <h2>What is Liquid Yield?</h2>
+            </h2>
+            <div className="indexheaderdiv">
+              <h1 className="indexheader">What is Liquid Yield?</h1>
+            </div>
             <p>
               Liquid Yield is a service designed to educate and equip people
-              with skills and tools to maximize their yields as a liquidity
-              provider (LP).{" "}
+              with tools to maximize their yields as a liquidity provider (LP).{" "}
               <strong>
                 This project has no token or monetezation of any kind. Liquid
-                Yield is just a collection of resources to improve the lives of
-                liquidity providers.
+                Yield is just a collection of tools and resources.
               </strong>{" "}
               The goal of this site is to provide value to anyone who is
               interested in maximizing yields with respect to Ethereum. Whether
               you're a complete beginner, or an experienced LP, the interactive
               guides on this site will help you understand, visualize, and take
-              control of the factors affecting your LP yields.
+              control of the factors affecting your investments.
             </p>
-            <h2>Features</h2>
+            <div className="indexheaderdiv">
+              <h1 className="indexheader">What is a Liquidity Provider?</h1>
+            </div>
             <p>
-              The first resource you should check out is the{" "}
-              <a href="/education">Education Center</a>. This page is meant to
-              be an all-encompassing reource which covers Bitcoin, Ethereum,
-              DeFi, and terms specific to liquidity providers. Regardless of
-              skill level, there should be something in the Education Center to
-              learn from. Two sections worth highlighting are the{" "}
-              <a href="/education#il">impermanent loss</a> and{" "}
-              <a href="/education#pe">price exposure</a> sections. The
-              information and interactive tools in these sections are the keys
-              to mastering liquidity provision.
+              A liquidity provider is a user who deposits their funds into a
+              liquidity pool to facilitate trading on a decentralized exchange,
+              and earns passive income on their deposit. Providing liquidity to
+              a decentralized exchange is a way to put to your assets to work,
+              and earn a reward for doing so.
             </p>
             <p>
-              Once you've gone through the education center and have a
-              comfortable understanding of the four factors affecting LP yields,
-              check out the <a href="/pools">Pool Explorer</a> to get an idea of
-              the ROI for liquidity pools on Uniswap and SushiSwap. As explained{" "}
-              <a href="/education#apr">here</a>, pool ROI is constantly changing
-              based on volume, liquidity, pool rewards, and asset price
-              fluctuation, so treat shorter term metrics like weekly and monthly
-              ROI with more confidence than APY. In addition, the pool ROI
-              cannot predict assets prices, so the returns are with respect to
-              the LP tokens (50% exposure to ETH, and 50% expsosure to a second
-              asset). This second point is why it is recommended to do your own
-              research on the assets in a liquidity pool before investing, and
-              track your returns with respect to ETH! For each pool in the
-              explorer, you can click on the row to bring up links for more in
-              depth pool analytics with{" "}
-              <a href="https://apy.vision/#/">apy.vision</a>, and a simple UI to
-              invest in the pool with{" "}
-              <a href="https://zapper.fi/dashboard">zapper.fi</a>.
+              This is similar in concept to a user who deposits their funds to a
+              bank or lending protocol such as AAVE or Compound, and earns
+              interest based on the demand for borrowing those funds. The
+              diagram below compares the interest earned by lenders to fees
+              earned by liquidity providers. To learn more about Ethereum, DeFi,
+              decentralized exchanges, and the factors affecting returns as an
+              LP, check out the <a href="/education">Education Center</a>.
+              <img src={LPComp} className="lpcomp"></img>
             </p>
-            <p>
-              The next two features are tools to track your existing LP
-              positions. The first is the{" "}
-              <a href="#lpvalue">LP Token Value Calculator</a>. Often times LP
-              tokens can be staked in contracts and it becomes difficult to find
-              the value of your staked tokens. With this tool you can input a
-              pool and an amount, and get the asset breakdown with value in USD
-              for your LP tokens. The second tool is the{" "}
-              <a href="#portfolio">Porfolio</a>, which tracks the performance of
-              Uniswap and SushiSwap LP tokens in your Ethereum wallet.
-            </p>
-            <p>
-              The final (and most exciting) feature of Liquid Yield is the{" "}
-              <a href="/zap">Liquid Ether Zap</a>. This zap is an interface to
-              go directly from ETH into an LP position while maintaining 100%
-              exposure to the price of ETH. To learn how this is possible, read
-              the AAVE section in the education center or check out the diagram
-              below. Currently the zap is under construction while I update the
-              interface to work with AAVE V2 and propose the creation of Uniswap
-              and SushiSwap markets in AAVE governance. I'll be posting links to
-              support these proposals once they're available.
-            </p>
+
+            <div className="indexheaderdiv" style={{ paddingTop: "30px" }}>
+              <h1 className="indexheader">Liquid Yield Features</h1>
+            </div>
+
+            <div className="featurerow">
+              <div className="featureleft">
+                <div className="centerfeature">
+                  <h3>Education Center</h3>
+                  <p>
+                    An all-encompassing reource which covers Bitcoin, Ethereum,
+                    DeFi, and terms specific to liquidity providers. Regardless
+                    of skill level, there should be something in the Education
+                    Center to learn from.
+                  </p>
+                </div>
+              </div>
+              <div className="featureright">
+                <a href="/education">
+                  <img src={educenter} className="featureimg" />
+                </a>
+              </div>
+            </div>
+
+            <div className="featurerow">
+              <div className="featureright">
+                <div className="centerfeature">
+                  <h3>Pool Explorer</h3>
+                  <p>
+                    {" "}
+                    Gives insights into the expected ROI for liquidity pools on
+                    Uniswap and SushiSwap. Pool ROI is constantly changing based
+                    on volume, liquidity, pool rewards, and asset price
+                    fluctuation, so staying informed about pool metrics is an
+                    important skill for LP's to have.
+                  </p>
+                </div>
+              </div>
+              <div className="featureleft">
+                <a href="/pools">
+                  <img src={poolexplorer} className="featureimg" />
+                </a>
+              </div>
+            </div>
+            <div className="featurerow">
+              <div className="featureleft">
+                <div className="centerfeature">
+                  <h3>LP Token Value</h3>
+                  <p>
+                    Often times LP tokens can be staked in contracts and it
+                    becomes difficult to find the value of your staked tokens.
+                    With this tool you can input a Uniswap or Sushiswap pool and
+                    an amount, and get the asset breakdown with the current
+                    value in USD.
+                  </p>
+                </div>
+              </div>
+              <div className="featureright">
+                <a href="/lpvalue">
+                  <img src={lptoken} className="featureimg" />
+                </a>
+              </div>
+            </div>
+
+            <div className="featurerow">
+              <div className="featureright">
+                <div className="centerfeature">
+                  <h3>Portfolio</h3>
+                  <p>
+                    {" "}
+                    The Portfolio tool tracks the performance of Uniswap and
+                    SushiSwap LP tokens in your Ethereum wallet with respect to
+                    USD and ETH.
+                  </p>
+                </div>
+              </div>
+              <div className="featureleft">
+                <a href="/portfolio">
+                  <img src={portfolio} className="featureimg" />
+                </a>
+              </div>
+            </div>
+            <div className="featurerow">
+              <div className="featureleft">
+                <div className="centerfeature">
+                  <h3>Liquid Ether Zap</h3>
+                  <p>
+                    {" "}
+                    This Liquid Ether Zap is an interface to go directly from
+                    ETH into an LP position while maintaining 100% exposure to
+                    the price of ETH. See the diagram below for the steps
+                    involved. This feature is still under development.
+                  </p>
+                </div>
+              </div>
+              <div className="featureright">
+                <a href="/zap">
+                  <img src={lezbox} className="featureimg" />
+                </a>
+              </div>
+            </div>
 
             <img
               className="indexlez"

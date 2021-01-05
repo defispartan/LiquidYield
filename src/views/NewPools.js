@@ -44,6 +44,7 @@ import UNIV2 from "assets/img/theme/uniswapv2.jpg";
 import SUSHI from "assets/img/theme/chef.PNG";
 import { FaInfoCircle } from "react-icons/fa";
 import ReactTooltip from "react-tooltip";
+import dayjs from "dayjs";
 
 function sortByColumn(a, colIndex, reverse) {
   if (reverse === true) {
@@ -82,6 +83,10 @@ function loadBoolParse(val) {
   } else {
     return true;
   }
+}
+
+function round(value, decimals) {
+  return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 }
 
 const NewPools = (props) => {
@@ -132,7 +137,9 @@ const NewPools = (props) => {
   }, []);
 
   useEffect(() => {
-    if (props.loadingUni === false) {
+    if (props.loadingUni === true) {
+      setLoadingUni(props.loadingUni);
+    } else if (props.loadingUni === false) {
       setUniData(props.uniData);
       if (openPool === "Uniswap") {
         //console.log("SETTING DATA TO UNI");
@@ -141,7 +148,9 @@ const NewPools = (props) => {
       }
       setLoadingUni(props.loadingUni);
     }
-    if (props.loadingSushi === false) {
+    if (props.loadingSushi === true) {
+      setLoadingSushi(props.loadingSushi);
+    } else if (props.loadingSushi === false) {
       setSushiData(props.sushiData);
       if (openPool === "SushiSwap") {
         //console.log("SETTING DATA TO SUSHI");
@@ -214,6 +223,11 @@ const NewPools = (props) => {
     setData(sushiData);
   };
 
+  const triggerRefresh = () => {
+    console.log("REFRESH TRIGGERED");
+    props.triggerRefresh();
+  };
+
   const getTooltip = (title) => {
     if (title === "Estimated ROI (30d)") {
       return (
@@ -284,7 +298,26 @@ const NewPools = (props) => {
       return null;
     }
   };
-
+  const displayRefresh = () => {
+    if (
+      (loadingUni === false && openPool === "Uniswap") ||
+      (loadingSushi === false && openPool === "SushiSwap")
+    ) {
+      console.log("LAST REFRESH");
+      console.log(props.lastRefreshPool);
+      return (
+        <div className="porttable" style={{ paddingBottom: "20px" }}>
+          <Button onClick={triggerRefresh}>Refresh Data</Button>
+          <p style={{ display: "inline-block" }}>
+            {" "}
+            Last Refresh:{" "}
+            {round(dayjs().diff(dayjs(props.lastRefreshPool)) / 60000, 0)}{" "}
+            minutes ago
+          </p>
+        </div>
+      );
+    } else return <></>;
+  };
   const displayPools = () => {
     //console.log("DISPLAY POOLS");
     //console.log(loadingUni);
@@ -406,6 +439,7 @@ const NewPools = (props) => {
           <Button onClick={setSushiSwap}>SushiSwap</Button>
         </div>
         {/* Table */}
+        {displayRefresh()}
         <Row>
           <div className="col">
             {/*               <a href="/education">
