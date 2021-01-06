@@ -569,3 +569,21 @@
   padding-top: 20px;
   padding-bottom: 40px;
 }
+@media (max-width: 925px) {
+  .ethtoggle {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding-bottom: 30px;
+  }
+
+  .porttable {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+.listelement {
+  padding-bottom: 5px;
+}

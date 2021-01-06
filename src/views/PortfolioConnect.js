@@ -30,6 +30,7 @@ import {
   Spinner,
 } from "reactstrap";
 import PortfolioHeader from "assets/img/brand/portfolioheader.png";
+import { Radio } from "semantic-ui-react";
 
 // core components
 import { Dropdown, Input, Label } from "semantic-ui-react";
@@ -50,8 +51,12 @@ const { AccountData } = newContextComponents;
 
 const PortfolioConnect = ({ disconnect }) => {
   const [uniLoading, setUniLoading] = useState(true);
-  const [data, setData] = useState(
-    JSON.parse(localStorage.getItem("portfolioData")) || [{}]
+  const [data, setData] = useState([{}]);
+  const [usdData, setUSDData] = useState(
+    JSON.parse(localStorage.getItem("usdData")) || [{}]
+  );
+  const [ethData, setETHData] = useState(
+    JSON.parse(localStorage.getItem("ethData")) || [{}]
   );
   const [currentAddress, setCurrentAddress] = useState(
     localStorage.getItem("currentAddress") || ""
@@ -119,15 +124,23 @@ const PortfolioConnect = ({ disconnect }) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  function setDataToggle() {
+    if (ethToggle === true) {
+      setData(ethData);
+    } else {
+      setData(usdData);
+    }
+  }
+
   const calculateUniHoldings = (uniData) => {
-    console.log("Calculating UNI holdings");
-    let holdingsArray = [];
+    let usdholdingsArray = [];
+    let ethholdingsArray = [];
     uniData.forEach((element) => {
       if (element.uniswap_version === "v2") {
         let current =
           element.operations_details[element.operations_details.length - 1];
         if (current.value_taken_out_usd > 10) {
-          let currentObj = {
+          let usdcurrentObj = {
             "Liquidity Pool": element.pair_name,
 
             "Current Value":
@@ -140,29 +153,45 @@ const PortfolioConnect = ({ disconnect }) => {
             "ROI of LP Position vs Holding Assets":
               round(current.roi_uniswap_usd * 100, 2) + " %",
           };
-          holdingsArray.push(currentObj);
+          usdholdingsArray.push(usdcurrentObj);
+
+          let ethcurrentObj = {
+            "Liquidity Pool": element.pair_name,
+
+            "Current Value":
+              numberWithCommas(round(current.value_taken_out_eth, 2)) + " ETH",
+            "Value Invested":
+              numberWithCommas(round(current.value_old_price_eth, 2)) + " ETH",
+            "ROI of LP Position": round(current.roi_net_eth * 100, 2) + " %",
+            "ROI of Holding Assets":
+              round(current.roi_of_price_eth * 100, 2) + " %",
+            "ROI of LP Position vs Holding Assets":
+              round(current.roi_uniswap_eth * 100, 2) + " %",
+          };
+          ethholdingsArray.push(ethcurrentObj);
         }
       }
     });
-    if (holdingsArray.length === 0) {
-      holdingsArray.push({});
+    if (usdholdingsArray.length === 0) {
+      usdholdingsArray.push({});
     }
-    return holdingsArray;
+    if (ethholdingsArray.length === 0) {
+      ethholdingsArray.push({});
+    }
+    return [usdholdingsArray, ethholdingsArray];
   };
 
-  const setDataSave = (holdings) => {
-    console.log("SETTING PORTFOLIO DATA SAVE");
-    console.log(holdings);
-    localStorage.setItem("portfolioData", JSON.stringify(holdings));
+  const setDataSave = (usdholdings, ethholdings) => {
+    localStorage.setItem("usdData", JSON.stringify(usdholdings));
+    localStorage.setItem("ethData", JSON.stringify(ethholdings));
     localStorage.setItem("dataSaved", true);
     setLastRefresh(dayjs().format());
     localStorage.setItem("lastRefresh", dayjs().format());
-    console.log("Setting last refresh time to " + dayjs().format());
+
     setDataSaved(true);
   };
 
   async function fetchData() {
-    console.log("fetching data");
     const uniswaproikey = process.env.REACT_APP_uniswaproiapikey;
     axios.defaults.headers.post["Content-Type"] =
       "application/x-www-form-urlencoded";
@@ -174,8 +203,6 @@ const PortfolioConnect = ({ disconnect }) => {
         //address: "0xc72525ab51a96cabe5d810125a08a4fb36740b07", // Test account
       }
     );
-    console.log("Called analysis");
-    console.log(response);
     if (response.data.status === "failed") {
       console.log(response.data.reason);
     } else {
@@ -195,10 +222,11 @@ const PortfolioConnect = ({ disconnect }) => {
         );
         status = analysis.data.status;
         if (status === "ok") {
-          console.log("Got the data");
           let uniswapPortfolioData = analysis.data.data.analysis;
           let holdings = calculateUniHoldings(uniswapPortfolioData);
-          if (Object.keys(holdings[0]).length === 0) {
+          let usdholdings = holdings[0];
+          let ethholdings = holdings[1];
+          if (Object.keys(usdholdings[0]).length === 0) {
             setMessage(
               <div style={{ textAlign: "center" }}>
                 <p style={{ color: "white" }}>
@@ -209,8 +237,10 @@ const PortfolioConnect = ({ disconnect }) => {
           } else {
             setMessage(<React.Fragment></React.Fragment>);
           }
-          setData(holdings);
-          setDataSave(holdings);
+          setUSDData(usdholdings);
+          setETHData(ethholdings);
+          setDataSave(usdholdings, ethholdings);
+          setDataToggle();
           setUniLoading(false);
           setRefresh(false);
           setCurrentAddress(state.accounts[0]);
@@ -222,6 +252,10 @@ const PortfolioConnect = ({ disconnect }) => {
   }
 
   useEffect(() => {
+    setDataToggle();
+  }, [ethToggle]);
+
+  useEffect(() => {
     localStorage.setItem("currentAddress", currentAddress);
   }, [currentAddress]);
 
@@ -231,8 +265,6 @@ const PortfolioConnect = ({ disconnect }) => {
       setUniLoading(true);
       fetchData();
       localStorage.setItem("dataSaved", false);
-      console.log("REFRESH SET");
-      console.log(localStorage.getItem("dataSaved"));
     }
   }, [refresh]);
 
@@ -253,7 +285,7 @@ const PortfolioConnect = ({ disconnect }) => {
         fetchData();
       } else {
         setUniLoading(false);
-        if (Object.keys(data[0]).length === 0) {
+        if (Object.keys(usdData[0]).length === 0) {
           setMessage(
             <div style={{ textAlign: "center" }}>
               <p style={{ color: "white" }}>
@@ -357,9 +389,31 @@ const PortfolioConnect = ({ disconnect }) => {
     }
   };
 
+  const handleSwitchChange = () => {
+    setETHToggle(!ethToggle);
+  };
+
   const displayETHToggle = () => {
     if (refresh === false) {
-      return <p style={{ color: "white" }}>TOGGLE</p>;
+      if (ethToggle === true) {
+        return (
+          <div className="ethtoggle">
+            <Button>
+              <Radio toggle onClick={handleSwitchChange} />
+              <p style={{ color: "black" }}>Value in ETH</p>
+            </Button>
+          </div>
+        );
+      } else {
+        return (
+          <div className="ethtoggle">
+            <Button>
+              <Radio toggle onClick={handleSwitchChange} />
+              <p style={{ color: "black" }}>Value in USD</p>
+            </Button>
+          </div>
+        );
+      }
     } else {
       return <></>;
     }
@@ -504,13 +558,14 @@ const PortfolioConnect = ({ disconnect }) => {
           <img src={PortfolioHeader} className="portcardheader"></img>
         </div>
         {displayRefresh()}
-        {displayETHToggle()}
+
         <div className="unipanel">
+          {displayETHToggle()}
           <img
             src={UniswapLogo}
             alt="Uniswap Header"
             className="portcardimg"
-          ></img>
+          ></img>{" "}
           {displayUniTable()}
           {uniLoadingSpin()}
           {displayMessage()}

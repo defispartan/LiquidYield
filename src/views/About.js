@@ -128,15 +128,39 @@ class About extends React.Component {
                 <li className="list">
                   <a href="https://www.uniswaproi.com/#">Uniswap ROI</a>
                 </li>
-                <li className="list">
-                  <a href="https://zapper.fi">Zapper</a>
-                </li>
-                <li className="list">
-                  <a href="https://zumzoom.github.io/analytics/uniswap/roi/">
-                    ZumZoom Uniswap ROI Graphs
-                  </a>
-                </li>
               </ul>
+
+              <h1 style={{ marginTop: "50px" }}>Future Plans</h1>
+              <div style={{ textAlign: "center" }}></div>
+              <ul>
+                <li className="listelement">
+                  Add graphs for ETH and USD value of LP tokens over time to
+                  Pool Explorer, LP Token Value, and Portfolio
+                </li>
+                <li className="listelement">
+                  Turn LP Token Value Calculator into a tool for visualizing
+                  USD/ETH value, fees earned, and IL of any liquidity pool
+                  (historical performance or scenario based){" "}
+                </li>
+                <li className="listelement">
+                  Improve accuracy of Pool Explorer metrics and add more
+                  timeframes (daily, weekly, yearly)
+                </li>
+                <li>SushiSwap Portfolio Support (with SushiBar)</li>
+                <li className="listelement">
+                  Create and/or promote AAVE governance proposals for Uniswap
+                  and SushiSwap market
+                </li>
+                <li className="listelement">
+                  Work with community members to build, test, and audit smart
+                  contracts for the Liquid Ether Zap{" "}
+                </li>
+                <li className="listelement">
+                  Add Support for more Ethereum wallet types
+                </li>
+                <li className="listelement">Integrate Curve and Balancer</li>
+              </ul>
+
               <h1 style={{ marginTop: "50px" }}>Source Code</h1>
               <a href="https://github.com/aschmidt20/LiquidYield">GitHub</a>
 

@@ -142,7 +142,6 @@ class Index extends React.Component {
 
   async componentDidMount() {
     this.fetchUni();
-
     this.fetchSushi();
   }
 
