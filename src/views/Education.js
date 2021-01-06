@@ -305,7 +305,7 @@ class Scenarios extends React.Component {
               bankless. After you're all setup with wallets it's time to learn
               about and interact with blockchain projects. This website is a
               great place to learn about a few specific protocols, but if you're
-              looking for more general information sources check out{" "}
+              looking for more general sources of information check out{" "}
               <a href="https://newsletter.banklesshq.com/p/-guide-1-starting-with-bankless">
                 Bankless
               </a>
@@ -332,17 +332,18 @@ class Scenarios extends React.Component {
               safe. Once you understand how wallets work it's important to
               understand the ways in which hackers will try to exploit you. The
               <a href="https://collectiveshift.com.au/knowledge-centre/how-to-identify-avoid-crypto-scams/">
+                {" "}
                 How to Identify and Avoid Crypto Scams
               </a>{" "}
-              guide is another resource that it's crucial to read-through and
+              guide is another resource that is crucial to read-through and
               understand.
             </p>
             <p>
               Once you understand the risks associated with wallet security,
-              it's time to turn to protocol security. The extremely experimental
-              and open-source nature of DeFi means that hacks are a pretty
-              common occurence. There are a few things that you can do to
-              protect yourself from these hacks:
+              it's time to turn to protocol security. The experimental and
+              open-source nature of DeFi means that hacks are a pretty common
+              occurence. There are a few things that you can do to protect
+              yourself from these hacks:
               <ul style={{ paddingTop: "20px" }}>
                 <li>
                   <strong>Buy Insurance</strong>: Protocols such as{" "}

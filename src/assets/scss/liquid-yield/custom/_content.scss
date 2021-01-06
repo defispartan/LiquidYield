@@ -519,5 +519,53 @@
   align-items: center;
 }
 
+.featureleft2 {
+  float: left;
+  width: 50%;
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.featureright2 {
+  float: right;
+  width: 50%;
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.featurerow2 {
+  min-height: 200px;
+  width: 100%;
+  max-width: 1000px;
+  min-width: 350px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1000px) {
+  .featureleft2 {
+    float: center;
+    width: 100%;
+  }
+  .featureright2 {
+    float: center;
+    width: 100%;
+  }
+}
 .centerfeature {
+  width: 100%;
+}
+.chartWrapper {
+  width: 90%;
+  padding-top: 20px;
+  padding-bottom: 40px;
 }

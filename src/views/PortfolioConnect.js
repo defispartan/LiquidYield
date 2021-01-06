@@ -65,6 +65,7 @@ const PortfolioConnect = ({ disconnect }) => {
   const [message, setMessage] = useState("");
   const [showWalletDetails, setShowWalletDetails] = useState(true);
   const [refresh, setRefresh] = useState(false);
+  const [ethToggle, setETHToggle] = useState(false);
   const [dataSaved, setDataSaved] = useState(
     localStorage.getItem("dataSaved") || false
   );
@@ -356,6 +357,14 @@ const PortfolioConnect = ({ disconnect }) => {
     }
   };
 
+  const displayETHToggle = () => {
+    if (refresh === false) {
+      return <p style={{ color: "white" }}>TOGGLE</p>;
+    } else {
+      return <></>;
+    }
+  };
+
   const displayMessage = () => {
     return message;
   };
@@ -495,7 +504,7 @@ const PortfolioConnect = ({ disconnect }) => {
           <img src={PortfolioHeader} className="portcardheader"></img>
         </div>
         {displayRefresh()}
-
+        {displayETHToggle()}
         <div className="unipanel">
           <img
             src={UniswapLogo}

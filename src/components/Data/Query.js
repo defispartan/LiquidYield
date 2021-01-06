@@ -146,3 +146,33 @@ export const GET_POOL_INFO = gql`
     }
   }
 `;
+
+export const GET_UNI_DAY_DATA = gql`
+  query dayData {
+    uniswapDayDatas(
+      first: 100
+      where: { dailyVolumeUSD_gt: 0 }
+      orderBy: date
+      orderDirection: desc
+    ) {
+      date
+      dailyVolumeUSD
+      id
+    }
+  }
+`;
+
+export const GET_SUSHI_DAY_DATA = gql`
+  query dayData {
+    dayDatas(
+      first: 100
+      where: { volumeUSD_gt: 0 }
+      orderBy: date
+      orderDirection: desc
+    ) {
+      date
+      volumeUSD
+      id
+    }
+  }
+`;

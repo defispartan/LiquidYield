@@ -30,10 +30,11 @@ import {
   Container,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
 import LiquidLogo from "../assets/img/brand/liquidyieldblue.png";
-import LPreturns from "../assets/img/brand/lpreturns.PNG";
-import Factors from "../assets/img/theme/factors.png";
+import Uniswap from "assets/img/brand/uniswap.png";
+import SushiNew from "assets/img/brand/sushiswaplogo.png";
 import LEZ from "../assets/img/brand/LEZ.png";
 import LPComp from "../assets/img/brand/lpcomp.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
@@ -43,11 +44,146 @@ import poolexplorer from "../assets/img/brand/poolexplorer.png";
 import portfolio from "../assets/img/brand/portfolio.png";
 import lptoken from "../assets/img/brand/lptoken.PNG";
 import lezbox from "../assets/img/brand/zapbox.png";
+import { Line, defaults } from "react-chartjs-2";
+import {
+  GET_UNI_DAY_DATA,
+  GET_SUSHI_DAY_DATA,
+} from "../components/Data/Query.js";
+import { uniswapClient } from "../components/Data/UniswapClient.js";
+import { sushiswapClient } from "../components/Data/SushiSwapClient";
+import dayjs from "dayjs";
+
+const decimals = 0;
+const options = {
+  scales: {
+    yAxes: [
+      {
+        scaleLabel: {
+          display: true,
+          labelString: "Daily Fees Earned (USD)",
+        },
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: function (value, index, values) {
+            return "$" + value.toFixed(decimals);
+          },
+        },
+      },
+    ],
+  },
+  legend: { display: false },
+};
 
 class Index extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  state = {
+    uniLoad: true,
+    sushiLoad: true,
+    uniChart: null,
+    sushiChart: null,
+  };
+
+  async fetchUni() {
+    const result = await uniswapClient.query({
+      query: GET_UNI_DAY_DATA,
+      fetchPolicy: "cache-first",
+    });
+    let data = result.data.uniswapDayDatas;
+    let unilabels = [];
+    let unidata = [];
+    data.reverse();
+    data.forEach((entry) => {
+      unilabels.push(dayjs.unix(entry.date).format("YYYY-MM-DD"));
+      unidata.push(entry.dailyVolumeUSD * 0.0003);
+    });
+    let uniChartData = {
+      labels: unilabels,
+      datasets: [
+        {
+          fill: true,
+          backgroundColor: "rgba(237,187,234)",
+          data: unidata,
+        },
+      ],
+    };
+    this.setState({ uniData: uniChartData });
+    this.setState({ uniLoad: false });
+  }
+
+  async fetchSushi() {
+    const sushiResult = await sushiswapClient.query({
+      query: GET_SUSHI_DAY_DATA,
+      fetchPolicy: "cache-first",
+    });
+    let sushiRawData = sushiResult.data.dayDatas;
+    let sushilabels = [];
+    let sushidata = [];
+    sushiRawData.reverse();
+    sushiRawData.forEach((entry) => {
+      sushilabels.push(dayjs.unix(entry.date).format("YYYY-MM-DD"));
+      sushidata.push(entry.volumeUSD * 0.00025);
+    });
+    let sushiChartData = {
+      labels: sushilabels,
+      datasets: [
+        {
+          fill: true,
+          backgroundColor: "rgba(255,236,150)",
+          data: sushidata,
+        },
+      ],
+    };
+    this.setState({ sushiData: sushiChartData });
+    this.setState({ sushiLoad: false });
+  }
+
+  async componentDidMount() {
+    this.fetchUni();
+
+    this.fetchSushi();
+  }
+
+  displayUniChart() {
+    if (this.state.uniLoad === true) {
+      return (
+        <div className="newspinny">
+          <Spinner
+            style={{ width: "5em", height: "5em", marginTop: "30px" }}
+            color="black"
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="chartWrapper">
+          <Line data={this.state.uniData} options={options} />
+        </div>
+      );
+    }
+  }
+
+  displaySushiChart() {
+    if (this.state.sushiLoad === true) {
+      return (
+        <div className="newspinny">
+          <Spinner
+            style={{ width: "5em", height: "5em", marginTop: "30px" }}
+            color="black"
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="chartWrapper">
+          <Line data={this.state.sushiData} options={options} />
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <>
@@ -70,6 +206,31 @@ class Index extends React.Component {
             >
               Smarter Liquidity Management
             </h2>
+            <div className="indexheaderdiv">
+              <h2>Trading Fees Earned By Liquidity Providers</h2>
+              <div className="featurerow2">
+                <div className="featureleft2">
+                  <div className="centerfeature">
+                    <img
+                      src={Uniswap}
+                      className="infoimage"
+                      alt="Uniswap"
+                    ></img>
+                    {this.displayUniChart()}
+                  </div>
+                </div>
+                <div className="featureright2">
+                  <div className="centerfeature">
+                    <img
+                      src={SushiNew}
+                      className="infoimage"
+                      alt="SushiSwap"
+                    ></img>
+                    {this.displaySushiChart()}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="indexheaderdiv">
               <h1 className="indexheader">What is Liquid Yield?</h1>
             </div>
