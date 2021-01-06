@@ -308,9 +308,10 @@
 
 .lpcomp {
   display: block;
-  width: 60%;
+  width: 85%;
   margin: 0 auto;
   min-width: 350px;
+  max-width: 750px;
 }
 .indexheaderdiv {
   text-align: center;
@@ -322,10 +323,7 @@
 
 .featureimg {
   width: 300px;
-  max-width: 100%;
-  position: relative;
-  margin-top: -100px;
-  top: 50%;
+  max-width: 85%;
 }
 
 .tableheaderimg {
@@ -470,6 +468,12 @@
   }
 }
 
+@media (max-width: 400px) {
+  .featurerow {
+    padding-right: 30px;
+  }
+}
+
 .portcardimg {
   display: block;
   margin-left: auto;
@@ -489,7 +493,7 @@
   height: 300px;
   width: 100%;
   max-width: 1000px;
-  min-width: 400px;
+  min-width: 350px;
   margin: 0 auto;
 }
 
@@ -499,6 +503,9 @@
   height: 100%;
   line-height: 100%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .featureright {
@@ -507,10 +514,10 @@
   height: 100%;
   line-height: 100%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .centerfeature {
-  position: relative;
-  margin-top: -50px;
-  top: 50%;
 }
