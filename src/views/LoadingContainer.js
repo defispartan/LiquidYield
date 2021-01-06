@@ -18,16 +18,16 @@ function LoadingContainer({ unsetWallet, setAlert, disconnect, page }) {
   const drizzleState = useDrizzleState((state) => state);
   const networkId = drizzleState.web3.networkId;
   if (
-    drizzleState.web3.status == "initialized" &&
-    networkId != 3 &&
-    networkId != 1
+    drizzleState.web3.status === "initialized" &&
+    networkId !== 3 &&
+    networkId !== 1
   ) {
     unsetWallet();
     if (networkId === undefined) {
       setAlert(
         "No Web3 wallet detected in your browser. To use this feature you'll need the Ethereum broswer wallet like MetaMask."
       );
-    } else if (networkMap[networkId] != undefined) {
+    } else if (networkMap[networkId] !== undefined) {
       setAlert(
         "Web3 wallet is connected to an unsupported network: " +
           networkMap[networkId] +

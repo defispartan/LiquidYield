@@ -29,7 +29,7 @@ import {
 import { sushiswapClient } from "components/Data/SushiSwapClient.js";
 import { uniswapClient } from "components/Data/UniswapClient.js";
 import { UNILP, SUSHILP } from "components/Data/Query.js";
-import { Dropdown, Input, Label } from "semantic-ui-react";
+import { Dropdown, Input } from "semantic-ui-react";
 // core components
 import Header from "components/Headers/Header.js";
 import AdminFooter from "../components/Footers/AdminFooter.js";
@@ -38,6 +38,7 @@ import UniswapLogo from "../assets/img/brand/uniswap.png";
 import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.png";
 
 const LPValue = (props) => {
+  // Info for all Uniswap pools which can be searched by name
   const uniPoolOptions = [
     {
       key: "usdt",
@@ -214,6 +215,7 @@ const LPValue = (props) => {
     },
   ];
 
+  // Info for all SushiSwap pools which can be searched by name
   const sushiPoolOptions = [
     {
       key: "usdt",
@@ -379,16 +381,16 @@ const LPValue = (props) => {
     },
   ];
 
-  const [market, setMarket] = useState("Uniswap");
-  const [title, setTitle] = useState(UniswapLogo);
-  const [client, setClient] = useState(uniswapClient);
-  const [option, setOption] = useState("Name");
-  const [pool, setPool] = useState(null);
-  const [poolOptions, setPoolOptions] = useState(uniPoolOptions);
-  const [inputAmount, setInputAmount] = useState(null);
+  const [market, setMarket] = useState("Uniswap"); // Which protocol is selected
+  const [title, setTitle] = useState(UniswapLogo); // Image for open protoocl
+  const [client, setClient] = useState(uniswapClient); // Which client should be used to fetch data from TheGraph
+  const [option, setOption] = useState("Name"); // Search by name or address
+  const [pool, setPool] = useState(null); // What pool is selected
+  const [poolOptions, setPoolOptions] = useState(uniPoolOptions); // Stores pool options for open protocol
+  const [inputAmount, setInputAmount] = useState(null); // Stores LP Token Amount
   const [usdValue, setUsdValue] = useState(null);
   const [reserves, setReserves] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // Is data actively being fetched
 
   const setUniswap = () => {
     setMarket("Uniswap");
@@ -423,12 +425,13 @@ const LPValue = (props) => {
     setInputAmount(data.value);
   };
 
+  // Given a protocol, and LP token amount, get the value from TheGraph
   const calculateValue = async () => {
     if (pool != null && inputAmount != null) {
       setUsdValue(null);
       setReserves(null);
       setLoading(true);
-      if (market == "Uniswap") {
+      if (market === "Uniswap") {
         const result = await client.query({
           query: UNILP,
           variables: {
@@ -448,7 +451,7 @@ const LPValue = (props) => {
         ];
         setReserves(output);
         setLoading(false);
-      } else if (market == "SushiSwap") {
+      } else if (market === "SushiSwap") {
         const result = await client.query({
           query: SUSHILP,
           variables: {
@@ -472,7 +475,7 @@ const LPValue = (props) => {
   };
 
   const displayPoolSelect = () => {
-    if (option == "Name") {
+    if (option === "Name") {
       return (
         <Dropdown
           fluid
@@ -491,7 +494,7 @@ const LPValue = (props) => {
   };
 
   const loadingSpin = () => {
-    if (loading == true) {
+    if (loading === true) {
       return (
         <div className="spinny">
           <Spinner style={{ width: "3em", height: "3em" }} color="primary" />

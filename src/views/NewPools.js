@@ -46,6 +46,8 @@ import { FaInfoCircle } from "react-icons/fa";
 import ReactTooltip from "react-tooltip";
 import dayjs from "dayjs";
 
+// Takes in table data, column index, and whether reverse toggle is set
+// Sorts table data by a specified column in place
 function sortByColumn(a, colIndex, reverse) {
   if (reverse === true) {
     a.sort(sortFunction).reverse();
@@ -53,6 +55,7 @@ function sortByColumn(a, colIndex, reverse) {
     a.sort(sortFunction);
   }
 
+  // Custom sort function for table elements (Ignores $ and % where applicable)
   function sortFunction(a, b) {
     if (a[colIndex] === b[colIndex]) {
       return 0;
@@ -75,6 +78,8 @@ function sortByColumn(a, colIndex, reverse) {
   return a;
 }
 
+// React throws a fit when using localStorage with booleans for some reason
+// This is to make sure Boolean values are stored coorectly
 function loadBoolParse(val) {
   if (val === "true" || val === true) {
     return true;
@@ -85,28 +90,31 @@ function loadBoolParse(val) {
   }
 }
 
+// Round float to a specified decimal place
 function round(value, decimals) {
   return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 }
 
+// Functional component representing the Pool Explorer
+// Data is no longer calculated in this component, that is handled in Admin.js and passed as props
 const NewPools = (props) => {
-  const [openPool, setOpenPool] = useState("Uniswap");
-  const [imagePool, setImagePool] = useState(AAVEPool);
-  const [title, setTitle] = useState(UniswapLogo);
-  const [poolRewards, setPoolRewards] = useState({});
-  const [uniData, setUniData] = useState(props.uniData);
+  const [openPool, setOpenPool] = useState("Uniswap"); // Which protocol is open
+  const [imagePool, setImagePool] = useState(AAVEPool); // What is the pool icon for the open protocol
+  const [title, setTitle] = useState(UniswapLogo); // What is the header image for the open protocol
+
+  const [uniData, setUniData] = useState(props.uniData); // Uniswap pool data
   //const [uniData, setUniData] = useState(JSON.parse(localStorage.getItem('uniData')) || [{}])
-  const [sushiData, setSushiData] = useState(props.sushiData);
+  const [sushiData, setSushiData] = useState(props.sushiData); // SushiSwap pool data
   //const [sushiData, setUniData] = useState(JSON.parse(localStorage.getItem('sushiData')) || [{}])
-  const [data, setData] = useState([{}]);
-  const [activeColumn, setActiveColumn] = useState(-1);
-  const [lastActiveColumn, setLastActiveColumn] = useState(0);
-  const [toggle, setToggle] = useState(false);
+  const [data, setData] = useState([{}]); // Data for the open protocol
+  const [activeColumn, setActiveColumn] = useState(-1); // Which column was last clicked (used for reverse toggle)
+  const [lastActiveColumn, setLastActiveColumn] = useState(0); // Which column was last clicked (used for reverse toggle)
+  const [toggle, setToggle] = useState(false); // Reverse toggle for pool table
   const [sushiToolTip, setSushiToolTip] = useState(false);
   const [roiToolTip, setRoiToolTip] = useState(false);
-  const [loadingUni, setLoadingUni] = useState(loadBoolParse(props.loadingUni));
+  const [loadingUni, setLoadingUni] = useState(loadBoolParse(props.loadingUni)); // Has Uniswap pool data loaded yet?
   const [loadingSushi, setLoadingSushi] = useState(
-    loadBoolParse(props.loadingSushi)
+    loadBoolParse(props.loadingSushi) // Has SushiSwap pool data loaded yet?
   );
   const [infoIcon, setInfoIcon] = useState(
     <i className="plus circle icon"></i>
@@ -118,16 +126,13 @@ const NewPools = (props) => {
     "Content",
   ]);
 
+  // Closes the modal box
   const handleSetModal = () => {
     setModal(false);
   };
 
+  // Sets data to the currently open protocol
   useEffect(() => {
-    console.log("EFFECTOR");
-    console.log(loadingUni);
-    console.log(uniData);
-    console.log(loadingSushi);
-    console.log(sushiData);
     if (openPool === "Uniswap") {
       setData(uniData);
     }
@@ -136,15 +141,14 @@ const NewPools = (props) => {
     }
   }, []);
 
+  // Handles when Uni or Sushi loading props get modified
   useEffect(() => {
     if (props.loadingUni === true) {
       setLoadingUni(props.loadingUni);
     } else if (props.loadingUni === false) {
       setUniData(props.uniData);
       if (openPool === "Uniswap") {
-        //console.log("SETTING DATA TO UNI");
         setData(props.uniData);
-        //console.log(data);
       }
       setLoadingUni(props.loadingUni);
     }
@@ -153,14 +157,13 @@ const NewPools = (props) => {
     } else if (props.loadingSushi === false) {
       setSushiData(props.sushiData);
       if (openPool === "SushiSwap") {
-        //console.log("SETTING DATA TO SUSHI");
         setData(props.sushiData);
-        //console.log(data);
       }
       setLoadingSushi(props.loadingSushi);
     }
   }, [props.loadingUni, props.loadingSushi]);
 
+  // Handles clicking on column header for sorting
   const handleClick = (title, key) => {
     if (activeColumn === key) {
       setToggle(!toggle);
@@ -172,6 +175,7 @@ const NewPools = (props) => {
     }
   };
 
+  // Handles clicking on individual row in pool table
   const handleRowClick = (key) => {
     if (modal === false) {
       let poolName = key["Liquidity Pool"];
@@ -204,6 +208,7 @@ const NewPools = (props) => {
     }
   };
 
+  // Set active protocol to Uniswap
   const setUniswap = () => {
     setOpenPool("Uniswap");
     setImagePool(AAVEPool);
@@ -213,6 +218,8 @@ const NewPools = (props) => {
     setLastActiveColumn(0);
     setData(uniData);
   };
+
+  // Set active protocol to SushiSwap
   const setSushiSwap = () => {
     setOpenPool("SushiSwap");
     setImagePool(AAVEPool);
@@ -223,11 +230,12 @@ const NewPools = (props) => {
     setData(sushiData);
   };
 
+  // Manually trigger pool data refresh
   const triggerRefresh = () => {
-    console.log("REFRESH TRIGGERED");
     props.triggerRefresh();
   };
 
+  // Returns a tooltip to get more info on specific columns
   const getTooltip = (title) => {
     if (title === "Estimated ROI (30d)") {
       return (
@@ -259,6 +267,7 @@ const NewPools = (props) => {
     }
   };
 
+  // Displays a spinner if pool data is still loading
   const loadingSpin = () => {
     if (
       (openPool === "Uniswap" && loadingUni === true) ||
@@ -298,6 +307,8 @@ const NewPools = (props) => {
       return null;
     }
   };
+
+  // Displays button to manually refresh pools with time of last update
   const displayRefresh = () => {
     if (
       (loadingUni === false && openPool === "Uniswap") ||
@@ -318,20 +329,13 @@ const NewPools = (props) => {
       );
     } else return <></>;
   };
+
+  // If we have pool data, display it in a Table
   const displayPools = () => {
-    //console.log("DISPLAY POOLS");
-    //console.log(loadingUni);
-    //console.log(uniData);
-    //console.log(loadingSushi);
-    //console.log(sushiData);
-    //console.log(data);
-    //console.log(openPool);
     if (
       (loadingUni === false && openPool === "Uniswap") ||
       (loadingSushi === false && openPool === "SushiSwap")
     ) {
-      //console.log("INTO THE LOOP, DATA BELOW");
-      //console.log(data);
       return (
         <Table className="align-items-center table-flush" responsive>
           <thead className="thead-light">
@@ -359,13 +363,6 @@ const NewPools = (props) => {
                   return null;
                 }
               })}
-
-              {/*               <th scope="col">Liquidity Pool</th>
-              <th scope="col">Total Liquidity (USD)</th>
-              <th scope="col">24h Volume (USD)</th>
-              <th scope="col">Estimated Fees (30d)</th>
-              <th scope="col">Estimated Impermanent Loss (30d)</th>
-              <th scope="col">Estimated ROI (30d)</th> */}
             </tr>
           </thead>
           <tbody>
@@ -525,10 +522,6 @@ const NewPools = (props) => {
                 </p>
               </Collapse>
             </div>
-            {/*               <Card className="data">
-                Data From <a href="https://thegraph.com/">The Graph</a> and{" "}
-                <a href="https://uniswaproi.com">UniswapROI</a>
-              </Card> */}
           </div>
         </Row>
         <AdminFooter />

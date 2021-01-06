@@ -19,37 +19,32 @@
 // reactstrap components
 import { Card, Collapse, Button, Container, Row } from "reactstrap";
 // core components
-import {
-  Dropdown,
-  Input,
-  Label,
-  Icon,
-  Modal,
-  Header,
-  Button as Button2,
-} from "semantic-ui-react";
+import { Icon, Modal, Header, Button as Button2 } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import LEZHeader from "assets/img/brand/LEZHeader.png";
 import LEZ from "assets/img/brand/LEZ.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 
+// Component for displaying blank Zap page with option to connect wallet
 const ZapPlain = ({ connect, alert, setAlert }) => {
-  const [walletConnected, setConnect] = useState(false);
-  const [zapMode, setZapMode] = useState("simple");
-  const [alertSet, setAlertNotif] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
-  const [disclaimerOpen, setDisclaimerOpen] = useState(false);
+  const [alertSet, setAlertNotif] = useState(false); // Stores any errors that occur when connecting to Web3 wallet
+  const [aboutOpen, setAboutOpen] = useState(false); // Toggle for About section
+  const [disclaimerOpen, setDisclaimerOpen] = useState(false); // Toggle for disclaimer section
   const [aboutIcon, setAboutIcon] = useState(
-    <i className="plus circle icon"></i>
+    <i className="plus circle icon"></i> // Icon for About section toggle
   );
   const [disclaimerIcon, setDisclaimerIcon] = useState(
-    <i className="plus circle icon"></i>
+    <i className="plus circle icon"></i> // Icon for disclaimer toggle
   );
+
+  // Display alert
   useEffect(() => {
     if (alert != null) {
       setAlertNotif(true);
     }
   });
+
+  // Clears alert when user clicks cancel
   const alertCancel = () => {
     setAlertNotif(false);
     setAlert(null);
@@ -71,71 +66,6 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
     }
     setDisclaimerOpen(!disclaimerOpen);
   };
-
-  const setSimpleMode = () => {
-    setZapMode("simple");
-  };
-  const setAdvancedMode = () => {
-    setZapMode("advanced");
-  };
-
-  const poolOptions = [
-    {
-      key: "dai",
-      value: "UNI-V1 ETH/DAI",
-      image: {
-        avatar: true,
-        src: "https://cdn.worldvectorlogo.com/logos/dai-2.svg",
-      },
-
-      text: "UNI-V1 ETH/DAI",
-    },
-    {
-      key: "lend",
-      value: "UNI-V1 ETH/LEND",
-      image: {
-        avatar: true,
-        src: "https://cdn.worldvectorlogo.com/logos/ethlend.svg",
-      },
-      text: "UNI-V1 ETH/LEND",
-    },
-    {
-      key: "link",
-      value: "UNI-V1 ETH/LINK",
-      image: {
-        avatar: true,
-        src: "https://cryptologos.cc/logos/chainlink-link-logo.png",
-      },
-      text: "UNI-V1 ETH/LINK",
-    },
-    {
-      key: "mkr",
-      value: "UNI-V1 ETH/MKR",
-      image: {
-        avatar: true,
-        src: "https://cryptologos.cc/logos/maker-mkr-logo.png",
-      },
-      text: "UNI-V1 ETH/MKR",
-    },
-    {
-      key: "seth",
-      value: "UNI-V1 ETH/sETH",
-      image: {
-        avatar: true,
-        src: "https://blog.synthetix.io/content/images/2019/01/SNX_300x300.png",
-      },
-      text: "UNI-V1 ETH/sETH",
-    },
-    {
-      key: "usdc",
-      value: "UNI-V1 ETH/USDC",
-      image: {
-        avatar: true,
-        src: "https://cryptologos.cc/logos/usd-coin-usdc-logo.png",
-      },
-      text: "UNI-V1 ETH/USDC",
-    },
-  ];
 
   return (
     <>
@@ -163,18 +93,6 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
               minWidth: "300px",
             }}
           >
-            {/*             <Button
-              onClick={setSimpleMode}
-              className={"simple" === zapMode ? "selected" : ""}
-            >
-              Simple
-            </Button>
-            <Button
-              onClick={setAdvancedMode}
-              className={"advanced" === zapMode ? "selected" : ""}
-            >
-              Advanced
-            </Button> */}
             <h4 style={{ color: "red" }}>Coming Soon</h4>
             <p>
               With the recent release of{" "}
@@ -207,7 +125,7 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
           <h3 className="abouticon">About</h3>
           <Collapse isOpen={aboutOpen} className="aboutcontent">
             The Liquid Ether Zap allows you to go from ETH into a liquidity pool
-            while maintaining 100% exposure to the price of ETH with the click
+            while maintaining ~100% exposure to the price of ETH with the click
             of a button. Below is an example for the Uniswap ETH/DAI pair, for a
             more detailed explanation see <a href="/education#lez">here</a>.
             <img

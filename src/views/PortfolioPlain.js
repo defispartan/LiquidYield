@@ -17,29 +17,24 @@
 */
 
 // reactstrap components
-import { Card, Collapse, Button, Container, Row } from "reactstrap";
+import { Card, Button, Container } from "reactstrap";
 // core components
-import {
-  Dropdown,
-  Input,
-  Label,
-  Icon,
-  Modal,
-  Header,
-  Button as Button2,
-} from "semantic-ui-react";
+import { Icon, Modal, Header, Button as Button2 } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import PortfolioHeader from "assets/img/brand/portfolioheader.png";
 
+// Component which basically just diplays a Connect wallet button
 const ZapPlain = ({ connect, alert, setAlert }) => {
-  const [walletConnected, setConnect] = useState(false);
-  const [alertSet, setAlertNotif] = useState(false);
+  const [alertSet, setAlertNotif] = useState(false); // Display alert if there was an error connecting to Web3 wallet
+
   useEffect(() => {
     if (alert != null) {
       setAlertNotif(true);
     }
-  });
+  }, [alert]);
+
+  // Clears alert
   const alertCancel = () => {
     setAlertNotif(false);
     setAlert(null);
@@ -63,7 +58,11 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
       <div className="wrapper">
         <Container className="mt--7 bg-dark" fluid>
           <div className="zapheader">
-            <img src={PortfolioHeader} className="portcardheader"></img>
+            <img
+              src={PortfolioHeader}
+              className="portcardheader"
+              alt="Portfolio Header"
+            ></img>
           </div>
           <Card body className="zap">
             <Button

@@ -17,11 +17,11 @@
 import Index from "views/Index.js";
 import About from "views/About.js";
 import Zap from "views/ZapHome.js";
-import Pools from "views/Pools.js";
 import NewPools from "views/NewPools.js";
 import LPValue from "views/LPValue.js";
 import Education from "views/Education.js";
 import Portfolio from "views/PortfolioHome.js";
+
 var routes = [
   {
     path: "/index",

@@ -270,7 +270,7 @@ const ZapConnect = ({ disconnect }) => {
           <h3 className="abouticon">About</h3>
           <Collapse isOpen={aboutOpen} className="aboutcontent">
             The Liquid Ether Zap allows you to go from ETH into a liquidity pool
-            while maintaining 100% exposure to the price of ETH with the click
+            while maintaining ~100% exposure to the price of ETH with the click
             of a button. Below is an example for the Uniswap ETH/DAI pair, for a
             more detailed explanation see <a href="/education#lez">here</a>.
             <img

@@ -6,13 +6,15 @@ import { drizzleReactHooks } from "@drizzle/react-plugin";
 import LoadingContainer from "./LoadingContainer.js";
 const { DrizzleProvider } = drizzleReactHooks;
 
+// Component responsible for routing user to wallet connect screen (ZapPlain) or Zap page after wallet is connected (LoadingContainer)
 function ZapHome(props) {
-  const [alertMessage, setAlert] = useState(null);
+  const [alertMessage, setAlert] = useState(null); // Stores any errors that occur while connecting to Web3 wallet
 
   let drizzle = {};
   if (props.walletConnected) {
     drizzle = new Drizzle(drizzleOptions);
   }
+
   return props.walletConnected ? (
     <DrizzleProvider drizzle={drizzle}>
       <LoadingContainer

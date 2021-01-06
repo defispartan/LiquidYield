@@ -17,23 +17,11 @@
 */
 
 // reactstrap components
-import {
-  Card,
-  CardHeader,
-  Collapse,
-  Table,
-  Button,
-  Container,
-  Row,
-  Media,
-  Alert,
-  Spinner,
-} from "reactstrap";
+import { Card, Table, Button, Container, Media, Spinner } from "reactstrap";
 import PortfolioHeader from "assets/img/brand/portfolioheader.png";
 import { Radio } from "semantic-ui-react";
 
 // core components
-import { Dropdown, Input, Label } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { drizzleReactHooks } from "@drizzle/react-plugin";
@@ -518,13 +506,13 @@ const PortfolioConnect = ({ disconnect }) => {
                       {Object.keys(row).map(function (entry, key) {
                         if (entry !== "Liquidity Pool") {
                           return (
-                            <td scope="row" key={key} data-label={entry}>
+                            <td key={key} data-label={entry}>
                               {row[entry]}
                             </td>
                           );
                         } else {
                           return (
-                            <td scope="row" key={key} data-label={entry}>
+                            <td key={key} data-label={entry}>
                               <Media className="align-items-center">
                                 <div className="avatar rounded-circle mr-3">
                                   <img alt="..." src={UNIV2} />
@@ -555,7 +543,11 @@ const PortfolioConnect = ({ disconnect }) => {
       {/* Page content */}
       <Container className="mt--7 bg-dark" fluid>
         <div className="zapheader">
-          <img src={PortfolioHeader} className="portcardheader"></img>
+          <img
+            src={PortfolioHeader}
+            className="portcardheader"
+            alt="Portfolio Header"
+          ></img>
         </div>
         {displayRefresh()}
 
@@ -574,7 +566,6 @@ const PortfolioConnect = ({ disconnect }) => {
         <div className="sushipanel">
           <img
             src={SushiSwapLogo}
-            className="uniswap"
             alt="SushiSwap Header"
             className="portcardimg"
           ></img>

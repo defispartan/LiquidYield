@@ -17,21 +17,7 @@
 */
 import React from "react";
 // reactstrap components
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
-  Container,
-  Row,
-  Col,
-  Spinner,
-} from "reactstrap";
+import { Container, Spinner } from "reactstrap";
 import LiquidLogo from "../assets/img/brand/liquidyieldblue.png";
 import Uniswap from "assets/img/brand/uniswap.png";
 import SushiNew from "assets/img/brand/sushiswaplogo.png";
@@ -44,7 +30,7 @@ import poolexplorer from "../assets/img/brand/poolexplorer.png";
 import portfolio from "../assets/img/brand/portfolio.png";
 import lptoken from "../assets/img/brand/lptoken.PNG";
 import lezbox from "../assets/img/brand/zapbox.png";
-import { Line, defaults } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import {
   GET_UNI_DAY_DATA,
   GET_SUSHI_DAY_DATA,
@@ -53,6 +39,7 @@ import { uniswapClient } from "../components/Data/UniswapClient.js";
 import { sushiswapClient } from "../components/Data/SushiSwapClient";
 import dayjs from "dayjs";
 
+// Options for ChartJS plots of daily trading fee revenue
 const decimals = 0;
 const options = {
   scales: {
@@ -74,18 +61,16 @@ const options = {
   legend: { display: false },
 };
 
+// Class representing the Liquid Yield homepage
 class Index extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
-    uniLoad: true,
-    sushiLoad: true,
-    uniChart: null,
-    sushiChart: null,
+    uniLoad: true, // Current loading state of UNI chart
+    sushiLoad: true, // Current loading state of SUSHI chat
+    uniChart: null, // Uniswap trading fee data to plot
+    sushiChart: null, // SushiSwap trading fee data to plot
   };
 
+  // Fetches Uniswap trading fee data from TheGraph
   async fetchUni() {
     const result = await uniswapClient.query({
       query: GET_UNI_DAY_DATA,
@@ -113,6 +98,7 @@ class Index extends React.Component {
     this.setState({ uniLoad: false });
   }
 
+  // Fetches SushiSwap trading fee data from TheGraph
   async fetchSushi() {
     const sushiResult = await sushiswapClient.query({
       query: GET_SUSHI_DAY_DATA,
@@ -140,11 +126,13 @@ class Index extends React.Component {
     this.setState({ sushiLoad: false });
   }
 
+  // Fetch data when component mounts
   async componentDidMount() {
     this.fetchUni();
     this.fetchSushi();
   }
 
+  // Displays line chart of Uniswap trading fees or spinner if loading
   displayUniChart() {
     if (this.state.uniLoad === true) {
       return (
@@ -164,6 +152,7 @@ class Index extends React.Component {
     }
   }
 
+  // Displays line chart of SushiSwap trading fees or spinner if loading
   displaySushiChart() {
     if (this.state.sushiLoad === true) {
       return (
@@ -264,7 +253,11 @@ class Index extends React.Component {
               earned by liquidity providers. To learn more about Ethereum, DeFi,
               decentralized exchanges, and the factors affecting returns as an
               LP, check out the <a href="/education">Education Center</a>.
-              <img src={LPComp} className="lpcomp"></img>
+              <img
+                src={LPComp}
+                className="lpcomp"
+                alt="Liquidity Provider Comparison"
+              ></img>
             </p>
 
             <div className="indexheaderdiv" style={{ paddingTop: "30px" }}>
@@ -285,7 +278,11 @@ class Index extends React.Component {
               </div>
               <div className="featureright">
                 <a href="/education">
-                  <img src={educenter} className="featureimg" />
+                  <img
+                    src={educenter}
+                    className="featureimg"
+                    alt="Education Center"
+                  />
                 </a>
               </div>
             </div>
@@ -306,7 +303,11 @@ class Index extends React.Component {
               </div>
               <div className="featureleft">
                 <a href="/pools">
-                  <img src={poolexplorer} className="featureimg" />
+                  <img
+                    src={poolexplorer}
+                    className="featureimg"
+                    alt="Pool Explorer"
+                  />
                 </a>
               </div>
             </div>
@@ -325,7 +326,11 @@ class Index extends React.Component {
               </div>
               <div className="featureright">
                 <a href="/lpvalue">
-                  <img src={lptoken} className="featureimg" />
+                  <img
+                    src={lptoken}
+                    className="featureimg"
+                    alt="LP Token Value Calculator"
+                  />
                 </a>
               </div>
             </div>
@@ -344,7 +349,7 @@ class Index extends React.Component {
               </div>
               <div className="featureleft">
                 <a href="/portfolio">
-                  <img src={portfolio} className="featureimg" />
+                  <img src={portfolio} className="featureimg" alt="Portfolio" />
                 </a>
               </div>
             </div>
@@ -355,7 +360,7 @@ class Index extends React.Component {
                   <p>
                     {" "}
                     This Liquid Ether Zap is an interface to go directly from
-                    ETH into an LP position while maintaining 100% exposure to
+                    ETH into an LP position while maintaining ~100% exposure to
                     the price of ETH. See the diagram below for the steps
                     involved. This feature is still under development.
                   </p>
@@ -363,7 +368,11 @@ class Index extends React.Component {
               </div>
               <div className="featureright">
                 <a href="/zap">
-                  <img src={lezbox} className="featureimg" />
+                  <img
+                    src={lezbox}
+                    className="featureimg"
+                    alt="Liquid Ether Zap Art"
+                  />
                 </a>
               </div>
             </div>

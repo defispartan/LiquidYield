@@ -610,7 +610,7 @@ class Scenarios extends React.Component {
               gains from lack of ETH exposure. This is the motivation behind the
               Liquid Ether Zap. By leveraging the composability of DeFi and
               using LP tokens as a form of collateral, the zap allows users to
-              borrow assets and maintain 100% to the price of ETH while
+              borrow assets and maintain ~100% to the price of ETH while
               providing liquidity. I have another visualizer planned for
               calculating historical and scenario-based price exposure in the
               future.
@@ -785,13 +785,19 @@ class Scenarios extends React.Component {
           <div className="edu">
             <p className="educontent">
               The Liquid Ether Zap is a tool which allows users to go from ETH
-              into a liquidity pool while maintaining 100%{" "}
+              into a liquidity pool while maintaining ~100%{" "}
               <a href="#pe">Price Exposure</a> to ETH. The motivation behind
               this zap is that if you are long term bullish on the price of
               Ethereum, there is money left on the table when providing
               liquidity in the form of lack of ETH price exposure. This zap
               leverages the composability of DeFi to collateralize LP tokens,
-              and borrows assets to maintain 100% price exposure to ETH.
+              and borrow assets to increase price exposure to ETH. The reason
+              for price exposure being ~100% instead of exactly 100% is because
+              your exposure to ETH while in a liquidity pool varies based on
+              trading fees, impermant loss, and asset price divergence. Two
+              scenarios in which your ETH exposure would fall below 100% are if
+              impermanent loss is greater than trading fee revenue, or if ETH
+              increases in value relative to the other paired asset.
             </p>
             <img src={LEZ} alt="Liquid Ether Zap" className="indexlez"></img>
           </div>
