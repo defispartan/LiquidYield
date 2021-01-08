@@ -65,7 +65,9 @@ function sortByColumn(a, colIndex, reverse) {
           parseInt(b[colIndex].substring(2).replace(/,/g, ""))
           ? -1
           : 1;
-      } else if (a[colIndex.charAt(-1) === "%"]) {
+      } else if (a[colIndex].charAt(a[colIndex].length-1) === "%") {
+        console.log("A: " + a[colIndex].substring(-2))
+        console.log("B: " + b[colIndex].substring(-2))
         return parseFloat(a[colIndex].substring(-2)) <
           parseFloat(b[colIndex].substring(-2))
           ? -1

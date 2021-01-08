@@ -226,7 +226,7 @@ class Index extends React.Component {
               Liquid Yield is a service designed to educate and equip people
               with tools to maximize their yields as a liquidity provider (LP).{" "}
               <strong>
-                This project has no token or monetezation of any kind. Liquid
+                This project has no token or monetization of any kind. Liquid
                 Yield is just a collection of tools and resources.
               </strong>{" "}
               The goal of this site is to provide value to anyone who is
@@ -242,7 +242,7 @@ class Index extends React.Component {
               A liquidity provider is a user who deposits their funds into a
               liquidity pool to facilitate trading on a decentralized exchange,
               and earns passive income on their deposit. Providing liquidity to
-              a decentralized exchange is a way to put to your assets to work,
+              a decentralized exchange is a way to put your assets to work,
               and earn a reward for doing so.
             </p>
             <p>
@@ -269,7 +269,7 @@ class Index extends React.Component {
                 <div className="centerfeature">
                   <h3>Education Center</h3>
                   <p>
-                    An all-encompassing reource which covers Bitcoin, Ethereum,
+                    An all-encompassing resource which covers Bitcoin, Ethereum,
                     DeFi, and terms specific to liquidity providers. Regardless
                     of skill level, there should be something in the Education
                     Center to learn from.

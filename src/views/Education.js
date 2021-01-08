@@ -154,7 +154,7 @@ class Scenarios extends React.Component {
               network. Immutability means that transactions on the Bitcoin
               network are irreversible, and that the supply of Bitcoin is not
               controlled by a single entity. If you hold the private key to a
-              wallet cotaining one Bitcoin, NO ONE can modify the Bitcoin ledger
+              wallet containing one Bitcoin, NO ONE can modify the Bitcoin ledger
               and take your Bitcoin away, and NO ONE can create new Bitcoins and
               de-value your holdings outside of the 21 million Bitcoin supply
               cap set forth in the whitepaper. In this way Bitcoin acts as a
@@ -251,18 +251,18 @@ class Scenarios extends React.Component {
           </h2>
           <div className="edu">
             <p className="educontent">
-              This section is very generalized and opionated. The advise that I
-              give here is <strong>not</strong> financial advise and should not
+              This section is very generalized and opinionated. The advice that I
+              give here is <strong>not</strong> financial advice and should not
               be interpreted as such. These are just some thoughts and resources
               that you may find useful when starting out with cryptocurrency.
             </p>
             <p>
-              The first step in engaging with cryptocurrency is to underatand
+              The first step in engaging with cryptocurrency is to understand
               cryptocurrency wallets. The following guide will teach you about
               all of the different kinds of wallets, and give you an
               introduction on best practices for keeping wallets secure:
               <a href="https://collectiveshift.com.au/kc/storage-wallets/">
-                All About Cryptocurrency Wallets
+                {" "}All About Cryptocurrency Wallets
               </a>
               .
             </p>
@@ -291,7 +291,7 @@ class Scenarios extends React.Component {
                   to use a hardware wallet such as a{" "}
                   <a href="https://www.ledger.com/">Ledger</a> or{" "}
                   <a href="https://trezor.io/">Trezor</a>. For interacting with
-                  DeFi applications, it is also recommended to have a seperate
+                  DeFi applications, it is also recommended to have a separate
                   browser wallet called{" "}
                   <a href="https://metamask.io/">MetaMask</a> where you can
                   quickly interact with dApps and send coins to other wallets.
@@ -300,9 +300,9 @@ class Scenarios extends React.Component {
             </p>
             <p>
               Once you own cryptocurrency and have your tokens secured on a
-              hardware wallet, take some time to give youself a pat on the back.
+              hardware wallet, take some time to give yourself a pat on the back.
               You're officially ahead of the curve and on your way to living
-              bankless. After you're all setup with wallets it's time to learn
+              bankless. After you're all set up with wallets it's time to learn
               about and interact with blockchain projects. This website is a
               great place to learn about a few specific protocols, but if you're
               looking for more general sources of information check out{" "}
@@ -318,10 +318,10 @@ class Scenarios extends React.Component {
           </h2>
           <div className="edu">
             <p className="educontent">
-              The permisionless nature of cryptocurrency means that there's no
+              The permissionless nature of cryptocurrency means that there's no
               central authority which can revert transactions. This means that
               it is <strong>crucial</strong> to take the security of your
-              crypotcurrency wallets and blockchain interactions seriously. The
+              cryptocurrency wallets and blockchain interactions seriously. The
               first thing you must understand is how cryptocurrency wallets
               work. If you haven't read the{" "}
               <a href="https://collectiveshift.com.au/kc/storage-wallets/">
@@ -342,7 +342,7 @@ class Scenarios extends React.Component {
               Once you understand the risks associated with wallet security,
               it's time to turn to protocol security. The experimental and
               open-source nature of DeFi means that hacks are a pretty common
-              occurence. There are a few things that you can do to protect
+              occurrence. There are a few things that you can do to protect
               yourself from these hacks:
               <ul style={{ paddingTop: "20px" }}>
                 <li>
@@ -440,7 +440,7 @@ class Scenarios extends React.Component {
               notable for its simple user interface and low transaction fees.
               These factors have contributed to Uniswap's status as the highest
               volume decentralized exchange in existence. The Uniswap protocol
-              consists of a serious of liquidity pools. These pools are just
+              consists of a series of liquidity pools. These pools are just
               pairs of assets, which serve as the liquidity to facilitate trades
               on Uniswap. When a user swaps funds on Uniswap, they pay a 30
               basis-point fee (0.03%) which goes directly to the liquidity
@@ -622,7 +622,7 @@ class Scenarios extends React.Component {
           <div className="edu">
             <p className="educontent">
               These three terms are often misunderstood, and you will see them
-              used incorectly on a variety of platforms. To maximize your
+              used incorrectly on a variety of platforms. To maximize your
               returns as an investor it's important to understand their
               differences. Here is a formal definition for each, with an
               additional comment on how they relate to liquidity providers:
@@ -794,10 +794,20 @@ class Scenarios extends React.Component {
               and borrow assets to increase price exposure to ETH. The reason
               for price exposure being ~100% instead of exactly 100% is because
               your exposure to ETH while in a liquidity pool varies based on
-              trading fees, impermant loss, and asset price divergence. Two
+              trading fees, impermanent loss, and asset price divergence. Two
               scenarios in which your ETH exposure would fall below 100% are if
               impermanent loss is greater than trading fee revenue, or if ETH
               increases in value relative to the other paired asset.
+            </p>
+            <p>It is very important to understand what 100% price exposure to ETH means in this context.
+              Your total asset exposure with the Liquid Ether Zap is 150% of your initial investment, broken down as follows:
+              <ul>
+                <li>50% exposed to ETH from the liquidity pool</li>
+                <li>50% exposed to the other asset in the liquidity pool</li>
+                <li>50% exposed to ETH from borrowing a stablecoin and swapping to ETH on AAVE</li>
+              </ul>
+            Here's a diagram depicting the steps involved:
+
             </p>
             <img src={LEZ} alt="Liquid Ether Zap" className="indexlez"></img>
           </div>

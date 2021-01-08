@@ -48,11 +48,6 @@ function numberWithCommas(x) {
 //      "Address": {}
 // }
 const SushiCalc = async (pool, address, rewards) => {
-  if (address in rewards) {
-    let reward = rewards[address];
-  } else {
-    let reward = 0;
-  }
 
   const result = await sushiswapClient.query({
     query: SUSHI_TICKER_QUERY,
@@ -105,6 +100,10 @@ const SushiCalc = async (pool, address, rewards) => {
   });
   let fees = expectedFees(monthlyAverageVolume, monthlyAverageLiquidity);
   let il = calculateIL(pair, previousMonth[0]);
+  let reward = 0
+  if (address in rewards) {
+    reward = rewards[address];
+  }
 
   return {
     "Liquidity Pool": pool,

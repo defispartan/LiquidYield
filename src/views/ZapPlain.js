@@ -103,7 +103,7 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
               and feature upgrades including native collateral swaps. The next
               step is to propose the creation of Uniswap V2 and SushiSwap
               markets. These proposals are in the works and I'll post
-              information on how to particpate in the AAVE governance process
+              information on how to participate in the AAVE governance process
               when they're ready.
             </p>
           </div>
