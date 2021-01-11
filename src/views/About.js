@@ -37,7 +37,8 @@ class About extends React.Component {
         <Container className="mt--7 bg-dark" fluid>
           <Row>
             <div className="col" style={{ textAlign: "center" }}>
-              <h1 className="indexcontent">Powered By</h1>
+              
+              <h1 className="powerheader">Powered By</h1>
               <Row>
                 <div
                   className="powerleft"

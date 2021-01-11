@@ -211,6 +211,11 @@
   width: 100%;
   margin: 0 auto;
   margin-bottom: 30px;
+
+  // Add top padding to main content when navbar shift to top of screen (for small screens)
+  @include media-breakpoint-down(sm) {
+    padding-top: 100px;
+  }
 }
 
 .about {
@@ -611,4 +616,12 @@
 
 .navbar-vertical {
   border-right: 1px solid gray;
+}
+
+.powerheader {
+  color: white;
+  // Add top padding to main content when navbar shift to top of screen (for small screens)
+  @include media-breakpoint-down(sm) {
+    padding-top: 100px;
+  }
 }
