@@ -193,16 +193,7 @@ class Index extends React.Component {
               src={LiquidLogo}
               alt="Liquid Yield Logo"
             ></img>
-            <h2
-              style={{
-                textAlign: "center",
-                color: "#4483f4",
-                marginBottom: "50px",
-                marginTop: "-10px",
-              }}
-            >
-              Put Your Assets To Work
-            </h2>
+
             <div className="indexheaderdiv">
               <h2 style={{color: "white"}}>Trading Fees Earned By Liquidity Providers</h2>
               <div className="featurerow2">

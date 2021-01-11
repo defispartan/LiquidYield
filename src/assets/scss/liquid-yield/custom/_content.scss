@@ -86,7 +86,7 @@
   width: 100%;
   max-width: 500px;
   height: auto;
-  padding-bottom: 30px;
+  padding-bottom: 50px;
 
   // Add top padding to main content when navbar shift to top of screen (for small screens)
   @include media-breakpoint-down(sm) {
