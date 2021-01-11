@@ -20,8 +20,8 @@ import React from "react";
 import { Container, Spinner } from "reactstrap";
 import LiquidLogo from "../assets/img/brand/liquidyieldblue.png";
 import Uniswap from "assets/img/brand/uniswap.png";
-import SushiNew from "assets/img/brand/sushiswaplogo.png";
-import LEZ from "../assets/img/brand/LEZ.png";
+import SushiNew from "assets/img/brand/sushiswaplogowhite.png";
+import LEZ from "../assets/img/brand/lezwhite.png";
 import LPComp from "../assets/img/brand/lpcomp.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import Header from "components/Headers/Header.js";
@@ -48,15 +48,24 @@ const options = {
         scaleLabel: {
           display: true,
           labelString: "Daily Fees Earned (USD)",
+          fontColor: "white"
         },
         ticks: {
           // Include a dollar sign in the ticks
           callback: function (value, index, values) {
             return "$" + value.toFixed(decimals);
           },
+          fontColor: "white"
         },
       },
     ],
+    xAxes: [
+      {
+        ticks:{
+          fontColor: "white"
+        }
+      }
+    ]
   },
   legend: { display: false },
 };
@@ -146,7 +155,7 @@ class Index extends React.Component {
     } else {
       return (
         <div className="chartWrapper">
-          <Line data={this.state.uniData} options={options} />
+          <Line data={this.state.uniData} options={options}/>
         </div>
       );
     }
@@ -177,7 +186,7 @@ class Index extends React.Component {
       <>
         <Header />
         {/* Page content */}
-        <Container className="mt--7" fluid>
+        <Container className="mt--7 bg-dark" fluid>
           <div className="col" style={{ textAlign: "left" }}>
             <img
               className="logohead"
@@ -192,10 +201,10 @@ class Index extends React.Component {
                 marginTop: "-10px",
               }}
             >
-              Smarter Liquidity Management
+              Put Your Assets To Work
             </h2>
             <div className="indexheaderdiv">
-              <h2>Trading Fees Earned By Liquidity Providers</h2>
+              <h2 style={{color: "white"}}>Trading Fees Earned By Liquidity Providers</h2>
               <div className="featurerow2">
                 <div className="featureleft2">
                   <div className="centerfeature">
@@ -222,7 +231,7 @@ class Index extends React.Component {
             <div className="indexheaderdiv">
               <h1 className="indexheader">What is Liquid Yield?</h1>
             </div>
-            <p>
+            <p className="indexcontent">
               Liquid Yield is a service designed to educate and equip people
               with tools to maximize their yields as a liquidity provider (LP).{" "}
               <strong>
@@ -238,14 +247,14 @@ class Index extends React.Component {
             <div className="indexheaderdiv">
               <h1 className="indexheader">What is a Liquidity Provider?</h1>
             </div>
-            <p>
+            <p className="indexcontent">
               A liquidity provider is a user who deposits their funds into a
               liquidity pool to facilitate trading on a decentralized exchange,
               and earns passive income on their deposit. Providing liquidity to
               a decentralized exchange is a way to put your assets to work,
               and earn a reward for doing so.
             </p>
-            <p>
+            <p className="indexcontent">
               This is similar in concept to a user who deposits their funds to a
               bank or lending protocol such as AAVE or Compound, and earns
               interest based on the demand for borrowing those funds. The
@@ -267,8 +276,8 @@ class Index extends React.Component {
             <div className="featurerow">
               <div className="featureleft">
                 <div className="centerfeature">
-                  <h3>Education Center</h3>
-                  <p>
+                  <h3 className="indexheader">Education Center</h3>
+                  <p className="indexcontent">
                     An all-encompassing resource which covers Bitcoin, Ethereum,
                     DeFi, and terms specific to liquidity providers. Regardless
                     of skill level, there should be something in the Education
@@ -290,8 +299,8 @@ class Index extends React.Component {
             <div className="featurerow">
               <div className="featureright">
                 <div className="centerfeature">
-                  <h3>Pool Explorer</h3>
-                  <p>
+                  <h3 className="indexheader">Pool Explorer</h3>
+                  <p className="indexcontent">
                     {" "}
                     Gives insights into the expected ROI for liquidity pools on
                     Uniswap and SushiSwap. Pool ROI is constantly changing based
@@ -314,8 +323,8 @@ class Index extends React.Component {
             <div className="featurerow">
               <div className="featureleft">
                 <div className="centerfeature">
-                  <h3>LP Token Value</h3>
-                  <p>
+                  <h3 className="indexheader">LP Token Value</h3>
+                  <p className="indexcontent">
                     Often times LP tokens can be staked in contracts and it
                     becomes difficult to find the value of your staked tokens.
                     With this tool you can input a Uniswap or Sushiswap pool and
@@ -338,8 +347,8 @@ class Index extends React.Component {
             <div className="featurerow">
               <div className="featureright">
                 <div className="centerfeature">
-                  <h3>Portfolio</h3>
-                  <p>
+                  <h3 className="indexheader">Portfolio</h3>
+                  <p className="indexcontent">
                     {" "}
                     The Portfolio tool tracks the performance of Uniswap and
                     SushiSwap LP tokens in your Ethereum wallet with respect to
@@ -356,8 +365,8 @@ class Index extends React.Component {
             <div className="featurerow">
               <div className="featureleft">
                 <div className="centerfeature">
-                  <h3>Liquid Ether Zap</h3>
-                  <p>
+                  <h3 className="indexheader">Liquid Ether Zap</h3>
+                  <p className="indexcontent">
                     {" "}
                     This Liquid Ether Zap is an interface to go directly from
                     ETH into an LP position while maintaining ~100% exposure to

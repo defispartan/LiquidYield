@@ -25,7 +25,7 @@ import AdminFooter from "../components/Footers/AdminFooter.js";
 import Header from "components/Headers/Header.js";
 import TheGraph from "assets/img/brand/thegraph.png";
 import Zapper from "assets/img/brand/zapper.png";
-import SushiSwap from "assets/img/brand/sushiswaplogo.png";
+import SushiSwap from "assets/img/brand/sushiswaplogowhite.png";
 import DeFiPedia from "assets/img/brand/defipedia.png";
 
 class About extends React.Component {
@@ -34,10 +34,10 @@ class About extends React.Component {
       <>
         <Header />
         {/* Page content */}
-        <Container className="mt--7" fluid>
+        <Container className="mt--7 bg-dark" fluid>
           <Row>
             <div className="col" style={{ textAlign: "center" }}>
-              <h1>Powered By</h1>
+              <h1 className="indexcontent">Powered By</h1>
               <Row>
                 <div
                   className="powerleft"
@@ -118,7 +118,7 @@ class About extends React.Component {
                 </div>
               </Row>
 
-              <h1 style={{ marginTop: "50px" }}>Inspired By</h1>
+              <h1 style={{ marginTop: "50px", color: "white" }}>Inspired By</h1>
               <ul style={{ listStyle: "none", padding: "0" }}>
                 <li className="list">
                   <a href="https://twitter.com/NodarJ/status/1213507574215200769?s=20">
@@ -130,9 +130,11 @@ class About extends React.Component {
                 </li>
               </ul>
 
-              <h1 style={{ marginTop: "50px" }}>Future Plans</h1>
+              <h1 style={{ marginTop: "50px", color: "white" }}>Future Plans</h1>
               <div style={{ textAlign: "center" }}></div>
               <ul>
+                <li className="listelement">
+                  Create LP University, a streamlined experience for learning about decentralization and LP best practices              </li>
                 <li className="listelement">
                   Add graphs for ETH and USD value of LP tokens over time to
                   Pool Explorer, LP Token Value, and Portfolio
@@ -146,7 +148,7 @@ class About extends React.Component {
                   Improve accuracy of Pool Explorer metrics and add more
                   timeframes (daily, weekly, yearly)
                 </li>
-                <li>SushiSwap Portfolio Support (with SushiBar)</li>
+                <li className="listelement">SushiSwap Portfolio Support (with SushiBar)</li>
                 <li className="listelement">
                   Create and/or promote AAVE governance proposals for Uniswap
                   and SushiSwap market
@@ -158,21 +160,21 @@ class About extends React.Component {
                 <li className="listelement">
                   Add Support for more Ethereum wallet types
                 </li>
-                <li className="listelement">Integrate Curve and Balancer</li>
+                <li className="listelement">Integrate Curve, Balancer, and Bancor</li>
               </ul>
 
-              <h1 style={{ marginTop: "50px" }}>Source Code</h1>
+              <h1 style={{ marginTop: "50px", color: "white" }}>Source Code</h1>
               <a href="https://github.com/aschmidt20/LiquidYield">GitHub</a>
 
-              <h1 style={{ marginTop: "50px" }}>
+              <h1 style={{ marginTop: "50px", color: "white" }}>
                 Question, Comments, or Feature Requests
               </h1>
-              <p>
+              <p className="indexcontent">
                 You can reach out to me on Twitter{" "}
                 <a href="https://twitter.com/defispartan">@defispartan</a>
               </p>
-              <h1 style={{ marginTop: "50px" }}>Donate</h1>
-              <p>defispartan.eth</p>
+              <h1 style={{ marginTop: "50px", color: "white" }}>Donate</h1>
+              <p className="indexcontent">defispartan.eth</p>
             </div>
           </Row>
           <AdminFooter />

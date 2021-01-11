@@ -415,15 +415,15 @@ const NewPools = (props) => {
       <Header />
       {/* Page content */}
       <Container
-        className="mt--7"
+        className="mt--7 bg-dark"
         fluid
-        style={{
+       /*  style={{
           backgroundImage: `url(${AAVE})`,
           height: "100%",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-        }}
+        }} */
       >
         <div className="zapheader">
           <img

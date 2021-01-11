@@ -33,7 +33,7 @@ import { Dropdown, Input } from "semantic-ui-react";
 // core components
 import Header from "components/Headers/Header.js";
 import AdminFooter from "../components/Footers/AdminFooter.js";
-import LPValueImg from "../assets/img/brand/lpvalue.png";
+import LPValueImg from "../assets/img/brand/lptokenvalue.png";
 import UniswapLogo from "../assets/img/brand/uniswap.png";
 import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.png";
 
@@ -527,6 +527,50 @@ const LPValue = (props) => {
     }
   };
 
+  const displayButtons = () => {
+    if(market === 'Uniswap'){
+      return(
+        <React.Fragment>
+        <Button color="info" onClick={setUniswap}>Uniswap</Button>
+        <Button onClick={setSushiSwap}>SushiSwap</Button>
+        </React.Fragment>
+      );
+    }
+    else if(market === 'SushiSwap'){
+      return (
+        <React.Fragment>
+        <Button onClick={setUniswap}>Uniswap</Button>
+        <Button color="info" onClick={setSushiSwap}>SushiSwap</Button>
+        </React.Fragment>
+    );
+    }
+
+  }
+
+  const displayInputTypeButtons = () => {
+    if(option === "Name"){
+    return (
+      <React.Fragment>
+
+      <Button color="info" onClick={setName}>By Name</Button>
+
+      <Button onClick={setAddress}>By Contract Address</Button>
+      </React.Fragment>
+    )
+    }
+    else{
+      return (
+
+        <React.Fragment>
+
+      <Button onClick={setName}>By Name</Button>
+
+      <Button color="info" onClick={setAddress}>By Contract Address</Button>
+      </React.Fragment>
+        )
+    }
+  }
+
   function round(value, decimals) {
     return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
   }
@@ -535,7 +579,7 @@ const LPValue = (props) => {
     <>
       <Header />
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7 bg-dark" fluid>
         <div className="zapheader">
           <img
             src={LPValueImg}
@@ -544,9 +588,7 @@ const LPValue = (props) => {
           ></img>
         </div>
         <div className="buttonrow">
-          <Button onClick={setUniswap}>Uniswap</Button>
-
-          <Button onClick={setSushiSwap}>SushiSwap</Button>
+          {displayButtons()}
         </div>
         {/* Table */}
         <Row>
@@ -561,9 +603,8 @@ const LPValue = (props) => {
               </CardHeader>
               <CardBody>
                 <div className="buttonrow">
-                  <Button onClick={setName}>By Name</Button>
+                  {displayInputTypeButtons()}
 
-                  <Button onClick={setAddress}>By Contract Address</Button>
                 </div>
                 <h2>Select Pool</h2>
                 <div className="poolselect">{displayPoolSelect()}</div>

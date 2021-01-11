@@ -21,8 +21,8 @@ import { Card, Collapse, Button, Container, Row } from "reactstrap";
 // core components
 import { Icon, Modal, Header, Button as Button2 } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
-import LEZHeader from "assets/img/brand/LEZHeader.png";
-import LEZ from "assets/img/brand/LEZ.png";
+import LEZHeader from "assets/img/brand/lezheader.png";
+import LEZ from "assets/img/brand/lezwhite.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 
 // Component for displaying blank Zap page with option to connect wallet
@@ -73,7 +73,7 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
       <Modal open={alertSet} basic size="small">
         <Header icon="exclamation circle" content="Alert" />
         <Modal.Content>
-          <p>{alert}</p>
+          <p className="indexcontent">{alert}</p>
         </Modal.Content>
         <Modal.Actions>
           <Button2 basic color="red" onClick={alertCancel} inverted>
@@ -81,7 +81,7 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
           </Button2>
         </Modal.Actions>
       </Modal>
-      <Container className="mt--7" fluid>
+      <Container className="mt--7 bg-dark" fluid>
         <div className="zapheader">
           <img src={LEZHeader} className="poolexplorer"></img>
           <div
@@ -94,7 +94,7 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
             }}
           >
             <h4 style={{ color: "red" }}>Coming Soon</h4>
-            <p>
+            <p className="indexcontent">
               With the recent release of{" "}
               <a href="https://medium.com/aave/the-aave-protocol-v2-f06f299cee04">
                 AAVE V2
@@ -118,12 +118,12 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
           </Button>
         </Card>
 
-        <div className="about">
+        <div className="about" style={{color:"white"}}>
           <div className="abouticon" onClick={toggleAboutOpen}>
             {aboutIcon}
           </div>
-          <h3 className="abouticon">About</h3>
-          <Collapse isOpen={aboutOpen} className="aboutcontent">
+          <h3 className="abouticon" style={{color:"white"}}>About</h3>
+          <Collapse isOpen={aboutOpen} className="aboutcontent" style={{color:"white"}}>
             The Liquid Ether Zap allows you to go from ETH into a liquidity pool
             while maintaining ~100% exposure to the price of ETH with the click
             of a button. Below is an example for the Uniswap ETH/DAI pair, for a
@@ -142,11 +142,11 @@ const ZapPlain = ({ connect, alert, setAlert }) => {
           <h3 className="disclaimericon">Disclaimer</h3>
 
           <Collapse isOpen={disclaimerOpen} className="disclaimercontent">
-            <p> There are two main risks associated with executing this zap:</p>
-            <h4>Smart Contract Risk</h4>
+            <p className="indexcontent"> There are two main risks associated with executing this zap:</p>
+            <h4 className="indexcontent">Smart Contract Risk</h4>
             <p></p>
-            <h4>Liquidation Risk</h4>
-            <p>
+            <h4 className="indexcontent">Liquidation Risk</h4>
+            <p className="Indexcontent">
               This zap involves borrowing DAI against the value of your newly
               minted Uniswap liquidity tokens. It's important to note that your
               borrowing position can be liquidated if the value of borrowed DAI

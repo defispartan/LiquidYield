@@ -21,6 +21,7 @@ import NewPools from "views/NewPools.js";
 import LPValue from "views/LPValue.js";
 import Education from "views/Education.js";
 import Portfolio from "views/PortfolioHome.js";
+import LPUniversity from "views/LPUniversity.js"
 
 var routes = [
   {
@@ -37,6 +38,13 @@ var routes = [
     component: Education,
     layout: "admin",
   },
+/*   {
+    path: "/lpu",
+    name: "LP University",
+    icon: "university icon white",
+    component: LPUniversity,
+    layout: "admin"
+  }, */
   {
     path: "/pools",
     name: "Pool Explorer",
@@ -54,7 +62,7 @@ var routes = [
   {
     path: "/portfolio",
     name: "Portfolio",
-    icon: "folder icon beige",
+    icon: "folder icon violet",
     component: Portfolio,
     layout: "admin",
   },

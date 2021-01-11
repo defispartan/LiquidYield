@@ -18,13 +18,13 @@
 import React from "react";
 // reactstrap components
 import { Container, Row, Button } from "reactstrap";
-
+import EduHeader from "assets/img/brand/educenterheader.png"
 import Aave from "assets/img/brand/aave.png";
 import Ethereum from "assets/img/brand/ethereum.png";
 import Uniswap from "assets/img/brand/uniswap.png";
 import SushiNew from "assets/img/brand/sushinew.png";
 import Ghost from "assets/img/brand/ghost.jpg";
-import LEZ from "assets/img/brand/LEZ.png";
+import LEZ from "assets/img/brand/lezwhite.png";
 import lpreturns from "assets/img/brand/lpreturns.PNG";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 import Header from "components/Headers/Header.js";
@@ -44,10 +44,14 @@ class Scenarios extends React.Component {
       <>
         <Header />
         {/* Page content */}
-        <Container className="mt--7" fluid>
-          <div className="infoheadertop" id="top">
-            <h1>Education Center</h1>
-          </div>
+        <Container className="mt--7 bg-dark" fluid>
+        <div className="zapheader">
+          <img
+            src={EduHeader}
+            className="poolexplorer"
+            alt="Education Center"
+          ></img>
+        </div>
 
           <div className="buttonrow">
             <a href="javascript:document.getElementById('bitcoin').scrollIntoView(true);">

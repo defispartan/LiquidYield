@@ -1,11 +1,6 @@
 .main-content {
   position: relative;
 
-  // Add top padding to main content when navbar shift to top of screen (for small screens)
-  @include media-breakpoint-down(sm) {
-    padding-top: 100px;
-  }
-
   // Navbar
   .navbar-top {
     position: absolute;
@@ -92,6 +87,11 @@
   max-width: 500px;
   height: auto;
   padding-bottom: 30px;
+
+  // Add top padding to main content when navbar shift to top of screen (for small screens)
+  @include media-breakpoint-down(sm) {
+    padding-top: 100px;
+  }
 }
 
 .liquidether {
@@ -264,6 +264,10 @@
   text-align: left;
 }
 
+.navbar-vertical {
+  z-index: 100;
+}
+
 .navbar-vertical .navbar-nav .nav-link > i {
   margin-bottom: 10px;
 }
@@ -319,6 +323,10 @@
 .indexheader {
   padding-top: 20px;
   padding-bottom: 15px;
+  color: white;
+}
+.indexcontent {
+  color: white;
 }
 
 .featureimg {
@@ -342,12 +350,14 @@
   width: 95%;
   margin: 0 auto;
   text-align: left;
+  color: white;
 }
 
 .infoheader {
   padding-bottom: 20px;
   padding-top: 40px;
   text-align: center;
+  color: white;
 }
 
 .infoheadertop {
@@ -495,6 +505,7 @@
   max-width: 1000px;
   min-width: 350px;
   margin: 0 auto;
+  color: white;
 }
 
 .featureleft {
@@ -506,6 +517,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 .featureright {
@@ -517,6 +529,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 .featureleft2 {
@@ -529,6 +542,7 @@
   justify-content: center;
   align-items: center;
   padding-top: 10px;
+  color: white;
 }
 
 .featureright2 {
@@ -541,6 +555,7 @@
   justify-content: center;
   align-items: center;
   padding-top: 10px;
+  color: white;
 }
 
 .featurerow2 {
@@ -549,6 +564,7 @@
   max-width: 1000px;
   min-width: 350px;
   margin: 0 auto;
+  color: white;
 }
 
 @media (max-width: 1000px) {
@@ -586,4 +602,13 @@
 
 .listelement {
   padding-bottom: 5px;
+  color: white;
+}
+
+.nav-link {
+  color: white !important;
+}
+
+.navbar-vertical {
+  border-right: 1px solid gray;
 }
