@@ -21,8 +21,8 @@ import { Card, Collapse, Button, Container, Row } from "reactstrap";
 // core components
 import { Icon, Modal, Header, Button as Button2 } from "semantic-ui-react";
 import React, { useState, useEffect } from "react";
-import LEZHeader from "assets/img/brand/lezheader.png";
-import LEZ from "assets/img/brand/lezwhite.png";
+import LEZHeader from "../assets/img/brand/lezheader.png";
+import LEZ from "../assets/img/brand/lezwhite.png";
 import AdminFooter from "../components/Footers/AdminFooter.js";
 
 // Component for displaying blank Zap page with option to connect wallet

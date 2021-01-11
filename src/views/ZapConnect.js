@@ -18,8 +18,8 @@
 
 // reactstrap components
 import { Card, Collapse, Button, Container, Row, Alert } from "reactstrap";
-import LEZHeader from "assets/img/brand/lezheader.png";
-import LEZ from "assets/img/brand/lezwhite.png";
+import LEZHeader from "../assets/img/brand/lezheader.png";
+import LEZ from "../assets/img/brand/lezwhite.png";
 // core components
 import { Dropdown, Input, Label } from "semantic-ui-react";
 import React, { useState } from "react";
