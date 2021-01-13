@@ -211,8 +211,9 @@
   width: 100%;
   margin: 0 auto;
   margin-bottom: 30px;
+}
 
-  // Add top padding to main content when navbar shift to top of screen (for small screens)
+.zapheader {
   @include media-breakpoint-down(sm) {
     padding-top: 100px;
   }
