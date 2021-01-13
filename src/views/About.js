@@ -133,7 +133,7 @@ class About extends React.Component {
 
               <h1 style={{ marginTop: "50px", color: "white" }}>Future Plans</h1>
               <div style={{ textAlign: "center" }}></div>
-              <ul>
+              <ul className='shiftright'>
                 <li className="listelement">
                   Create LP University, a streamlined experience for learning about decentralization and LP best practices              </li>
                 <li className="listelement">
