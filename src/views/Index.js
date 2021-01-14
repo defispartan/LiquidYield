@@ -55,7 +55,8 @@ const options = {
           callback: function (value, index, values) {
             return "$" + value.toFixed(decimals);
           },
-          fontColor: "white"
+          fontColor: "white",
+          max: 700000
         },
       },
     ],

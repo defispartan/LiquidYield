@@ -46,6 +46,9 @@ import { FaInfoCircle } from "react-icons/fa";
 import ReactTooltip from "react-tooltip";
 import dayjs from "dayjs";
 
+
+
+
 // Takes in table data, column index, and whether reverse toggle is set
 // Sorts table data by a specified column in place
 function sortByColumn(a, colIndex, reverse) {
@@ -66,8 +69,6 @@ function sortByColumn(a, colIndex, reverse) {
           ? -1
           : 1;
       } else if (a[colIndex].charAt(a[colIndex].length-1) === "%") {
-        console.log("A: " + a[colIndex].substring(-2))
-        console.log("B: " + b[colIndex].substring(-2))
         return parseFloat(a[colIndex].substring(-2)) <
           parseFloat(b[colIndex].substring(-2))
           ? -1
@@ -104,8 +105,9 @@ const NewPools = (props) => {
   const [imagePool, setImagePool] = useState(AAVEPool); // What is the pool icon for the open protocol
   const [title, setTitle] = useState(UniswapLogo); // What is the header image for the open protocol
 
-  const [uniData, setUniData] = useState(props.uniData); // Uniswap pool data
-  //const [uniData, setUniData] = useState(JSON.parse(localStorage.getItem('uniData')) || [{}])
+  //const [uniData, setUniData] = useState(props.uniData); // Uniswap pool data
+  //const [uniData, setUniData] = useState([{}])
+ const [uniData, setUniData] = useState(JSON.parse(localStorage.getItem('uniData')) || [{}])
   const [sushiData, setSushiData] = useState(props.sushiData); // SushiSwap pool data
   //const [sushiData, setUniData] = useState(JSON.parse(localStorage.getItem('sushiData')) || [{}])
   const [data, setData] = useState([{}]); // Data for the open protocol
@@ -316,8 +318,6 @@ const NewPools = (props) => {
       (loadingUni === false && openPool === "Uniswap") ||
       (loadingSushi === false && openPool === "SushiSwap")
     ) {
-      console.log("LAST REFRESH");
-      console.log(props.lastRefreshPool);
       return (
         <div className="porttable" style={{ paddingBottom: "20px" }}>
           <Button onClick={triggerRefresh}>Refresh Data</Button>
@@ -465,6 +465,7 @@ const NewPools = (props) => {
                 </Button>
               </ModalFooter>
             </Modal>
+            <h3 className="info" style={{color:"white"}}>Want a pool added? DM me on Twitter <a href="https://twitter.com/defispartan">@DeFiSpartan</a> and I'll make it happen!</h3>
             <div className="info">
               <div className="infoicon" onClick={handleInfoClick}>
                 {infoIcon}
@@ -480,23 +481,15 @@ const NewPools = (props) => {
                 </p>
                 <h3>Fees:</h3>
                 <p>
-                  Estimated by taking the average daily return over the last 30
-                  days and multiplying by 30. The average daily return is
-                  calculated by averaging (volume * trading fees percentage /
-                  pool liquidity).
+                  Estimated by taking the average daily fees for the previous 30 days with a 2x weighting for the last 7 days.
                 </p>
                 <h3>Impermanent Loss:</h3>
                 <p>
-                  Estimated by taking the price divergence for the two assets in
-                  the pool over the last 30 days, and plugging this value into
-                  the IL curve described{" "}
+                  Estimated by taking the average price ratio divergence for the last 30 days and plugging it into the IL curve found{" "}
                   <a style={{ color: "white" }} href="/education#il">
                     here
                   </a>
-                  . Estimations for this value could be improved upon by
-                  factoring in volatility on a rolling 30 day windows. For now,
-                  this calculation just predicts that the next month price
-                  divergence will be equal to the previous month.
+                  . 
                 </p>
                 <h3>Sushi Rewards:</h3>
                 <p>
