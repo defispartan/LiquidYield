@@ -183,6 +183,7 @@
   margin-bottom: 30px;
 }
 .connectbutton {
+  background: "#4883F6";
   width: 75%;
   margin: 0 auto;
 }
@@ -192,13 +193,19 @@
 }
 
 .ethinput {
-  width: 75%;
+
+  width: 30%;
+  min-width: 200px;
   margin: 0 auto;
-  margin-bottom: 30px;
 }
 
 .ethinputbox {
-  width: 100%;
+  width: 200px;
+}
+.ui.fluid.dropdown{
+  width: 30%;
+  min-width: 200px;
+  margin: 0 auto;
 }
 
 .labelimg {
@@ -632,4 +639,31 @@
 
 .shiftright {
   padding-right: 20px;
+}
+
+span.lpNum{
+  background: #4883F6;
+  border-radius: 1em;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 2em;
+  margin-right: 5px;
+  text-align: center;
+  width: 2em; 
+}
+
+.react-daterange-picker__wrapper{
+  color: white;
+  border: thin solid white
+}
+
+.react-daterange-picker__clear{
+  color: white
+}
+
+.react-daterange-picker__calendar{
+color:white
 }
