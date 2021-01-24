@@ -25,23 +25,15 @@ import NewPools from "views/NewPools.js";
 import PortfolioHome from "views/PortfolioHome.js";
 import ZapHome from "views/ZapHome.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import { masterchefClient } from "components/Data/MasterChefClient";
-import { sushiswapClient } from "components/Data/SushiSwapClient";
-import {
-  GET_DERIVED_ETH,
-  GET_REWARD_POOLS,
-  GET_TOTAL_ALLOC,
-  GET_POOL_INFO,
-} from "components/Data/Query.js";
-import UniCalc from "components/Data/UniCalc.js";
+
 import UniCalcNew from "components/Data/UniCalcNew.js"
-import SushiCalc from "components/Data/SushiCalc.js";
+import SushiCalcNew from "components/Data/SushiCalcNew.js";
 import drizzleOptions from "../drizzleOptions.js";
 import { Drizzle } from "@drizzle/store";
 import { drizzleReactHooks } from "@drizzle/react-plugin";
 import routes from "routes.js";
 import dayjs from "dayjs";
-import {unilist, sushilist} from "components/Data/Lists.js"
+import { unilist, sushilist } from "components/Data/Lists.js"
 const { DrizzleProvider } = drizzleReactHooks;
 
 
@@ -56,6 +48,8 @@ class Admin extends React.Component {
     //loadingSushi: true,
     walletConnected: localStorage.getItem("wallet") || false,
     lastRefreshPool: localStorage.getItem("lastRefreshPool") || null,
+    errorActive: false,
+    errorMessage: ""
   };
 
   setWalletConnect = (status) => {
@@ -86,80 +80,47 @@ class Admin extends React.Component {
   }
 
   async fetchUni() {
-    let uniArray = await UniCalcNew(unilist);
-    
-    //let uniArray = [];
-    //await this.asyncForEach(unilist, async (element) => {
-    //  let newObj = await UniCalc(element[0], element[1]);
-    //  uniArray.push(newObj);
-    //});
+    let [status, response] = await UniCalcNew(unilist);
 
-    this.setState({ uniData: uniArray });
-    localStorage.setItem("uniData", JSON.stringify(uniArray));
-    this.setState({ loadingUni: false });
-    this.setState({ lastRefreshPool: dayjs().format() });
-    localStorage.setItem("lastRefreshPool", dayjs().format());
-    localStorage.setItem("loadingUni", false);
+    if (status === false) {
+
+      this.setState({ uniData: response });
+      localStorage.setItem("uniData", JSON.stringify(response));
+      this.setState({ loadingUni: false });
+      this.setState({ lastRefreshPool: dayjs().format() });
+      localStorage.setItem("lastRefreshPool", dayjs().format());
+      localStorage.setItem("loadingUni", false);
+    }
+    else {
+
+      this.setState({ loadingUni: false });
+      localStorage.setItem("loadingUni", false);
+      this.setState({ errorActive: true, errorMessage: response })
+    }
+
+
   }
 
   async fetchSushi() {
-    let sushiArray = [];
 
-    const blocksPerDay = 6500;
-    const sushi = await sushiswapClient.query({
-      query: GET_DERIVED_ETH,
-      variables: {
-        id: "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
-      },
-    });
-    const derivedETH = sushi.data.token.derivedETH;
-    const poolResult = await masterchefClient.query({
-      query: GET_REWARD_POOLS,
-      fetchPolicy: "cache-first",
-    });
-    const pools = poolResult.data.pools;
-    const allocResult = await masterchefClient.query({
-      query: GET_TOTAL_ALLOC,
-      fetchPolicy: "cache-first",
-    });
-    const totalAlloc = allocResult.data.masterChefs[0].totalAllocPoint;
-    let pool30ROI = {};
-    await this.asyncForEach(pools, async (entry) => {
-      const poolInfo = await sushiswapClient.query({
-        query: GET_POOL_INFO,
-        variables: {
-          id: entry.pair,
-        },
-        fetchPolicy: "cache-first",
-      });
-      if (poolInfo.data.pair != null) {
-        let totalSupply = poolInfo.data.pair.totalSupply;
-        let totalValueETH = poolInfo.data.pair.reserveETH;
-        let sushiPerBlock = 100 - 100 * (entry.allocPoint / totalAlloc);
-        let thirtyDayROI =
-          (100 *
-            (derivedETH *
-              blocksPerDay *
-              sushiPerBlock *
-              3 *
-              30 *
-              (entry.allocPoint / totalAlloc))) /
-          (totalValueETH * (entry.slpBalance / totalSupply));
+    let [status, response] = await SushiCalcNew(sushilist);
+    if (status === false) {
 
-        pool30ROI[entry.pair] = thirtyDayROI;
-      }
-    });
-    let rewards = pool30ROI;
-    await this.asyncForEach(sushilist, async (element) => {
-      let newObj = await SushiCalc(element[0], element[1], rewards);
-      sushiArray.push(newObj);
-    });
-    this.setState({ sushiData: sushiArray });
-    localStorage.setItem("sushiData", JSON.stringify(sushiArray));
-    this.setState({ loadingSushi: false });
-    this.setState({ lastRefreshPool: dayjs().format() });
-    localStorage.setItem("lastRefreshPool", dayjs().format());
-    localStorage.setItem("loadingSushi", false);
+      this.setState({ sushiData: response });
+      localStorage.setItem("sushiData", JSON.stringify(response));
+      this.setState({ loadingSushi: false });
+      this.setState({ lastRefreshPool: dayjs().format() });
+      localStorage.setItem("lastRefreshPool", dayjs().format());
+      localStorage.setItem("loadingSushi", false);
+    }
+    else {
+
+      this.setState({ loadingSushi: false });
+      localStorage.setItem("loadingSushi", false);
+      this.setState({ errorActive: true, errorMessage: response })
+    }
+
+
   }
 
   async componentDidMount() {
@@ -169,6 +130,10 @@ class Admin extends React.Component {
     if (this.state.loadingSushi === true) {
       this.fetchSushi();
     }
+  }
+
+  closeError = () => {
+    this.setState({ errorActive: false, errorMessage: null })
   }
 
   componentDidUpdate(e) {
@@ -222,6 +187,9 @@ class Admin extends React.Component {
                 loadingSushi={this.state.loadingSushi}
                 lastRefreshPool={this.state.lastRefreshPool}
                 triggerRefresh={this.triggerRefresh}
+                errorActive={this.state.errorActive}
+                errorMessage={this.state.errorMessage}
+                closeAlert={this.closeError}
               />
             )}
           />

@@ -50,6 +50,32 @@ export const TICKER_GET_MONTH_ALL = gql`
   }
 `;
 
+export const TICKER_GET_MONTH_ALL_SUSHI = gql`
+  query pairDayData($id: [Bytes!], $date: Int!) {
+    pairDayDatas(first: 1000, where: { pair_in: $id, date_gt: $date }) {
+      pair{
+        id
+      }
+      date
+      reserve0
+      reserve1
+      reserveUSD
+      volumeUSD
+    }
+  }
+`;
+
+export const TICKER_GET_ALL_POOL_INFO_SUSHI = gql`
+  query poolinfo($id: [ID!]) {
+    pairs(where:{id_in: $id}) {
+      id
+      totalSupply
+      reserveETH
+    }
+  }
+
+`;
+
 export const SUSHI_GET_MONTH = gql`
   query pairDayData($id: Bytes!, $date: Int!) {
     pairDayDatas(where: { pair: $id, date_gt: $date }) {
@@ -141,8 +167,12 @@ export const GET_INDEX_PRICES = gql`
 `;
 
 export const GET_REWARD_POOLS = gql`
-  query pools {
-    pools(where: { allocPoint_gt: 0 }) {
+  query pools($id:[ID!]) {
+    pools(
+      where: { pair_in: $id }
+      orderBy: pair
+      orderDirection: asc
+      ) {
       id
       pair
       slpBalance

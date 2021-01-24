@@ -357,9 +357,6 @@ const PortfolioConnect = ({ disconnect }) => {
   };
 
   const displayRefresh = () => {
-    console.log("LAST REFRESH");
-    console.log(lastRefresh);
-    console.log(dayjs(lastRefresh));
     if (refresh === false) {
       return (
         <div className="porttable">

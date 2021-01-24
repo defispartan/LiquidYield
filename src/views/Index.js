@@ -18,6 +18,7 @@
 import React from "react";
 // reactstrap components
 import { Collapse, Container, Spinner, Button } from "reactstrap";
+import { Icon, Modal, Button as Button2 } from "semantic-ui-react";
 import LiquidLogo from "../assets/img/brand/liquidyieldblue.png";
 import Uniswap from "assets/img/brand/uniswap.png";
 import SushiNew from "assets/img/brand/sushiswaplogowhite.png";
@@ -108,7 +109,9 @@ class Index extends React.Component {
     uniPrice: null,
     sushiPrice: null,
     notesOpen: false,
-    notesIcon: <i className="plus circle icon"></i>
+    notesIcon: <i className="plus circle icon"></i>,
+    errorActive: false,
+    errorMessage: "",
 
 
   };
@@ -311,136 +314,166 @@ class Index extends React.Component {
 
   // Fetches Uniswap trading fee data from TheGraph
   async fetchUni() {
-    const result = await uniswapClient.query({
-      query: GET_UNI_DAY_DATA,
-      fetchPolicy: "cache-first",
-    });
-    const ethprice = await uniswapClient.query({
-      query: GET_INDEX_PRICES,
-      fetchPolicy: "cache-first",
+    try {
+      const result = await uniswapClient.query({
+        query: GET_UNI_DAY_DATA,
+        fetchPolicy: "cache-first",
+      });
 
-    })
-    let ethderivedprice = 1 / (ethprice.data.tokens[2].derivedETH)
-    let uniprice = ethprice.data.tokens[0].derivedETH * ethderivedprice
-    let data = result.data.uniswapDayDatas;
-    let unilabels = [];
-    let unidata = [];
-    let unirewarddata = [];
-    if (dayjs.unix(data[0].date) > dayjs.unix(data[1].date)) {
+      const ethprice = await uniswapClient.query({
+        query: GET_INDEX_PRICES,
+        fetchPolicy: "cache-first",
 
-      data.reverse();
+      })
+
+      let ethderivedprice = 1 / (ethprice.data.tokens[2].derivedETH)
+      let uniprice = ethprice.data.tokens[0].derivedETH * ethderivedprice
+      let data = result.data.uniswapDayDatas;
+      let unilabels = [];
+      let unidata = [];
+      let unirewarddata = [];
+      if (dayjs.unix(data[0].date) > dayjs.unix(data[1].date)) {
+
+        data.reverse();
+      }
+      data.forEach((entry) => {
+        unilabels.push(dayjs.unix(entry.date).format("YYYY-MM-DD"));
+        unidata.push(entry.dailyVolumeUSD * 0.003);
+        if ((dayjs.unix(entry.date) < dayjs.unix(1600387200)) || (dayjs.unix(entry.date) > dayjs.unix(1605571200))) {
+          unirewarddata.push(0)
+        }
+        else {
+          unirewarddata.push(uniprice * (20000000 / 60))
+        }
+      });
+      this.setState({ uniMasterTime: unilabels, uniMasterFees: unidata, uniMasterRewards: unirewarddata })
+      let uniChartData = {
+        labels: unilabels,
+        datasets: [
+          {
+            label: "Trading Fees",
+
+            backgroundColor: "rgba(237,187,234)",
+            data: unidata,
+          },
+          {
+            label: "UNI Liquidity Mining Rewards",
+
+            backgroundColor: "rgba(142,39,176)",
+            data: unirewarddata,
+          },
+
+        ],
+
+      };
+      this.setState({ uniData: uniChartData, uniLoad: false, uniPrice: uniprice })
+
+      if (this.state.sushiLoad === false) {
+        this.resizeSushi()
+        //this.setState({ bothLoad: false })
+      }
+
     }
-    data.forEach((entry) => {
-      unilabels.push(dayjs.unix(entry.date).format("YYYY-MM-DD"));
-      unidata.push(entry.dailyVolumeUSD * 0.003);
-      if ((dayjs.unix(entry.date) < dayjs.unix(1600387200)) || (dayjs.unix(entry.date) > dayjs.unix(1605571200))) {
-        unirewarddata.push(0)
+    catch (error) {
+      this.setState({ errorActive: true })
+      if (error.response) {
+        this.setState({ errorMessage: "Received " + error.response.status + " error in API response. Please refresh page to reload graphs." })
+      } if (error.request) {
+        this.setState({ errorMessage: "Received no response from API request. Please refresh page to reload graphs." })
       }
       else {
-        unirewarddata.push(uniprice * (20000000 / 60))
+        this.setState({ errorMessage: "API Error, please refresh page to reload graphs." })
       }
-    });
-    this.setState({ uniMasterTime: unilabels, uniMasterFees: unidata, uniMasterRewards: unirewarddata })
-    let uniChartData = {
-      labels: unilabels,
-      datasets: [
-        {
-          label: "Trading Fees",
-
-          backgroundColor: "rgba(237,187,234)",
-          data: unidata,
-        },
-        {
-          label: "UNI Liquidity Mining Rewards",
-
-          backgroundColor: "rgba(142,39,176)",
-          data: unirewarddata,
-        },
-
-      ],
-
-    };
-    this.setState({ uniData: uniChartData, uniLoad: false, uniPrice: uniprice })
-
-    if (this.state.sushiLoad === false) {
-      this.resizeSushi()
-      //this.setState({ bothLoad: false })
     }
+
   }
 
   // Fetches SushiSwap trading fee data from TheGraph
   async fetchSushi() {
-    const sushiResult = await sushiswapClient.query({
-      query: GET_SUSHI_DAY_DATA,
-      fetchPolicy: "cache-first",
-    });
-    const ethprice = await uniswapClient.query({
-      query: GET_INDEX_PRICES,
-      fetchPolicy: "cache-first",
+    try {
+      const sushiResult = await sushiswapClient.query({
+        query: GET_SUSHI_DAY_DATA,
+        fetchPolicy: "cache-first",
+      });
+      const ethprice = await uniswapClient.query({
+        query: GET_INDEX_PRICES,
+        fetchPolicy: "cache-first",
 
-    })
-    let ethderivedprice = 1 / (ethprice.data.tokens[2].derivedETH)
-    let sushiprice = ethprice.data.tokens[1].derivedETH * ethderivedprice
-    let sushiRawData = sushiResult.data.dayDatas;
-    let sushilabels = [];
-    let sushidata = [];
-    let sushirewarddata = []
-    if (dayjs.unix(sushiRawData[0].date) > dayjs.unix(sushiRawData[1].date)) {
+      })
+      let ethderivedprice = 1 / (ethprice.data.tokens[2].derivedETH)
+      let sushiprice = ethprice.data.tokens[1].derivedETH * ethderivedprice
+      let sushiRawData = sushiResult.data.dayDatas;
+      let sushilabels = [];
+      let sushidata = [];
+      let sushirewarddata = []
+      if (dayjs.unix(sushiRawData[0].date) > dayjs.unix(sushiRawData[1].date)) {
 
-      sushiRawData.reverse();
+        sushiRawData.reverse();
+      }
+      sushiRawData.forEach((entry) => {
+        sushilabels.push(dayjs.unix(entry.date).format("YYYY-MM-DD"));
+        sushidata.push(entry.volumeUSD * 0.0025);
+        let rewardentry = 6500 * sushiprice
+        if (dayjs.unix(entry.date) < dayjs.unix(1600387200)) {
+          sushirewarddata.push(rewardentry * 1000)
+        }
+        else if (dayjs.unix(entry.date) < dayjs.unix(1599868800)) {
+          sushirewarddata.push(rewardentry * 100)
+        }
+        else if (dayjs.unix(entry.date) < dayjs.unix(1601510400)) {
+          sushirewarddata.push(rewardentry * 90)
+        }
+        else if (dayjs.unix(entry.date) < dayjs.unix(1604188800)) {
+          sushirewarddata.push(rewardentry * 80)
+        }
+        else if (dayjs.unix(entry.date) < dayjs.unix(1606780800)) {
+          sushirewarddata.push(rewardentry * 70)
+        }
+        else if (dayjs.unix(entry.date) < dayjs.unix(1609459200)) {
+          sushirewarddata.push(rewardentry * 60)
+        }
+        else if (dayjs.unix(entry.date) < dayjs.unix(1612137600)) {
+          sushirewarddata.push(rewardentry * 50)
+        }
+        else if (dayjs.unix(entry.date) < dayjs.unix(1612137600)) {
+          sushirewarddata.push(rewardentry * 40)
+        }
+
+      });
+      this.setState({ sushiMasterTime: sushilabels, sushiMasterFees: sushidata, sushiMasterRewards: sushirewarddata })
+      let sushiChartData = {
+        labels: sushilabels,
+        datasets: [
+          {
+            label: "Trading Fees",
+            backgroundColor: "rgba(255,236,150)",
+            data: sushidata,
+          },
+          {
+            label: "SUSHI Liquidity Mining Rewards",
+            backgroundColor: "rgba(191,41,31)",
+            data: sushirewarddata,
+          },
+        ],
+      };
+      this.setState({ sushiData: sushiChartData, sushiLoad: false, sushiPrice: sushiprice });
+
+
+      if (this.state.uniLoad === false) {
+        this.resizeSushi()
+        //this.setState({ bothLoad: false })
+      }
     }
-    sushiRawData.forEach((entry) => {
-      sushilabels.push(dayjs.unix(entry.date).format("YYYY-MM-DD"));
-      sushidata.push(entry.volumeUSD * 0.0025);
-      let rewardentry = 6500 * sushiprice
-      if (dayjs.unix(entry.date) < dayjs.unix(1600387200)) {
-        sushirewarddata.push(rewardentry * 1000)
+    catch (error) {
+      this.setState({ errorActive: true })
+      if (error.response) {
+        this.setState({ errorMessage: "Received " + error.response.status + " error in API response. Please refresh page to reload graphs." })
+      } if (error.request) {
+        this.setState({ errorMessage: "Received no response from API request. Please refresh page to reload graphs." })
       }
-      else if (dayjs.unix(entry.date) < dayjs.unix(1599868800)) {
-        sushirewarddata.push(rewardentry * 100)
+      else {
+        this.setState({ errorMessage: "API Error: " + error.message })
       }
-      else if (dayjs.unix(entry.date) < dayjs.unix(1601510400)) {
-        sushirewarddata.push(rewardentry * 90)
-      }
-      else if (dayjs.unix(entry.date) < dayjs.unix(1604188800)) {
-        sushirewarddata.push(rewardentry * 80)
-      }
-      else if (dayjs.unix(entry.date) < dayjs.unix(1606780800)) {
-        sushirewarddata.push(rewardentry * 70)
-      }
-      else if (dayjs.unix(entry.date) < dayjs.unix(1609459200)) {
-        sushirewarddata.push(rewardentry * 60)
-      }
-      else if (dayjs.unix(entry.date) < dayjs.unix(1612137600)) {
-        sushirewarddata.push(rewardentry * 50)
-      }
-      else if (dayjs.unix(entry.date) < dayjs.unix(1612137600)) {
-        sushirewarddata.push(rewardentry * 40)
-      }
-
-    });
-    this.setState({ sushiMasterTime: sushilabels, sushiMasterFees: sushidata, sushiMasterRewards: sushirewarddata })
-    let sushiChartData = {
-      labels: sushilabels,
-      datasets: [
-        {
-          label: "Trading Fees",
-          backgroundColor: "rgba(255,236,150)",
-          data: sushidata,
-        },
-        {
-          label: "SUSHI Liquidity Mining Rewards",
-          backgroundColor: "rgba(191,41,31)",
-          data: sushirewarddata,
-        },
-      ],
-    };
-    this.setState({ sushiData: sushiChartData, sushiLoad: false, sushiPrice: sushiprice });
-
-
-    if (this.state.uniLoad === false) {
-      this.resizeSushi()
-      //this.setState({ bothLoad: false })
     }
   }
 
@@ -597,11 +630,25 @@ class Index extends React.Component {
   };
 
 
-
+  closeAlert = () => {
+    this.setState({ errorActive: false, errorMessage: null })
+  }
 
   render() {
     return (
       <>
+        {/* Page content */}
+        <Modal open={this.state.errorActive} basic size="small">
+          <Header icon="exclamation circle" content="Alert" />
+          <Modal.Content>
+            <p className="indexcontent">{this.state.errorMessage}</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button2 basic color="red" onClick={this.closeAlert} inverted>
+              <Icon name="remove" /> Close
+          </Button2>
+          </Modal.Actions>
+        </Modal>
         <Header />
         {/* Page content */}
         <Container className="mt--7 bg-dark" fluid>

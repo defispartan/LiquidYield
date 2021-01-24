@@ -1,7 +1,7 @@
 import SimpleStorage from "./contracts/SimpleStorage.json";
 
 const options = {
-  web3: {
+  ethereum: {
     block: false,
     fallback: {
       type: "ws",

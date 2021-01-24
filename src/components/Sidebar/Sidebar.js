@@ -116,7 +116,7 @@ class Sidebar extends React.Component {
         expand="md"
         id="sidenav-main"
       >
-        <Container fluid bg-dark>
+        <Container className="bg-dark" fluid>
           {/* Toggler */}
           <button
             className="navbar-toggler"
@@ -149,10 +149,10 @@ class Sidebar extends React.Component {
                         <img alt={logo.imgAlt} src={logo.imgSrc} />
                       </Link>
                     ) : (
-                      <a href={logo.outterLink}>
-                        <img alt={logo.imgAlt} src={logo.imgSrc} />
-                      </a>
-                    )}
+                        <a href={logo.outterLink}>
+                          <img alt={logo.imgAlt} src={logo.imgSrc} />
+                        </a>
+                      )}
                   </Col>
                 ) : null}
                 <Col className="collapse-close" xs="6">

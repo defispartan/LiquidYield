@@ -33,6 +33,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
+import { Icon, Button as Button2 } from "semantic-ui-react";
 // core components
 import Header from "components/Headers/Header.js";
 import AAVE from "../assets/img/brand/aave.jpg";
@@ -68,7 +69,7 @@ function sortByColumn(a, colIndex, reverse) {
           parseInt(b[colIndex].substring(2).replace(/,/g, ""))
           ? -1
           : 1;
-      } else if (a[colIndex].charAt(a[colIndex].length-1) === "%") {
+      } else if (a[colIndex].charAt(a[colIndex].length - 1) === "%") {
         return parseFloat(a[colIndex].substring(-2)) <
           parseFloat(b[colIndex].substring(-2))
           ? -1
@@ -107,7 +108,7 @@ const NewPools = (props) => {
 
   //const [uniData, setUniData] = useState(props.uniData); // Uniswap pool data
   //const [uniData, setUniData] = useState([{}])
- const [uniData, setUniData] = useState(JSON.parse(localStorage.getItem('uniData')) || [{}])
+  const [uniData, setUniData] = useState(JSON.parse(localStorage.getItem('uniData')) || [{}])
   const [sushiData, setSushiData] = useState(props.sushiData); // SushiSwap pool data
   //const [sushiData, setUniData] = useState(JSON.parse(localStorage.getItem('sushiData')) || [{}])
   const [data, setData] = useState([{}]); // Data for the open protocol
@@ -129,7 +130,8 @@ const NewPools = (props) => {
     "Name Placeholder",
     "Content",
   ]);
-
+  const [errorActive, setErrorActive] = useState(props.errorActive)
+  const [errorMessage, setErrorMessage] = useState(props.errorMessage)
   // Closes the modal box
   const handleSetModal = () => {
     setModal(false);
@@ -161,11 +163,16 @@ const NewPools = (props) => {
     } else if (props.loadingSushi === false) {
       setSushiData(props.sushiData);
       if (openPool === "SushiSwap") {
-        setData(props.sushiData);
+        setData(props.sushiData)
       }
       setLoadingSushi(props.loadingSushi);
     }
   }, [props.loadingUni, props.loadingSushi]);
+
+  useEffect(() => {
+    setErrorActive(props.errorActive)
+    setErrorMessage(props.errorMessage)
+  }, [props.errorActive, props.errorMessage])
 
   // Handles clicking on column header for sorting
   const handleClick = (title, key) => {
@@ -238,6 +245,10 @@ const NewPools = (props) => {
   const triggerRefresh = () => {
     props.triggerRefresh();
   };
+
+  const triggerAlertClose = () => {
+    props.closeAlert()
+  }
 
   // Returns a tooltip to get more info on specific columns
   const getTooltip = (title) => {
@@ -312,6 +323,7 @@ const NewPools = (props) => {
     }
   };
 
+
   // Displays button to manually refresh pools with time of last update
   const displayRefresh = () => {
     if (
@@ -344,23 +356,44 @@ const NewPools = (props) => {
             <tr>
               {Object.keys(data[0]).map((title, key) => {
                 if (title !== "Address") {
-                  return (
-                    <th
-                      key={key}
-                      onClick={() => handleClick(title, key)}
-                      scope="col"
-                      data-label={title}
-                      className="tableHeader"
-                    >
-                      <p style={{ display: "inline", cursor: "pointer" }}>
-                        {title + " "}
+                  if (title != "Estimated ROI (7d/30d/1y)") {
+                    return (
+                      <th
+                        key={key}
+                        onClick={() => handleClick(title, key)}
+                        scope="col"
+                        data-label={title}
+                        className="tableHeader"
+                      >
+                        <p style={{ display: "inline", cursor: "pointer" }}>
+                          {title + " "}
+                        </p>
+                        {getTooltip(title)}
+                        <p style={{ cursor: "pointer", display: "inline" }}>
+                          {activeColumn === key ? (toggle ? " ↓" : " ↑") : ""}
+                        </p>
+                      </th>
+                    );
+                  }
+                  else {
+                    return (
+                      <th
+                        key={key}
+                        onClick={() => handleClick(title, key)}
+                        scope="col"
+                        data-label={title}
+                        className="tableHeader"
+                      >
+                        <p style={{ display: "inline", cursor: "pointer" }}>
+                          Estimated ROI (7d/<strong>30d</strong>/1y)
                       </p>
-                      {getTooltip(title)}
-                      <p style={{ cursor: "pointer", display: "inline" }}>
-                        {activeColumn === key ? (toggle ? " ↓" : " ↑") : ""}
-                      </p>
-                    </th>
-                  );
+                        {getTooltip(title)}
+                        <p style={{ cursor: "pointer", display: "inline" }}>
+                          {activeColumn === key ? (toggle ? " ↓" : " ↑") : ""}
+                        </p>
+                      </th>
+                    )
+                  }
                 } else {
                   return null;
                 }
@@ -384,15 +417,27 @@ const NewPools = (props) => {
                               <img alt="..." src={getMarketImage()} />
                             </div>
                             <Media>
-                              <span className="mb-0 text-sm">{row[entry]}</span>
+                              <span className="mb-0 text-sm"><p>{row[entry]}</p></span>
                             </Media>
                           </Media>
                         </td>
                       );
-                    } else if (entry !== "Address") {
+                    }
+                    else if (entry === "Estimated ROI (7d/30d/1y)") {
+                      let roi = row[entry]
+                      roi = roi.split("/")
+                      let roitag = <p>{roi[0]}/<strong>{roi[1]}</strong>/{roi[2]}</p>
+
                       return (
                         <td scope="row" key={key} data-label={entry}>
-                          {row[entry]}
+                          {roitag}
+                        </td>
+                      );
+                    }
+                    else if (entry !== "Address") {
+                      return (
+                        <td scope="row" key={key} data-label={entry}>
+                          <p>  {row[entry]}</p>
                         </td>
                       );
                     } else {
@@ -412,18 +457,31 @@ const NewPools = (props) => {
 
   return (
     <>
+      <Modal isOpen={errorActive} centered={true}>
+        <Header icon="exclamation circle" content="Alert" />
+        <ModalHeader>{"Error"}</ModalHeader>
+        <ModalBody>
+          {errorMessage}
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={triggerAlertClose}>
+            <Icon name="remove" /> Close
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Header />
       <Header />
       {/* Page content */}
       <Container
         className="mt--7 bg-dark"
         fluid
-       /*  style={{
-          backgroundImage: `url(${AAVE})`,
-          height: "100%",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-        }} */
+      /*  style={{
+         backgroundImage: `url(${AAVE})`,
+         height: "100%",
+         backgroundPosition: "center",
+         backgroundRepeat: "no-repeat",
+         backgroundSize: "cover",
+       }} */
       >
         <div className="zapheader">
           <img
@@ -465,7 +523,7 @@ const NewPools = (props) => {
                 </Button>
               </ModalFooter>
             </Modal>
-            <h3 className="info" style={{color:"white"}}>Want a pool added? DM me on Twitter <a href="https://twitter.com/defispartan">@DeFiSpartan</a> and I'll make it happen!</h3>
+            <h3 className="info" style={{ color: "white" }}>Want a pool added? DM me on Twitter <a href="https://twitter.com/defispartan">@DeFiSpartan</a> and I'll make it happen!</h3>
             <div className="info">
               <div className="infoicon" onClick={handleInfoClick}>
                 {infoIcon}
@@ -489,7 +547,7 @@ const NewPools = (props) => {
                   <a style={{ color: "white" }} href="/education#il">
                     here
                   </a>
-                  . 
+                  .
                 </p>
                 <h3>Sushi Rewards:</h3>
                 <p>
