@@ -45,6 +45,11 @@
   }
 }
 
+.ilwrapper{
+  width: 20%;
+  min-width: 400px;
+}
+
 .powerleft {
   width: 50%;
   height: 200px;
@@ -614,6 +619,13 @@
     margin: 0 auto;
     text-align: center;
   }
+}
+
+.daterow{
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 30px;
 }
 
 .listelement {

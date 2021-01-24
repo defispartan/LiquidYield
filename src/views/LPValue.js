@@ -41,7 +41,9 @@ import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.png";
 import { uniPoolOptions, sushiPoolOptions, balancerPoolOptions } from "components/Data/Lists.js"
 import { balancerClient } from "components/Data/balancerClient.js"
 import BalancerLogo from "../assets/img/brand/balancer.png"
-import DateRangePicker from '@wojtekmaj/react-daterange-picker'
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { DateRange } from 'react-date-range';
 
 
 const LPValue = (props) => {
@@ -172,7 +174,9 @@ const LPValue = (props) => {
 
 
 
-  const displayPoolSelectButtons = () => {
+  const displayPoolSelectButtons = (pool) => {
+    console.log("POOOOOOOOOOL")
+    console.log(pool)
     if (option === "Name") {
       return (
         <div>
@@ -186,6 +190,7 @@ const LPValue = (props) => {
               fluid
               search
               selection
+              value={pool}
               options={poolOptions}
               width="50%"
               onChange={getPool}
@@ -212,7 +217,7 @@ const LPValue = (props) => {
     }
   }
 
-  const displayPoolSelect = () => {
+  const displayPoolSelect = (pool) => {
     return (
       <div>
         {displayPlatformSelect()}
@@ -225,7 +230,7 @@ const LPValue = (props) => {
           </div>
         </div>
 
-        {displayPoolSelectButtons()}
+        {displayPoolSelectButtons(pool)}
 
 
 
@@ -277,36 +282,36 @@ const LPValue = (props) => {
         <React.Fragment>
           <Button color="info" onClick={setUniswap}>Uniswap</Button>
           <Button onClick={setSushiSwap}>SushiSwap</Button>
-          <Button onClick={setBalancer}>Balancer</Button>
         </React.Fragment>
       );
+      // <Button onClick={setBalancer}>Balancer</Button>
     }
     else if (market === 'SushiSwap') {
       return (
         <React.Fragment>
           <Button onClick={setUniswap}>Uniswap</Button>
           <Button color="info" onClick={setSushiSwap}>SushiSwap</Button>
-          <Button onClick={setBalancer}>Balancer</Button>
         </React.Fragment>
       );
+      //     <Button onClick={setBalancer}>Balancer</Button>
     }
     else if (market === 'Balancer') {
       return (
         <React.Fragment>
           <Button onClick={setUniswap}>Uniswap</Button>
           <Button onClick={setSushiSwap}>SushiSwap</Button>
-          <Button color="info" onClick={setBalancer}>Balancer</Button>
         </React.Fragment>
       );
+      //   <Button color="info" onClick={setBalancer}>Balancer</Button>
     }
     else {
       return (
         <React.Fragment>
           <Button onClick={setUniswap}>Uniswap</Button>
           <Button onClick={setSushiSwap}>SushiSwap</Button>
-          <Button onClick={setBalancer}>Balancer</Button>
         </React.Fragment>
       );
+      //   <Button onClick={setBalancer}>Balancer</Button>
     }
 
   }
@@ -418,22 +423,32 @@ const LPValue = (props) => {
 
 
 
-  const displayMode = () => {
+  const displayMode = (pool) => {
     if (mode === 'historical') {
+      const selectionRange = {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection',
+      }
       return (
         <div>
-          {displayPoolSelect()}
+          {displayPoolSelect(pool)}
           <div className="buttonrow">
             <div style={{ display: "inline" }}>
               <span className="lpNum">4</span>
               {"       "}<p style={{ color: "white", display: "inline" }}>Select a Date Range</p>
             </div>
           </div>
-          <div className="buttonrow">
+          <div className="daterow">
 
-            <DateRangePicker style={{ color: "white" }} onChange={getRange} className="ethinput" />
+            {/*    <DateRangePicker style={{ color: "white" }} onChange={getRange} className="ethinput" />
+ */}
+            <DateRange
+              ranges={[selectionRange]}
+              onChange={getRange}
+              className="ethinput"
 
-
+            />
           </div>
           <div className="buttonrow">
 
@@ -513,72 +528,12 @@ const LPValue = (props) => {
     else {
       return (
 
-        displayMode()
+        displayMode(pool)
       )
     }
 
 
 
-    return (
-      <div>
-
-        <div className="buttonrow">
-          {displayModeSelect()}
-
-        </div>
-        <div className="buttonrow">
-          {displayPlatformSelect()}
-        </div>
-        <div className="buttonrow">
-          {displayPoolSelect()}
-        </div>
-        <div className="buttonrow">
-          {displayMode(mode)}
-        </div>
-        <Row>
-          <div className="col">
-            <Card className="zap">
-              <CardHeader className="border-0">
-                <img
-                  src={title}
-                  alt="Market Header"
-                  className="lpcardheader"
-                ></img>
-              </CardHeader>
-              <CardBody>
-                <div className="buttonrow">
-                  {displayInputTypeButtons()}
-
-                </div>
-                <h2>Select Pool</h2>
-                <div className="poolselect">{displayPoolSelect()}</div>
-                <h2>LP Token Amount</h2>
-                <div className="ethinput">
-                  <Input
-                    className="ethinputbox"
-                    placeholder="0.0"
-                    onChange={getInput}
-                  />
-                </div>
-                <Button
-                  className="connectbutton"
-                  onClick={calculateValue}
-                  color="primary"
-                >
-                  Get Value
-            </Button>
-                {loadingSpin()}
-                {displayOutput()}
-              </CardBody>
-            </Card>
-            <div className="data"></div>
-            {/*             <Card className="data">
-          Data From <a href="https://thegraph.com/">The Graph</a>
-        </Card> */}
-          </div>
-        </Row>
-      </div>
-    )
   }
 
   return (
