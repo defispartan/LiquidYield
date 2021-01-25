@@ -554,7 +554,7 @@
 }
 
 .featureleft2 {
-  float: left;
+  float: center;
   width: 50%;
   height: 100%;
   line-height: 100%;
@@ -567,7 +567,7 @@
 }
 
 .featureright2 {
-  float: right;
+  float: center;
   width: 50%;
   height: 100%;
   line-height: 100%;
@@ -582,10 +582,10 @@
 .featurerow2 {
   min-height: 200px;
   width: 100%;
-  max-width: 1000px;
   min-width: 350px;
   margin: 0 auto;
   color: white;
+  display: flex;
 }
 
 @media (max-width: 1000px) {
@@ -596,6 +596,9 @@
   .featureright2 {
     float: center;
     width: 100%;
+  }
+  .featurerow2{
+    display: block;
   }
 }
 .centerfeature {

@@ -66,7 +66,7 @@ const options = {
             return "$" + numberWithCommas(value.toFixed(decimals));
           },
           fontColor: "white",
-          max: 5000000
+          max: 6000000
         },
         stacked: true
       },
