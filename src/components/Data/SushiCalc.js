@@ -24,7 +24,7 @@ import {
   SUSHI_GET_MONTH,
 } from "components/Data/Query.js";
 import { sushiswapClient } from "components/Data/SushiSwapClient.js";
-import SUSHI from "assets/img/theme/chef.PNG";
+import SUSHI from "assets/img/theme/sushilogo.jpg";
 import dayjs from "dayjs";
 
 function round(value, decimals) {

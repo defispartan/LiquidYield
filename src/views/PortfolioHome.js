@@ -23,12 +23,12 @@ function PortfolioHome(props) {
       />
     </DrizzleProvider>
   ) : (
-    <PortfolioPlain
-      connect={() => props.connectWallet()}
-      alert={alertMessage}
-      setAlert={(alert) => setAlert(alert)}
-    />
-  );
+      <PortfolioPlain
+        connect={() => props.connectWallet()}
+        alert={alertMessage}
+        setAlert={(alert) => setAlert(alert)}
+      />
+    );
 }
 
 export default PortfolioHome;

@@ -23,7 +23,7 @@ import {
   SUSHI_TICKER_HISTORICAL_QUERY,
 } from "components/Data/Query.js";
 import { sushiswapClient } from "components/Data/SushiSwapClient.js";
-import SUSHI from "assets/img/theme/chef.PNG";
+import SUSHI from "assets/img/theme/sushilogo.jpg";
 import dayjs from "dayjs";
 
 function round(value, decimals) {
@@ -162,8 +162,8 @@ const SushiPool = (props) => {
       <td style={{ textAlign: "center" }}>
         {round(
           expectedFees(previousDayPairData.volumeUSD, pairData.reserveUSD) +
-            calculateIL(pairData, previousMonthPairData) +
-            reward,
+          calculateIL(pairData, previousMonthPairData) +
+          reward,
           2
         ).toString() + " %"}
       </td>

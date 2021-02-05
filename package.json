@@ -44,7 +44,17 @@
     "@drizzle/react-components": "^1.5.1",
     "@drizzle/react-plugin": "^1.5.1",
     "@drizzle/store": "^1.5.1",
+    "@ethersproject/address": "^5.0.5",
+    "@ethersproject/bignumber": "^5.0.8",
+    "@ethersproject/bytes": "^5.0.5",
+    "@ethersproject/contracts": "^5.0.5",
+    "@ethersproject/providers": "^5.0.12",
+    "@ethersproject/units": "^5.0.6",
     "@fortawesome/fontawesome-free": "5.12.1",
+    "@metamask/legacy-web3": "^2.0.0",
+    "@ramp-network/ramp-instant-sdk": "^2.2.0",
+    "@uniswap/sdk": "^3.0.3",
+    "@walletconnect/web3-provider": "^1.3.1",
     "apollo-boost": "^0.4.9",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
@@ -76,7 +86,8 @@
     "reactstrap": "8.4.1",
     "semantic-ui-react": "^0.88.2",
     "sushi-data": "0.0.0",
-    "truffle-hdwallet-provider": "^1.0.17"
+    "truffle-hdwallet-provider": "^1.0.17",
+    "web3modal": "^1.9.1"
   },
   "devDependencies": {
     "@types/googlemaps": "3.39.2",

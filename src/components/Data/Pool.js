@@ -26,7 +26,7 @@ import { uniswapClient } from "components/Data/UniswapClient.js";
 import { sushiswapClient } from "components/Data/SushiSwapClient.js";
 import UNIV1 from "assets/img/theme/uniswapv1.jpg";
 import UNIV2 from "assets/img/theme/uniswapv2.jpg";
-import SUSHI from "assets/img/theme/chef.PNG";
+import SUSHI from "assets/img/theme/sushilogo.jpg";
 import dayjs from "dayjs";
 function round(value, decimals) {
   return Number(Math.round(value + "e" + decimals) + "e-" + decimals);

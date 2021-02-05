@@ -42,7 +42,7 @@ import AdminFooter from "../components/Footers/AdminFooter.js";
 import UniswapLogo from "../assets/img/brand/uniswap.png";
 import SushiSwapLogo from "../assets/img/brand/sushiswaplogo.png";
 import UNIV2 from "assets/img/theme/uniswapv2.jpg";
-import SUSHI from "assets/img/theme/chef.PNG";
+import SUSHI from "assets/img/brand/sushilogo.jpg";
 import { FaInfoCircle } from "react-icons/fa";
 import ReactTooltip from "react-tooltip";
 import dayjs from "dayjs";

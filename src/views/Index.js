@@ -49,6 +49,7 @@ const numberWithCommas = (x) => {
 const round = (value, decimals) => {
   return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
 }
+
 // Options for ChartJS plots of daily trading fee revenue
 const decimals = 0;
 const options = {
@@ -66,7 +67,7 @@ const options = {
             return "$" + numberWithCommas(value.toFixed(decimals));
           },
           fontColor: "white",
-          max: 6000000
+          max: 9000000
         },
         stacked: true
       },
@@ -301,8 +302,6 @@ class Index extends React.Component {
         },
       ],
     };
-
-
 
     this.setState({ sushiData: sushiChartData, sushiMasterTime: newtime, sushiMasterFees: newfees, sushiMasterRewards: newrewards, bothLoad: false })
 
@@ -620,7 +619,7 @@ class Index extends React.Component {
 
   toggleNotesOpen = () => {
 
-    if (this.state.notesOpen == false) {
+    if (this.state.notesOpen === false) {
       this.setState({ notesIcon: <i className="minus circle icon"></i> });
     } else {
       this.setState({ notesIcon: <i className="plus circle icon"></i> })
